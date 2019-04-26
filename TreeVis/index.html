@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- libs  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-full.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/chai/1.10.0/chai.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.1.4/mocha.min.js"></script>
+    <script src="//cdn.rawgit.com/rstacruz/mocha-clean/v0.3.0/index.js"></script>
+    <!-- /libs -->
+
+    <title>TreeVis</title>
+</head>
+
+<div id="TreeVisApp">
+    {{message}}
+    ...
+</div>
+
+<!-- sourcecode  -->
+<script src="src\AbstractTree.js"></script>
+<!-- /sourcecode -->
+
+
+<!-- vue  -->
+<script src="vue\TreeVisApp.js"></script>
+<!-- /vue -->
+
+
+<!-- tests  -->
+<div id="mocha"></div>
+
+<script>
+    mocha.setup('bdd');
+    mocha.traceIgnores = ['mocha.min.js', 'chai.min.js'];
+    expect = chai.expect;
+</script>
+
+<script src="test/test.js"></script>
+
+<script>
+    mocha.run();
+</script>
+<!-- /tests -->
+
+</html>
