@@ -33,7 +33,7 @@ class AbstractTree {
 
     }
 
-    searchKey(searchKey) {
+    searchKey(_key) {
 
     }
 

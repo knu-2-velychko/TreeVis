@@ -16,8 +16,8 @@ class BinarySearchTree extends BinaryTree {
         } else {
             var current = this._root;
             while (current != null) {
-                if (current.getKey > newKey) {
-                    if (current.left === null) {
+                if (current.key > newKey) {
+                    if (current.left == null) {
                         current.left = new BinarySearchNode(newKey);
                         break;
                     } else {
@@ -33,5 +33,20 @@ class BinarySearchTree extends BinaryTree {
                 }
             }
         }
+    }
+
+    searchKey(_key) {
+        super.searchKey(_key);
+        let current = this._root;
+        while (current != null) {
+            if (current.key > _key) {
+                current = current.left;
+            } else if (current.key < _key) {
+                current = current.right;
+            } else {
+                return current;
+            }
+        }
+        return null;
     }
 }
