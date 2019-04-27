@@ -29,7 +29,7 @@ class AbstractTree {
 
     }
 
-    deleteKey(deleteKey) {
+    deleteKey(_key) {
 
     }
 
