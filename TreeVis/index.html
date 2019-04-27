@@ -7,17 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- libs  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-full.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-full.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.1.4/mocha.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/SergySanJj/mocha-clean/index.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js'></script>
     <!-- /libs -->
 
     <title>TreeVis</title>
 </head>
+
+<canvas id="treeCanvas" resize></canvas>
+
 
 <div id="TreeVisApp">
     {{message}}
@@ -30,12 +34,23 @@
 <script src="src\BinarySearchTree.js"></script>
 <script src="src\RedBlackTree.js"></script>
 <script src="src\AVLTree.js"></script>
+
+<script src="src\AVLTree.js"></script>
 <!-- /sourcecode -->
 
 
 <!-- vue  -->
 <script src="vue\TreeVisApp.js"></script>
 <!-- /vue -->
+
+<!-- paper  -->
+<script src="visualisation/Renderer.js"></script>
+<script src="visualisation/RenderableObjectInterface.js"></script>
+<script src="visualisation/NodeView.js"></script>
+<script src="visualisation/TreeView.js"></script>
+
+<script src="visualisation/papermain.js" type="text/paperscript" canvas="treeCanvas"></script>
+<!-- /paper -->
 
 
 <!-- tests  -->

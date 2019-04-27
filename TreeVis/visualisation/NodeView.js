@@ -1,0 +1,3 @@
+class NodeView extends RenderableObjectInterface {
+    
+}
