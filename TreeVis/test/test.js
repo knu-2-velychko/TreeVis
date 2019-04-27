@@ -1,13 +1,3 @@
-function sum(a, b) {
-    return a + b;
-}
-
-describe('sum', function () {
-    it('should return sum of arguments', function () {
-        chai.expect(sum(1, 2)).to.equal(3);
-    });
-});
-
 describe('Binary Search Node', function () {
     var node = new BinarySearchNode(3);
 
@@ -73,7 +63,7 @@ describe('Binary Search Tree', function () {
             tree.insertKey(1);
         });
         it("delete should delete node with key from tree", function () {
-            /*tree.deleteKey(3);
+            tree.deleteKey(3);
             checkInvariant(this.root);
             chai.expect(tree.searchKey(3)).to.equal(null);
             tree.deleteKey(5);
@@ -85,7 +75,6 @@ describe('Binary Search Tree', function () {
             tree.deleteKey(1);
             checkInvariant(this.root);
             chai.expect(tree.searchKey(1)).to.equal(null);
-            */
         });
     });
 });

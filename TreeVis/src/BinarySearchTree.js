@@ -53,5 +53,8 @@ class BinarySearchTree extends BinaryTree {
         }
         return null;
     }
-
 }
+
+let getMin = function (node) {
+
+};
