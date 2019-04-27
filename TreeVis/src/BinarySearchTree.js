@@ -1,6 +1,6 @@
 class BinarySearchNode extends BinaryNode {
-    constructor() {
-        super();
+    constructor(nodeKey, nodeParent) {
+        super(nodeKey, nodeParent);
     }
 }
 
@@ -9,23 +9,27 @@ class BinarySearchTree extends BinaryTree {
         super();
     }
 
-    insertKey(_key) {
-        super.insertKey(_key);
-        if (this.root == null) {
-            this.root = new BinarySearchNode(_key);
+    insertKey(newKey) {
+        super.insertKey(newKey);
+        if (this._root == null) {
+            this._root = new BinarySearchNode(newKey);
         } else {
-            var current = this.root;
-            if (current.getKey > _key) {
-                if (current.left == null) {
-                    current.left = new BinarySearchNode(_key);
+            var current = this._root;
+            while (current != null) {
+                if (current.getKey > newKey) {
+                    if (current.left === null) {
+                        current.left = new BinarySearchNode(newKey);
+                        break;
+                    } else {
+                        current = current.left;
+                    }
                 } else {
-                    current = current.left;
-                }
-            } else {
-                if (current.right == null) {
-                    current.right = new BinarySearchNode(_key);
-                } else {
-                    current = current.right;
+                    if (current.right == null) {
+                        current.right = new BinarySearchNode(newKey);
+                        break;
+                    } else {
+                        current = current.right;
+                    }
                 }
             }
         }

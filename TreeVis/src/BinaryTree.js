@@ -1,34 +1,34 @@
 class BinaryNode extends AbstractNode {
-    constructor() {
-        super();
+    constructor(nodeKey, nodeParent) {
+        super(nodeKey, nodeParent);
         if (this.constructor === BinaryNode) {
             throw new TypeError('Abstract class "BinaryNode" cannot be instantiated directly.');
         }
-        this.children = [null, null];
+        this._children = [null, null];
     }
 
     get left() {
-        return this.children[0];
+        return this._children[0];
     }
 
     set left(_left) {
-        this.children[0] = _left;
+        this._children[0] = _left;
     }
 
     get right() {
-        return this.children[1];
+        return this._children[1];
     }
 
     set right(_right) {
-        this.children[1] = _right;
+        this._children[1] = _right;
     }
 
     get key() {
-        return this.keys[0];
+        return this._keys[0];
     }
 
-    set key(_key) {
-        this.keys[0] = _key;
+    set key(nodeKey) {
+        this._keys[0] = nodeKey;
     }
 }
 

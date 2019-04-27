@@ -1,10 +1,19 @@
 class AbstractNode {
-    constructor(_key) {
+    constructor(nodeKey, nodeParent) {
         if (this.constructor === AbstractNode) {
             throw new TypeError('Abstract class "AbstractNode" cannot be instantiated directly.');
         }
-        this.keys = [_key];
-        this.children = [];
+        this._keys = [nodeKey];
+        this._children = [];
+        this._parent = nodeParent;
+    }
+
+    get parent() {
+        return this._parent;
+    }
+
+    set parent(newParent){
+        this._parent=newParent;
     }
 }
 
@@ -13,22 +22,22 @@ class AbstractTree {
         if (this.constructor === AbstractTree) {
             throw new TypeError('Abstract class "AbstractTree" cannot be instantiated directly.');
         }
-        this.root = null;
+        this._root = null;
     }
 
-    insertKey(_key) {
-
-    }
-
-    deleteKey(_key) {
+    insertKey(newKey) {
 
     }
 
-    searchKey(_key) {
+    deleteKey(deleteKey) {
 
     }
 
-    get getRoot() {
-        return this.root;
+    searchKey(searchKey) {
+
+    }
+
+    get root() {
+        return this._root;
     }
 }
