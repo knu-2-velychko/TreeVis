@@ -35,10 +35,6 @@ class BinarySearchTree extends BinaryTree {
         }
     }
 
-    deleteKey(_key) {
-        super.deleteKey(_key);
-    }
-
     searchKey(_key) {
         super.searchKey(_key);
         let current = this._root;
@@ -53,8 +49,25 @@ class BinarySearchTree extends BinaryTree {
         }
         return null;
     }
+
+    _findMin(node) {
+        let current = node;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current
+    }
+
+    _replaceNodeInParent(node, newNode) {
+        if (node.parent != null) {
+            if (node == node.parent.left) {
+                node.parent.left = newNode;
+            } else {
+                node.parent.right = newNode;
+            }
+        }
+        if (newNode == null) {
+            newNode.parent = node.parent;
+        }
+    }
 }
-
-let getMin = function (node) {
-
-};
