@@ -12,12 +12,13 @@ class AbstractNode {
         return this._parent;
     }
 
-    set parent(newParent){
-        this._parent=newParent;
+    set parent(newParent) {
+        this._parent = newParent;
     }
 }
 
 class AbstractTree {
+
     constructor() {
         if (this.constructor === AbstractTree) {
             throw new TypeError('Abstract class "AbstractTree" cannot be instantiated directly.');
@@ -36,6 +37,7 @@ class AbstractTree {
     searchKey(_key) {
 
     }
+
 
     get root() {
         return this._root;
