@@ -1,4 +1,4 @@
-let Color = Object.freeze({"red": 1, "black": 2})
+let Color = Object.freeze({"red": 1, "black": 2});
 
 class RedBlackNode extends BinaryNode {
     constructor(nodeKey, nodeParent) {
@@ -43,7 +43,7 @@ class RedBlackTree extends BinarySearchTree {
     //TODO: deletion
 
     _insertCase1(node) {
-        if (node.parent == nullptr) {
+        if (node.parent == null) {
             node.color = Color.black;
         } else {
             this._insertCase2(node);
@@ -96,10 +96,37 @@ class RedBlackTree extends BinarySearchTree {
 
     //TODO: rotates
     _rotateLeft(node) {
-
+        var rightChild = node.right;
+        node.right = rightChild.left;
+        if (node.right != null) {
+            node.right.parent = node;
+        }
+        rightChild.parent = node.parent;
+        if (node.parent == nullptr) {
+            this._root = rightChild;
+        } else if (node == node.parent.left) {
+            node.parent.left = rightChild;
+        } else {
+            node.parent.right = rightChild;
+        }
+        rightChild.left = node;
+        node.parent = rightChild;
     }
 
     _rotateRight(node) {
-
+        var leftChild = node.left;
+        node.left = leftChild.right;
+        //
+        if (node.left != null)
+            node.left.parent = node;
+        leftChild.parent = node.parent;
+        if (node.parent == null)
+            this._root = leftChild;
+        else if (node == node.parent.left)
+            node.parent.left = leftChild;
+        else
+            node.parent.right = leftChild;
+        leftChild.right = node;
+        node.parent = leftChild;
     }
 }

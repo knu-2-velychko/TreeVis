@@ -9,7 +9,10 @@ class AbstractNode {
     }
 
     get parent() {
-        return this._parent;
+        if (typeof this._parent !== 'undefined') {
+            return this._parent;
+        }
+        return null;
     }
 
     set parent(newParent) {
