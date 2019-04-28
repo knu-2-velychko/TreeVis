@@ -39,6 +39,8 @@ class RedBlackTree extends BinarySearchTree {
         this._insertCase1(node);
     }
 
+    //TODO: deletion
+
     _insertCase1(node) {
         if (node.parent == nullptr) {
             node.color = Color.black;
@@ -81,9 +83,18 @@ class RedBlackTree extends BinarySearchTree {
     }
 
     _insertCase5(node) {
-
+        var g = node.parent.parent;
+        node.parent.color=Color.red;
+        g.color=Color.red;
+        if(node==node.parent.left && node.parent==g.left){
+            this._rotateRight(g);
+        }
+        else{
+            this._rotateLeft()
+        }
     }
 
+    //TODO: rotates
     _rotateLeft(node) {
 
     }
@@ -91,5 +102,4 @@ class RedBlackTree extends BinarySearchTree {
     _rotateRight(node) {
 
     }
-
 }
