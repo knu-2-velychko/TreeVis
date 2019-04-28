@@ -26,6 +26,18 @@ var checkRedBlackTreeInvariant = function (node) {
     }
 };
 
+var checkAVLTreeInvariant = function (node) {
+    var difference = 0;
+    if (node.left != null) {
+        difference += node.left.height;
+    }
+    if (node.right != null) {
+        difference -= node.left.height;
+    }
+    chai.expect(Math.abs(difference)).to.equal(1);
+    chai.expect(Math.abs(node.balanceFactor)).to.equal(1);
+};
+
 describe('Binary Search Node', () => {
     var node = new BinarySearchNode(3, null);
 
@@ -214,7 +226,99 @@ describe('Red-Black Tree', () => {
 });
 
 describe('AVL Tree Node', () => {
+    var node = new AVLNode(3, null);
+
+    it('node should not be empty', () => {
+        chai.expect(node.key).to.equal(3);
+        chai.expect(node.left).to.equal(null);
+        chai.expect(node.right).to.equal(null);
+        chai.expect(node.height).to.equal(1);
+        chai.expect(node.balanceFactor).to.equal(1);
+    });
+
+    it('left getter & setter', () => {
+        node.left = new AVLNode(2, node);
+        chai.expect(node.key).to.equal(3);
+        chai.expect(node.left).to.not.equal(null);
+        chai.expect(node.left.key).to.equal(2);
+        chai.expect(node.height).to.equal(1);
+        chai.expect(node.balanceFactor).to.equal(2);
+    });
+
+    it('right getter & setter', () => {
+        node.right = new AVLNode(5, node);
+        chai.expect(node.key).to.equal(3);
+        chai.expect(node.right).to.not.equal(null);
+        chai.expect(node.right.key).to.equal(5);
+        chai.expect(node.height).to.equal(1);
+        chai.expect(node.balanceFactor).to.equal(1);
+    });
+
 });
 
 describe('AVL Tree', () => {
+    var tree = new AVLTree();
+    it('root should be empty', () => {
+        chai.expect(tree.root).to.equal(null);
+    });
+
+    describe('Red Black Tree insertion', () => {
+        it('Red Black Tree invariants', () => {
+            tree.insertKey(3);
+            checkBinaryTreeOrderInvariant(tree.root);
+            checkAVLTreeInvariant(tree.root);
+            tree.insertKey(5);
+            checkBinaryTreeOrderInvariant(tree.root);
+            checkAVLTreeInvariant(tree.root);
+            tree.insertKey(2);
+            checkBinaryTreeOrderInvariant(tree.root);
+            checkAVLTreeInvariant(tree.root);
+            tree.insertKey(1);
+            checkBinaryTreeOrderInvariant(tree.root);
+            checkAVLTreeInvariant(tree.root);
+        });
+    });
+
+    describe('Red Black Tree search', () => {
+        before(() => {
+            tree.insertKey(3);
+            tree.insertKey(5);
+            tree.insertKey(2);
+            tree.insertKey(1);
+        });
+        it("search should return node with searched key", () => {
+            chai.expect(tree.searchKey(3).key).to.equal(3);
+            chai.expect(tree.searchKey(5).key).to.equal(5);
+            chai.expect(tree.searchKey(2).key).to.equal(2);
+            chai.expect(tree.searchKey(1).key).to.equal(1);
+            chai.expect(tree.searchKey(7)).to.equal(null);
+        });
+    });
+
+    describe('Red Black Tree delete', () => {
+        before(() => {
+            tree.insertKey(3);
+            tree.insertKey(5);
+            tree.insertKey(2);
+            tree.insertKey(1);
+        });
+        it("delete should delete node with key from tree", () => {
+            tree.deleteKey(3);
+            checkBinaryTreeOrderInvariant(this.root);
+            checkAVLTreeInvariant(tree.root);
+            chai.expect(tree.searchKey(3)).to.equal(null);
+            tree.deleteKey(5);
+            checkBinaryTreeOrderInvariant(this.root);
+            checkAVLTreeInvariant(tree.root);
+            chai.expect(tree.searchKey(5)).to.equal(null);
+            tree.deleteKey(2);
+            checkBinaryTreeOrderInvariant(this.root);
+            checkAVLTreeInvariant(tree.root);
+            chai.expect(tree.searchKey(2)).to.equal(null);
+            tree.deleteKey(1);
+            checkBinaryTreeOrderInvariant(this.root);
+            checkAVLTreeInvariant(tree.root);
+            chai.expect(tree.searchKey(1)).to.equal(null);
+        });
+    });
 });
