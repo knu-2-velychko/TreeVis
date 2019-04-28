@@ -9,8 +9,3 @@ var path = new Path.Circle({
 });
 
 
-class TreeSample{
-	exampleEvent(){
-		
-	}
-}
