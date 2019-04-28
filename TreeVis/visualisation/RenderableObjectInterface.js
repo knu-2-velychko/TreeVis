@@ -4,7 +4,7 @@ class RenderableObjectInterface {
         this.model = model;
     }
 
-    draw(params) {
+    draw() {
 
     }
 }

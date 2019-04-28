@@ -20,4 +20,8 @@ class Renderer {
             renderableObjects.splice(index, 1);
         }
     }
+
+    testPrint(){
+        console.log('created');
+    }
 }
