@@ -1,7 +1,8 @@
+let Color = Object.freeze({"red": 1, "black": 2})
+
 class RedBlackNode extends BinaryNode {
     constructor(nodeKey, nodeParent) {
         super(nodeKey, nodeParent);
-        let Color = Object.freeze({"red": 1, "black": 2})
         this._color = Color.red;
     }
 
@@ -84,12 +85,11 @@ class RedBlackTree extends BinarySearchTree {
 
     _insertCase5(node) {
         var g = node.parent.parent;
-        node.parent.color=Color.red;
-        g.color=Color.red;
-        if(node==node.parent.left && node.parent==g.left){
+        node.parent.color = Color.red;
+        g.color = Color.red;
+        if (node == node.parent.left && node.parent == g.left) {
             this._rotateRight(g);
-        }
-        else{
+        } else {
             this._rotateLeft()
         }
     }
