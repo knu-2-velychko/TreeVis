@@ -1,5 +1,5 @@
 class NodeView extends RenderableObjectInterface {
-    constructor(nodeModel){
-        this.nodeModel = nodeModel;
+    constructor(nodeModel) {
+        super(nodeModel);
     }
 }

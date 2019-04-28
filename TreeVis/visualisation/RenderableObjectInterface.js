@@ -1,6 +1,8 @@
 class RenderableObjectInterface {
-    constructor(renderer, model) {
-        this.renderer = renderer;
+    constructor(model) {
+        if (this.constructor === RenderableObjectInterface) {
+            throw new TypeError('Abstract class "AbstractModel" cannot be instantiated directly.');
+        }
         this.model = model;
     }
 
