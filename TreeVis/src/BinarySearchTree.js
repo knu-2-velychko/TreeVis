@@ -11,28 +11,27 @@ class BinarySearchTree extends BinaryTree {
 
     insertKey(newKey) {
         super.insertKey(newKey);
-        if (this._root == null) {
-            this._root = new BinarySearchNode(newKey, null);
-        } else {
-            var current = this._root;
-            while (current != null) {
-                if (current.key > newKey) {
-                    if (current.left == null) {
-                        current.left = new BinarySearchNode(newKey, current);
-                        break;
-                    } else {
-                        current = current.left;
-                    }
-                } else {
-                    if (current.right == null) {
-                        current.right = new BinarySearchNode(newKey, current);
-                        break;
-                    } else {
-                        current = current.right;
+        var node = new BinarySearchNode(newKey, null);
+        this._insertNode(node);
+    }
+
+    deleteKey(_key) {
+        super.deleteKey(_key);
+        /*
+                var current = this.searchKey(_key);
+                if (current != null) {
+                    var parent = current.parent;
+
+                    //case 1: leaf node
+                    if (current.left == null && current.right == null) {
+                        if(parent.left==current){
+                            parent.left=null;
+                        }
+
                     }
                 }
-            }
-        }
+
+         */
     }
 
     searchKey(_key) {
@@ -48,6 +47,33 @@ class BinarySearchTree extends BinaryTree {
             }
         }
         return null;
+    }
+
+    _insertNode(node) {
+        if (this._root == null) {
+            this._root = node;
+        } else {
+            var current = this._root;
+            while (current != null) {
+                if (current.key > node.key) {
+                    if (current.left == null) {
+                        current.left = node;
+                        node.parent = current;
+                        break;
+                    } else {
+                        current = current.left;
+                    }
+                } else {
+                    if (current.right == null) {
+                        current.right = node;
+                        node.parent = current;
+                        break;
+                    } else {
+                        current = current.right;
+                    }
+                }
+            }
+        }
     }
 
     _findMin(node) {

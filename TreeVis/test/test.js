@@ -1,3 +1,16 @@
+var checkBinaryTreeOrderInvariant = function (node) {
+    if (node != null) {
+        if (node.left) {
+            chai.assert(node.key > node.left.key);
+            checkBinaryTreeOrderInvariant(node.left);
+        }
+        if (node.right) {
+            chai.assert(node.key < node.right.key);
+            checkBinaryTreeOrderInvariant(node.right);
+        }
+    }
+};
+
 describe('Binary Search Node', () => {
     var node = new BinarySearchNode(3);
 
@@ -127,15 +140,3 @@ describe('AVL Tree Node', () => {
 
 describe('AVL Tree', () => {
 });
-
-
-var checkBinaryTreeOrderInvariant = function (node) {
-    if (node.left) {
-        chai.assert(node.key > node.left.key);
-        checkBinaryTreeOrderInvariant(node.left);
-    }
-    if (node.right) {
-        chai.assert(node.key < node.right.key);
-        checkBinaryTreeOrderInvariant(node.right);
-    }
-};
