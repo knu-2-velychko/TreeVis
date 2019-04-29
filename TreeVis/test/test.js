@@ -27,15 +27,18 @@ var checkRedBlackTreeInvariant = function (node) {
 };
 
 var checkAVLTreeInvariant = function (node) {
-    var difference = 0;
-    if (node.left != null) {
-        difference += node.left.height;
+    if (node != null) {
+        var difference = 0;
+        if (node.left != null) {
+            difference += node.left.height;
+        }
+        if (node.right != null) {
+            difference -= node.right.height;
+        }
+        chai.assert(Math.abs(difference) < 2);
+        console.log(node.balanceFactor);
+        chai.assert(Math.abs(node.balanceFactor) < 2);
     }
-    if (node.right != null) {
-        difference -= node.left.height;
-    }
-    chai.expect(Math.abs(difference)).to.equal(1);
-    chai.expect(Math.abs(node.balanceFactor)).to.equal(1);
 };
 
 describe('Binary Search Node', () => {
@@ -251,7 +254,7 @@ describe('AVL Tree Node', () => {
         chai.expect(node.right).to.not.equal(null);
         chai.expect(node.right.key).to.equal(5);
         chai.expect(node.height).to.equal(1);
-        chai.expect(node.balanceFactor).to.equal(1);
+        chai.expect(node.balanceFactor).to.equal(0);
     });
 
 });
@@ -262,8 +265,8 @@ describe('AVL Tree', () => {
         chai.expect(tree.root).to.equal(null);
     });
 
-    describe('Red Black Tree insertion', () => {
-        it('Red Black Tree invariants', () => {
+    describe('AVL Tree insertion', () => {
+        it('AVL Tree invariants', () => {
             tree.insertKey(3);
             checkBinaryTreeOrderInvariant(tree.root);
             checkAVLTreeInvariant(tree.root);
@@ -279,7 +282,7 @@ describe('AVL Tree', () => {
         });
     });
 
-    describe('Red Black Tree search', () => {
+    describe('AVL Tree search', () => {
         before(() => {
             tree.insertKey(3);
             tree.insertKey(5);
@@ -295,7 +298,7 @@ describe('AVL Tree', () => {
         });
     });
 
-    describe('Red Black Tree delete', () => {
+    describe('AVL Tree delete', () => {
         before(() => {
             tree.insertKey(3);
             tree.insertKey(5);

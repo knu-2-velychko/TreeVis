@@ -1,4 +1,4 @@
-class AVLNode extends BinaryNode {
+class AVLNode extends BinarySearchNode {
     constructor(nodeKey, nodeParent) {
         super(nodeKey, nodeParent);
         this._height = 1;
@@ -11,10 +11,9 @@ class AVLNode extends BinaryNode {
             }
             return 1;
         } else if (this.left == null) {
-            return 2;
-        } else {
-            return left._height - right._height;
+            return 1;
         }
+        return this.left._height - this.right._height;
     }
 
     setHeight() {
@@ -34,19 +33,23 @@ class AVLNode extends BinaryNode {
     }
 }
 
-class AVLTree extends BinaryTree {
+class AVLTree extends BinarySearchTree {
     constructor() {
         super();
     }
 
     //TODO: insertion
     insertKey(newKey) {
-        var node = new RedBlackNode(newKey, null);
+        var node = new AVLNode(newKey, null);
         super._insertNode(node);
         var current = node;
         while (current != null) {
             current = this._balance(current);
-            current = current.parent;
+
+            if (current != null)
+                current = current.parent;
+
+
         }
     }
 
@@ -55,13 +58,13 @@ class AVLTree extends BinaryTree {
     _balance(node) {
         node.setHeight();
         if (node.balanceFactor == 2) {
-            if (node.right.balanceFactor < 0) {
+            if (node.right && node.right.balanceFactor < 0) {
                 node.right = this._rotateRight(node.right);
             }
             return this._rotateLeft(node);
         }
         if (node.balanceFactor == -2) {
-            if (node.left.balanceFactor > 0) {
+            if (node.left && node.left.balanceFactor > 0) {
                 node.left = this._rotateLeft(node.left);
             }
             return this._rotateRight(node);
