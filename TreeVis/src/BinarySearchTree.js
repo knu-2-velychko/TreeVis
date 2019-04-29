@@ -9,39 +9,24 @@ class BinarySearchTree extends BinaryTree {
         super();
     }
 
-    insertKey(newKey) {
-        super.insertKey(newKey);
-        var node = new BinarySearchNode(newKey, null);
+    insertKey(key) {
+        super.insertKey(key);
+        let node = new BinarySearchNode(key, null);
         this._insertNode(node);
     }
 
     //TODO: deletion
-    deleteKey(_key) {
-        super.deleteKey(_key);
-        /*
-                var current = this.searchKey(_key);
-                if (current != null) {
-                    var parent = current.parent;
-
-                    //case 1: leaf node
-                    if (current.left == null && current.right == null) {
-                        if(parent.left==current){
-                            parent.left=null;
-                        }
-
-                    }
-                }
-
-         */
+    deleteKey(key) {
+        this._root = this._deleteKey(this._root, key);
     }
 
-    searchKey(_key) {
-        super.searchKey(_key);
+    searchKey(key) {
+        super.searchKey(key);
         let current = this._root;
         while (current != null) {
-            if (current.key > _key) {
+            if (current.key > key) {
                 current = current.left;
-            } else if (current.key < _key) {
+            } else if (current.key < key) {
                 current = current.right;
             } else {
                 return current;
@@ -54,7 +39,7 @@ class BinarySearchTree extends BinaryTree {
         if (this._root == null) {
             this._root = node;
         } else {
-            var current = this._root;
+            let current = this._root;
             while (current != null) {
                 if (current.key > node.key) {
                     if (current.left == null) {
@@ -82,19 +67,36 @@ class BinarySearchTree extends BinaryTree {
         while (current.left != null) {
             current = current.left;
         }
-        return current
+        return current;
     }
 
-    _replaceNodeInParent(node, newNode) {
-        if (node.parent != null) {
-            if (node == node.parent.left) {
-                node.parent.left = newNode;
-            } else {
-                node.parent.right = newNode;
-            }
+    _deleteMin(node) {
+        if (node.left == null)
+            return node.right;
+        node.left = this._deleteMin(node.left);
+        return node;
+    }
+
+    _deleteKey(node, key) {
+        if (node == null) {
+            return null;
         }
-        if (newNode == null) {
-            newNode.parent = node.parent;
+        if (key < node.key) {
+            node.left = this._deleteKey(node.left, key);
+        } else if (key > node.key) {
+            node.right = this._deleteKey(node.right, key);
+        } else {
+            let left = node.left;
+            let right = node.right;
+            node = null;
+            if (right == null) {
+                return left;
+            }
+            let min = this._findMin(right);
+            min.right = this._deleteMin(right);
+            min.left = left;
+            return min;
         }
     }
+
 }

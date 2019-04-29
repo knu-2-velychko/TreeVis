@@ -11,7 +11,7 @@ class RedBlackNode extends BinaryNode {
     }
 
     set color(newColor) {
-        if (newColor == Color.red || newColor == Color.black) {
+        if (newColor === Color.red || newColor === Color.black) {
             this._color = newColor;
         }
     }
@@ -21,8 +21,8 @@ class RedBlackNode extends BinaryNode {
     }
 
     get uncle() {
-        var g = this.grandparent;
-        if (g.left == this.parent)
+        let g = this.grandparent;
+        if (g.left === this.parent)
             return g.right;
         else
             return g.left;
@@ -35,7 +35,7 @@ class RedBlackTree extends BinarySearchTree {
     }
 
     insertKey(newKey) {
-        var node = new RedBlackNode(newKey, null);
+        let node = new RedBlackNode(newKey, null);
         super._insertNode(node);
         this._insertCase1(node);
     }
@@ -51,16 +51,16 @@ class RedBlackTree extends BinarySearchTree {
     }
 
     _insertCase2(node) {
-        if (node.parent.color != Color.black) {
+        if (node.parent.color !== Color.black) {
             this._insertCase3(node);
         }
     }
 
     _insertCase3(node) {
-        var g = node.grandparent;
-        var u = node.uncle;
+        let g = node.grandparent;
+        let u = node.uncle;
 
-        if (u != null && u.color == Color.red) {
+        if (u != null && u.color === Color.red) {
             node.parent.color = Color.black;
             u.color = Color.black;
             g.color = Color.red;
@@ -71,12 +71,12 @@ class RedBlackTree extends BinarySearchTree {
     }
 
     _insertCase4(node) {
-        var g = node.grandparent;
+        let g = node.grandparent;
 
-        if (node == node.parent.right && node.parent == g.left) {
+        if (node === node.parent.right && node.parent === g.left) {
             this._rotateLeft(node.parent);
             node = node.left;
-        } else if (node == node.parent.left && node.parent == g.right) {
+        } else if (node === node.parent.left && node.parent === g.right) {
             this._rotateRight(node.parent);
             node = node.right;
         }
@@ -84,10 +84,10 @@ class RedBlackTree extends BinarySearchTree {
     }
 
     _insertCase5(node) {
-        var g = node.parent.parent;
+        let g = node.parent.parent;
         node.parent.color = Color.red;
         g.color = Color.red;
-        if (node == node.parent.left && node.parent == g.left) {
+        if (node === node.parent.left && node.parent === g.left) {
             this._rotateRight(g);
         } else {
             this._rotateLeft()
@@ -96,15 +96,15 @@ class RedBlackTree extends BinarySearchTree {
 
     //TODO: rotates
     _rotateLeft(node) {
-        var rightChild = node.right;
+        let rightChild = node.right;
         node.right = rightChild.left;
         if (node.right != null) {
             node.right.parent = node;
         }
         rightChild.parent = node.parent;
-        if (node.parent == nullptr) {
+        if (node.parent === nullptr) {
             this._root = rightChild;
-        } else if (node == node.parent.left) {
+        } else if (node === node.parent.left) {
             node.parent.left = rightChild;
         } else {
             node.parent.right = rightChild;
@@ -114,7 +114,7 @@ class RedBlackTree extends BinarySearchTree {
     }
 
     _rotateRight(node) {
-        var leftChild = node.left;
+        let leftChild = node.left;
         node.left = leftChild.right;
         //
         if (node.left != null)
@@ -122,7 +122,7 @@ class RedBlackTree extends BinarySearchTree {
         leftChild.parent = node.parent;
         if (node.parent == null)
             this._root = leftChild;
-        else if (node == node.parent.left)
+        else if (node === node.parent.left)
             node.parent.left = leftChild;
         else
             node.parent.right = leftChild;

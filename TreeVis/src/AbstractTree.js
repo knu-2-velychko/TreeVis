@@ -18,6 +18,19 @@ class AbstractNode {
     set parent(newParent) {
         this._parent = newParent;
     }
+
+    deleteNode() {
+        for(let i of this._children){
+            i.parent=null;
+        }
+        if (this._parent != null) {
+            for (let i of this._parent._children) {
+                if(i===this){
+                    i=null;
+                }
+            }
+        }
+    }
 }
 
 class AbstractTree {

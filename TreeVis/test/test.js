@@ -1,17 +1,17 @@
-var checkBinaryTreeOrderInvariant = function (node) {
+let checkBinaryTreeOrderInvariant = function (node) {
     if (node != null) {
-        if (node.left) {
+        if (node.left != null) {
             chai.assert(node.key > node.left.key);
             checkBinaryTreeOrderInvariant(node.left);
         }
-        if (node.right) {
+        if (node.right != null) {
             chai.assert(node.key < node.right.key);
             checkBinaryTreeOrderInvariant(node.right);
         }
     }
 };
 
-var checkRedBlackTreeInvariant = function (node) {
+let checkRedBlackTreeInvariant = function (node) {
     if (node.parent == null) {
         chai.expect(node.color).to.equal(Color.black);
     } else {
@@ -26,9 +26,9 @@ var checkRedBlackTreeInvariant = function (node) {
     }
 };
 
-var checkAVLTreeInvariant = function (node) {
+let checkAVLTreeInvariant = function (node) {
     if (node != null) {
-        var difference = 0;
+        let difference = 0;
         if (node.left != null) {
             difference += node.left.height;
         }
@@ -36,7 +36,6 @@ var checkAVLTreeInvariant = function (node) {
             difference -= node.right.height;
         }
         chai.assert(Math.abs(difference) < 2);
-        console.log(node.balanceFactor);
         chai.assert(Math.abs(node.balanceFactor) < 2);
     }
 };
@@ -64,12 +63,13 @@ describe('Binary Search Node', () => {
 });
 
 describe('Binary Search Tree', () => {
-    var tree = new BinarySearchTree();
     it('root should be empty', () => {
+        let tree = new BinarySearchTree();
         chai.expect(tree.root).to.equal(null);
     });
 
     describe('Binary Search Tree insertion', () => {
+        let tree = new BinarySearchTree();
         it('Binary Search Tree invariant', () => {
             tree.insertKey(3);
             checkBinaryTreeOrderInvariant(tree.root);
@@ -83,13 +83,13 @@ describe('Binary Search Tree', () => {
     });
 
     describe('Binary Search Tree search', () => {
-        before(() => {
+        let tree = new BinarySearchTree();
+
+        it("search should return node with searched key", () => {
             tree.insertKey(3);
             tree.insertKey(5);
             tree.insertKey(2);
             tree.insertKey(1);
-        });
-        it("search should return node with searched key", () => {
             chai.expect(tree.searchKey(3).key).to.equal(3);
             chai.expect(tree.searchKey(5).key).to.equal(5);
             chai.expect(tree.searchKey(2).key).to.equal(2);
@@ -99,24 +99,24 @@ describe('Binary Search Tree', () => {
     });
 
     describe('Binary Search Tree delete', () => {
-        before(() => {
+        let tree = new BinarySearchTree();
+
+        it("delete should delete node with key from tree", () => {
             tree.insertKey(3);
             tree.insertKey(5);
             tree.insertKey(2);
             tree.insertKey(1);
-        });
-        it("delete should delete node with key from tree", () => {
             tree.deleteKey(3);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             chai.expect(tree.searchKey(3)).to.equal(null);
             tree.deleteKey(5);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             chai.expect(tree.searchKey(5)).to.equal(null);
             tree.deleteKey(2);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             chai.expect(tree.searchKey(2)).to.equal(null);
             tree.deleteKey(1);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             chai.expect(tree.searchKey(1)).to.equal(null);
         });
     });
@@ -162,12 +162,15 @@ describe('Red-Black Tree Node', () => {
 });
 
 describe('Red-Black Tree', () => {
-    var tree = new RedBlackTree();
     it('root should be empty', () => {
+        var tree = new RedBlackTree();
+
         chai.expect(tree.root).to.equal(null);
     });
 
     describe('Red Black Tree insertion', () => {
+        var tree = new RedBlackTree();
+
         it('Red Black Tree invariants', () => {
             tree.insertKey(3);
             checkBinaryTreeOrderInvariant(tree.root);
@@ -185,6 +188,8 @@ describe('Red-Black Tree', () => {
     });
 
     describe('Red Black Tree search', () => {
+        var tree = new RedBlackTree();
+
         before(() => {
             tree.insertKey(3);
             tree.insertKey(5);
@@ -201,6 +206,8 @@ describe('Red-Black Tree', () => {
     });
 
     describe('Red Black Tree delete', () => {
+        var tree = new RedBlackTree();
+
         before(() => {
             tree.insertKey(3);
             tree.insertKey(5);
@@ -260,12 +267,15 @@ describe('AVL Tree Node', () => {
 });
 
 describe('AVL Tree', () => {
-    var tree = new AVLTree();
     it('root should be empty', () => {
+        let tree = new AVLTree();
+
         chai.expect(tree.root).to.equal(null);
     });
 
     describe('AVL Tree insertion', () => {
+        let tree = new AVLTree();
+
         it('AVL Tree invariants', () => {
             tree.insertKey(3);
             checkBinaryTreeOrderInvariant(tree.root);
@@ -283,13 +293,12 @@ describe('AVL Tree', () => {
     });
 
     describe('AVL Tree search', () => {
-        before(() => {
+        let tree = new AVLTree();
+        it("search should return node with searched key", () => {
             tree.insertKey(3);
             tree.insertKey(5);
             tree.insertKey(2);
             tree.insertKey(1);
-        });
-        it("search should return node with searched key", () => {
             chai.expect(tree.searchKey(3).key).to.equal(3);
             chai.expect(tree.searchKey(5).key).to.equal(5);
             chai.expect(tree.searchKey(2).key).to.equal(2);
@@ -299,13 +308,12 @@ describe('AVL Tree', () => {
     });
 
     describe('AVL Tree delete', () => {
-        before(() => {
+        let tree = new AVLTree();
+        it("delete should delete node with key from tree", () => {
             tree.insertKey(3);
             tree.insertKey(5);
             tree.insertKey(2);
             tree.insertKey(1);
-        });
-        it("delete should delete node with key from tree", () => {
             tree.deleteKey(3);
             checkBinaryTreeOrderInvariant(this.root);
             checkAVLTreeInvariant(tree.root);
@@ -324,4 +332,7 @@ describe('AVL Tree', () => {
             chai.expect(tree.searchKey(1)).to.equal(null);
         });
     });
+});
+
+describe('Binary Tree Iterator', () => {
 });
