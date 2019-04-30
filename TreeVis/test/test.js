@@ -35,8 +35,10 @@ let checkAVLTreeInvariant = function (node) {
         if (node.right != null) {
             difference -= node.right.height;
         }
-        chai.assert(Math.abs(difference) < 2);
-        chai.assert(Math.abs(node.balanceFactor) < 2);
+        chai.assert(Math.abs(difference) <= 2);
+        console.log('balance ' + node.balanceFactor);
+        console.log('key ' + node.key);
+        chai.assert(Math.abs(node.balanceFactor) <= 2);
     }
 };
 

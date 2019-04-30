@@ -94,7 +94,6 @@ class RedBlackTree extends BinarySearchTree {
         }
     }
 
-    //TODO: rotates
     _rotateLeft(node) {
         let rightChild = node.right;
         node.right = rightChild.left;
@@ -116,7 +115,6 @@ class RedBlackTree extends BinarySearchTree {
     _rotateRight(node) {
         let leftChild = node.left;
         node.left = leftChild.right;
-        //
         if (node.left != null)
             node.left.parent = node;
         leftChild.parent = node.parent;

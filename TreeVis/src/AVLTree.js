@@ -9,7 +9,8 @@ class AVLNode extends BinarySearchNode {
             return 1;
         else if (this.right == null || this.left == null)
             return 2;
-        return this.left._height - this.right._height;
+        else
+            return this.left._height - this.right._height;
     }
 
     setHeight() {
@@ -35,38 +36,42 @@ class AVLTree extends BinarySearchTree {
         super();
     }
 
-    //TODO: insertion
     insertKey(newKey) {
         let node = new AVLNode(newKey, null);
         super._insertNode(node);
         let current = node;
         while (current != null) {
-            current = this._balance(current);
-            if (current != null)
-                current = current.parent;
+            current = current.parent;
+            current = this._balance(current, newKey);
         }
-        this.print(this._root);
     }
 
-    //TODO: deletion
-    deleteKey(_key) {
-        //super.deleteKey(_key);
+    deleteKey(key) {
+        this._root = this._deleteKey(key);
     }
 
-    _balance(node) {
+    _balance(node, key) {
+        if (node == null)
+            return null;
         node.setHeight();
-        console.log('balance');
-        console.log(node.balanceFactor);
-        if (node.balanceFactor === 2) {
-            if (node.right != null && node.right.balanceFactor < 0) {
-                node.right = this._rotateRight(node.right);
-            }
-            return this._rotateLeft(node);
-        } else if (node.balanceFactor === -2) {
-            if (node.left != null && node.left.balanceFactor > 0) {
-                node.left = this._rotateLeft(node.left);
-            }
+
+        //left left case
+        if (node.balanceFactor > 1 && node.left != null && key < node.left.key) {
             return this._rotateRight(node);
+        }
+        //right right case
+        if (node.balanceFactor < -1 && node.right != null && key > node.right.key) {
+            return this._rotateLeft(node);
+        }
+        //left right case
+        if (node.balanceFactor > 1 && node.left != null && key > node.left.key) {
+            node.left = this._rotateLeft(node.left);
+            return this._rotateRight(node);
+        }
+        //right left case
+        if (node.balanceFactor < -1 && node.right != null && key < node.right.key) {
+            node.right = this._rotateRight(node.right);
+            return this._rotateLeft(node);
         }
         return node;
     }
@@ -78,6 +83,22 @@ class AVLTree extends BinarySearchTree {
         tmp.setHeight();
         node.setHeight();
         return tmp;
+
+        let rightChild = node.right;
+        node.right = rightChild.left;
+        if (node.right != null) {
+            node.right.parent = node;
+        }
+        rightChild.parent = node.parent;
+        if (node.parent === nullptr) {
+            this._root = rightChild;
+        } else if (node === node.parent.left) {
+            node.parent.left = rightChild;
+        } else {
+            node.parent.right = rightChild;
+        }
+        rightChild.left = node;
+        node.parent = rightChild;
     };
 
     _rotateRight(node) {
@@ -89,15 +110,26 @@ class AVLTree extends BinarySearchTree {
         return tmp;
     };
 
-    print(node) {
-        console.log(node.key);
-        if (node.left != null) {
-            console.log('left');
-            this.print(node.left);
+    _deleteKey(node, key) {
+        if (node == null) {
+            return null;
         }
-        if (node.right != null) {
-            console.log('right');
-            this.print(node.right);
+        if (key < node.key) {
+            node.left = this._deleteKey(node.left, key);
+        } else if (key > node.key) {
+            node.right = this._deleteKey(node.right, key);
+        } else {
+            let left = node.left;
+            let right = node.right;
+            node = null;
+            if (right == null) {
+                return this._balance(left);
+            }
+            let min = this._findMin(right);
+            min.right = this._deleteMin(right);
+            min.left = left;
+            return this._balance(min);
         }
     }
+
 }
