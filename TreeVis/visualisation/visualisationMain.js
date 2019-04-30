@@ -1,16 +1,19 @@
-let circleRadius = 20;
+let circleRadius = 15;
+let nodeFontSize = 13;
 
 // We use static for canvases that don't need gui elements selection StaticCanvas
 var canvas = new fabric.Canvas('canvas');
 
 function makeCircle(left = 0, top = 0) {
-    var circle = new fabric.Circle({
+    let circle = new fabric.Circle({
         left: left,
         top: top,
-        strokeWidth: 5,
+        strokeWidth: 2,
         radius: circleRadius,
         fill: '#fff',
-        stroke: '#666'
+        stroke: '#666',
+        originX: 'center',
+        originY: 'center'
     });
     circle.hasControls = circle.hasBorders = false;
 
@@ -18,8 +21,8 @@ function makeCircle(left = 0, top = 0) {
 }
 
 function makeText(left = 0, top = 0, value) {
-    var text = new fabric.Text(value, {
-        fontSize: 30,
+    let text = new fabric.Text(value, {
+        fontSize: nodeFontSize,
         originX: 'center',
         originY: 'center'
     });
@@ -27,13 +30,17 @@ function makeText(left = 0, top = 0, value) {
 }
 
 function makeNodeVisualisation(left = 0, top = 0, value) {
-
+    let node = new fabric.Group([makeCircle(left, top), makeText(left, top, value)], {
+        left: left,
+        top: top
+    });
+    return node;
 }
 
 class NodeV {
     constructor(value, canvas = null) {
         this.value = value;
-        this.view = makeCircle()
+        this.view = makeNodeVisualisation(0, 0, String(value));
         this.canvas = canvas;
 
         if (canvas !== null) {
@@ -41,7 +48,7 @@ class NodeV {
         }
     }
 
-    moveTo(x, y, duration = 100) {
+    moveTo(x, y, duration = 1000) {
         this.view.animate('left', x, {
             onChange: canvas.renderAll.bind(canvas),
             duration: duration
@@ -51,7 +58,26 @@ class NodeV {
             duration: duration
         });
     }
+
+    setPosition(x, y) {
+        this.view.setLeft(x);
+        this.view.setTop(y);
+    }
 }
+
+var treeMatrix = [
+    [0],
+    [0, 1],
+    [1, 2, 4],
+    [2, 3],
+    [4]
+];
+
+function calcCoord(nodeIndex, fromTotal, dimension) {
+    let interval = Number(dimension) / Number(fromTotal);
+    return interval * (nodeIndex + 0.5);
+}
+
 
 class TreeV {
     constructor(canvas) {
@@ -62,19 +88,33 @@ class TreeV {
     addNode(value) {
         let newNode = new NodeV(value, this.canvas);
         this.nodes.push(newNode);
+
+        return newNode;
     }
 
     size() {
         return this.nodes.length;
     }
+
+    updateView(treeMatrix) {
+        let curr = 0;
+        let levels = treeMatrix.length;
+
+        let columnCount = 1;
+        for (let row = 0; row < levels; row++) {
+            let nodeH = calcCoord(row, levels, this.canvas.height) - circleRadius;
+            for (let nodeNum = 0; nodeNum < columnCount; nodeNum++) {
+                let nodeW = calcCoord(nodeNum, columnCount, this.canvas.width) - circleRadius;
+                this.addNode(curr).moveTo(nodeW, nodeH);
+
+                curr++;
+            }
+
+            columnCount *= 2;
+        }
+    }
 }
 
 let tree = new TreeV(canvas);
 
-for (let i = 0; i < 5; i++) {
-    tree.addNode(i);
-}
-
-for (let i = 0; i < tree.size(); i++) {
-    tree.nodes[i].moveTo(i * 100, i * 100, 1000);
-}
+tree.updateView(treeMatrix);
