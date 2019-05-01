@@ -141,13 +141,8 @@ class TreeV {
     }
 
     swapNodes(nodeValue1, nodeValue2, duration = 1000) {
-        let node1, node2;
-        this.nodes.forEach(node => {
-            if (nodeValue1 == node.value)
-                node1 = node;
-            if (nodeValue2 == node.value)
-                node2 = node;
-        });
+        let node1 = findNode(nodeValue1);
+        let node2 = findNode(nodeValue2);
         let x1, y1, x2, y2;
         x1 = node1.posX();
         y1 = node1.posY();
@@ -157,6 +152,13 @@ class TreeV {
 
         node1.moveTo(x2, y2, duration);
         node2.moveTo(x1, y1, duration);
+    }
+
+    findNode(value) {
+        this.nodes.forEach(node => {
+            if (value == node.value)
+                return node;
+        });
     }
 }
 
@@ -174,9 +176,7 @@ let tree = new TreeV(canvas);
 tree.updateView(treeMatrix);
 
 // tree.nodes[0].highlighted(true);
-
-
-tree.swapNodes(0, 3);
+// tree.swapNodes(0, 3);
 
 let a = makeLine([10, 10, 100, 100]);
 canvas.add(a);
