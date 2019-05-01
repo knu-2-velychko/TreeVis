@@ -83,22 +83,6 @@ class AVLTree extends BinarySearchTree {
         tmp.setHeight();
         node.setHeight();
         return tmp;
-
-        let rightChild = node.right;
-        node.right = rightChild.left;
-        if (node.right != null) {
-            node.right.parent = node;
-        }
-        rightChild.parent = node.parent;
-        if (node.parent === nullptr) {
-            this._root = rightChild;
-        } else if (node === node.parent.left) {
-            node.parent.left = rightChild;
-        } else {
-            node.parent.right = rightChild;
-        }
-        rightChild.left = node;
-        node.parent = rightChild;
     };
 
     _rotateRight(node) {

@@ -12,15 +12,17 @@ let checkBinaryTreeOrderInvariant = function (node) {
 };
 
 let checkRedBlackTreeInvariant = function (node) {
-    if (node.parent == null) {
-        chai.expect(node.color).to.equal(Color.black);
-    } else {
-        if (node.color == Color.red) {
-            if (node.left != null) {
-                chai.expect(node.left.color).to.equal(Color.black);
-            }
-            if (node.right != null) {
-                chai.expect(node.right.color).to.equal(Color.black);
+    if (node != null) {
+        if (node.parent == null) {
+            chai.expect(node.color).to.equal(Color.black);
+        } else {
+            if (node.color == Color.red) {
+                if (node.left != null) {
+                    chai.expect(node.left.color).to.equal(Color.black);
+                }
+                if (node.right != null) {
+                    chai.expect(node.right.color).to.equal(Color.black);
+                }
             }
         }
     }
@@ -36,8 +38,6 @@ let checkAVLTreeInvariant = function (node) {
             difference -= node.right.height;
         }
         chai.assert(Math.abs(difference) <= 2);
-        console.log('balance ' + node.balanceFactor);
-        console.log('key ' + node.key);
         chai.assert(Math.abs(node.balanceFactor) <= 2);
     }
 };
@@ -218,19 +218,19 @@ describe('Red-Black Tree', () => {
         });
         it("delete should delete node with key from tree", () => {
             tree.deleteKey(3);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             checkRedBlackTreeInvariant(tree.root);
             chai.expect(tree.searchKey(3)).to.equal(null);
             tree.deleteKey(5);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             checkRedBlackTreeInvariant(tree.root);
             chai.expect(tree.searchKey(5)).to.equal(null);
             tree.deleteKey(2);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             checkRedBlackTreeInvariant(tree.root);
             chai.expect(tree.searchKey(2)).to.equal(null);
             tree.deleteKey(1);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             checkRedBlackTreeInvariant(tree.root);
             chai.expect(tree.searchKey(1)).to.equal(null);
         });
@@ -317,19 +317,19 @@ describe('AVL Tree', () => {
             tree.insertKey(2);
             tree.insertKey(1);
             tree.deleteKey(3);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             checkAVLTreeInvariant(tree.root);
             chai.expect(tree.searchKey(3)).to.equal(null);
             tree.deleteKey(5);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             checkAVLTreeInvariant(tree.root);
             chai.expect(tree.searchKey(5)).to.equal(null);
             tree.deleteKey(2);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             checkAVLTreeInvariant(tree.root);
             chai.expect(tree.searchKey(2)).to.equal(null);
             tree.deleteKey(1);
-            checkBinaryTreeOrderInvariant(this.root);
+            checkBinaryTreeOrderInvariant(tree.root);
             checkAVLTreeInvariant(tree.root);
             chai.expect(tree.searchKey(1)).to.equal(null);
         });
