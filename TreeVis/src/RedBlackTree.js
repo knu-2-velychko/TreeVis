@@ -40,50 +40,9 @@ class RedBlackTree extends BinarySearchTree {
         this._insertCase1(node);
     }
 
+    //TODO: deletion
     deleteKey(key) {
-        let deleteNode = this.searchKey(key);
-        if (deleteNode != null) {
-            let tmp1 = null;
-            let tmp2 = null;
-            if (deleteNode.left == null || deleteNode.right == null)
-                tmp1 = deleteNode;
-            else
-                tmp1 = this._treeSuccesor(deleteNode);
 
-            if (tmp1.left != null)
-                tmp2 = tmp1.left;
-            else
-                tmp2 = tmp1.right;
-
-            tmp2.parent = tmp1.parent;
-
-            if (tmp1.parent == null)
-                this._root = tmp2;
-            else if (tmp1 === tmp1.parent.left)
-                tmp1.parent.left = tmp2;
-            else
-                tmp2.parent.right = tmp2;
-
-            if (tmp1 !== deleteNode) {
-                deleteNode.key = tmp1.key;
-            }
-
-            if (tmp1.color === Color.black)
-                this._fixDelete(tmp2);
-        }
-
-        this._root.color = Color.black;
-    }
-
-    _treeSuccesor(node) {
-        if (node.right != null)
-            return this._findMin(node.right);
-        let tmp = node.parent;
-        while (tmp != null && node === tmp.right) {
-            node = tmp;
-            tmp = tmp.parent;
-        }
-        return tmp;
     }
 
     _insertCase1(node) {
@@ -174,57 +133,4 @@ class RedBlackTree extends BinarySearchTree {
         node.parent = leftChild;
     }
 
-    _fixDelete(node) {
-        if (node == null)
-            return null;
-        let tmp = null;
-        while (node != this._root && node.color != Color.black) {
-            if (node === node.parent.left) {
-                tmp = node.parent.right;
-                if (tmp.color === Color.red) {
-                    tmp.color = Color.black;
-                    node.parent.color = Color.red;
-                    node.parent = this._rotateLeft(node.parent);
-                    tmp = node.parent.right;
-                }
-                if ((tmp.left == null || tmp.left.color === Color.black) && (tmp.right == null || tmp.right.color === Color.black)) {
-                    tmp.color = Color.red;
-                    node = node.parent;
-                } else if (tmp.right == null || tmp.right.color === Color.black) {
-                    tmp.left.color = Color.black;
-                    tmp.color = Color.red;
-                } else {
-                    tmp.color = node.parent.color;
-                    node.parent.color = Color.black;
-                    tmp.right.color = Color.black;
-                    node.parent = this._rotateLeft(node.parent);
-                    node = this._root;
-                }
-            } else {
-                tmp = node.parent.left;
-                if (tmp.color === Color.red) {
-                    tmp.color = Color.black;
-                    node.parent.color = Color.red;
-                    node.parent = this._rotateRight(node.parent);
-                    tmp = node.parent.left;
-                }
-                if ((tmp.right == null || tmp.right.color === Color.black) && (tmp.left == null || tmp.left.color === Color.black)) {
-                    tmp.color = Color.red;
-                    node = node.parent;
-                } else if (tmp.left == null || tmp.left.color === Color.black) {
-                    tmp.right.color = Color.black;
-                    tmp.color = Color.red;
-                    tmp = this._rotateLeft(tmp);
-                    tmp = node.parent.left;
-                } else {
-                    tmp.color = node.parent.color;
-                    node.parent.color = Color.black;
-                    tmp.left.color = Color.black;
-                    node.parent = this._rotateRight(node.parent);
-                    node = this._root;
-                }
-            }
-        }
-        node.color = Color.black;
-    }
 }

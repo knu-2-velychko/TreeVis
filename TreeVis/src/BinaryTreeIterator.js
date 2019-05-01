@@ -1,11 +1,11 @@
 class BinaryTreeIterator {
     constructor(tree) {
-        this.current = {node: tree._root, depth: 0, pos: 0};
+        this.current = {node: tree.root, depth: 0, pos: 0};
         this.queue = [];
     }
 
     isEqual(other) {
-        return this.current.node === other.current.node;
+        return this.current.node === other.node;
     }
 
     get getCurrent() {
@@ -21,20 +21,26 @@ class BinaryTreeIterator {
     }
 
     next() {
-        if (this.current.left != null)
-            this.queue.push({node: this.current.left, depth: this.current.depth + 1, pos: this.current.pos * 2});
-        if (this.current.left != null)
-            this.queue.push({node: this.current.right, depth: this.current.depth + 1, pos: this.current.pos * 2 + 1});
-        if (!this.queue.empty()) {
+        if (this.current.node.left != null) {
+            this.queue.push({node: this.current.node.left, depth: this.current.depth + 1, pos: this.current.pos * 2});
+        }
+        if (this.current.node.right != null) {
+            this.queue.push({
+                node: this.current.node.right,
+                depth: this.current.depth + 1,
+                pos: this.current.pos * 2 + 1
+            });
+        }
+        if (!this.queue || !this.queue.length) {
+            this.current = {node: null, depth: 0, pos: 0};
+        } else {
             this.current = this.queue[0];
             this.queue.shift();
-        } else {
-            this.current = null;
         }
     }
 
     get end() {
-        return null;
+        return {node: null, depth: 0, pos: 0};
     }
 }
 
@@ -49,7 +55,7 @@ let makeMatrix = function (tree) {
             tmp = {};
             currentDepth++;
         }
-        tmp.push({pos: iterator.getPos, node:iterator.getCurrent});
+        tmp.push({pos: iterator.getPos, node: iterator.getCurrent});
     }
     return matrix;
 };

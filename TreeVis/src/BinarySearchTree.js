@@ -15,7 +15,6 @@ class BinarySearchTree extends BinaryTree {
         this._insertNode(node);
     }
 
-    //TODO: deletion
     deleteKey(key) {
         this._root = this._deleteKey(this._root, key);
     }
