@@ -45,17 +45,16 @@ class BinaryTreeIterator {
 }
 
 let makeMatrix = function (tree) {
-    let iterator = BinaryTreeIterator(tree);
-    let matrix = {};
-    let tmp = {};
+    let iterator = new BinaryTreeIterator(tree);
+    let matrix = [[]];
     let currentDepth = 0;
-    while (!iterator.isEqual(null)) {
+    while (!iterator.isEqual(iterator.end)) {
         if (currentDepth !== iterator.getDepth) {
-            matrix.push(tmp);
-            tmp = {};
             currentDepth++;
+            matrix.push([]);
         }
-        tmp.push({pos: iterator.getPos, node: iterator.getCurrent});
+        matrix[currentDepth].push({pos: iterator.getPos, node: iterator.getCurrent});
+        iterator.next();
     }
     return matrix;
 };

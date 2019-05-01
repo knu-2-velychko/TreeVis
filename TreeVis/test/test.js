@@ -416,3 +416,55 @@ describe('Binary Tree Iterator', () => {
         chai.assert(iterator.isEqual(iterator.end));
     });
 });
+
+describe('Get matrix of tree', () => {
+    it('Binary Search Tree', () => {
+        let tree = new BinarySearchTree();
+        tree.insertKey(3);
+        tree.insertKey(5);
+        tree.insertKey(2);
+        tree.insertKey(1);
+        let matrix = makeMatrix(tree);
+        chai.expect(matrix.length).to.equal(3);
+        chai.expect(matrix[0][0].pos).to.equal(0);
+        chai.expect(matrix[0][0].node.key).to.equal(3);
+        chai.expect(matrix[1][0].pos).to.equal(0);
+        chai.expect(matrix[1][0].node.key).to.equal(2);
+        chai.expect(matrix[1][1].pos).to.equal(1);
+        chai.expect(matrix[1][1].node.key).to.equal(5);
+        chai.expect(matrix[2][0].pos).to.equal(0);
+        chai.expect(matrix[2][0].node.key).to.equal(1);
+    });
+    it('Red-Black Tree', () => {
+        let tree = new RedBlackTree();
+        tree.insertKey(3);
+        tree.insertKey(5);
+        tree.insertKey(2);
+        tree.insertKey(1);
+        let matrix = makeMatrix(tree);
+        chai.expect(matrix.length).to.equal(3);
+        chai.expect(matrix[0][0].pos).to.equal(0);
+        chai.expect(matrix[0][0].node.key).to.equal(3);
+        chai.expect(matrix[1][0].pos).to.equal(0);
+        chai.expect(matrix[1][0].node.key).to.equal(2);
+        chai.expect(matrix[1][1].pos).to.equal(1);
+        chai.expect(matrix[1][1].node.key).to.equal(5);
+        chai.expect(matrix[2][0].pos).to.equal(0);
+        chai.expect(matrix[2][0].node.key).to.equal(1);    });
+    it('AVL Tree', () => {
+        let tree = new AVLTree();
+        tree.insertKey(3);
+        tree.insertKey(5);
+        tree.insertKey(2);
+        tree.insertKey(1);
+        let matrix = makeMatrix(tree);
+        chai.expect(matrix.length).to.equal(3);
+        chai.expect(matrix[0][0].pos).to.equal(0);
+        chai.expect(matrix[0][0].node.key).to.equal(3);
+        chai.expect(matrix[1][0].pos).to.equal(0);
+        chai.expect(matrix[1][0].node.key).to.equal(2);
+        chai.expect(matrix[1][1].pos).to.equal(1);
+        chai.expect(matrix[1][1].node.key).to.equal(5);
+        chai.expect(matrix[2][0].pos).to.equal(0);
+        chai.expect(matrix[2][0].node.key).to.equal(1);    });
+});
