@@ -66,11 +66,11 @@ class NodeV {
 }
 
 var treeMatrix = [
-    [0],
-    [0, 1],
-    [1, 2, 4],
-    [2, 3],
-    [4]
+    [{ pos: 0 }],
+    [{ pos: 0 }, { pos: 1 }],
+    [{ pos: 1 }, { pos: 2 }, { pos: 4 }],
+    [{ pos: 2 }, { pos: 3 }],
+    [{ pos: 4 }]
 ];
 
 function calcCoord(nodeIndex, fromTotal, dimension) {
@@ -103,15 +103,17 @@ class TreeV {
         let columnCount = 1;
         for (let row = 0; row < levels; row++) {
             let nodeH = calcCoord(row, levels, this.canvas.height) - circleRadius;
-            for (let nodeNum = 0; nodeNum < columnCount; nodeNum++) {
-                let nodeW = calcCoord(nodeNum, columnCount, this.canvas.width) - circleRadius;
-                this.addNode(curr).moveTo(nodeW, nodeH);
 
+            treeMatrix[row].forEach(node => {
+                let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - circleRadius;
+                this.addNode(curr).setPosition(nodeW, nodeH);
                 curr++;
-            }
+            });
 
             columnCount *= 2;
         }
+
+        this.canvas.renderAll();
     }
 }
 
