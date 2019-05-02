@@ -54,6 +54,9 @@ class NodeV {
         this.view = makeNodeVisualisation(0, 0, String(value));
         this.view.on('moving', function () { highlighted(true); });
 
+        // values {node:.. , line:..}
+        this.outgoingConnections = [];
+
         this.canvas = canvas;
         if (canvas !== null) {
             canvas.add(this.view);
@@ -66,6 +69,14 @@ class NodeV {
 
     posY() {
         return this.view.getTop();
+    }
+
+    posCenterX() {
+
+    }
+
+    posCenterY() {
+
     }
 
     moveTo(x, y, duration = 1000) {
@@ -94,6 +105,18 @@ class NodeV {
         this.canvas.renderAll();
     }
 
+    connectWith(node, nodeCoords) {
+        let coords = [];
+        coords.push(this.posX());
+        coords.push(this.posY());
+        coords = coords.concat(nodeCoords);
+
+        let line = makeLine(coords);
+        this.outgoingConnections.push({ node: node, line: line });
+
+        this.canvas.add(line);
+        this.canvas.renderAll();
+    }
 }
 
 
@@ -107,6 +130,7 @@ class TreeV {
     constructor(canvas) {
         this.nodes = [];
         this.canvas = canvas;
+        this.treeMatrix = null;
     }
 
     addNode(value) {
@@ -121,7 +145,7 @@ class TreeV {
     }
 
     updateView(treeMatrix) {
-        let curr = 0;
+        this.treeMatrix = treeMatrix;
         let levels = treeMatrix.length;
 
         let columnCount = 1;
@@ -130,14 +154,21 @@ class TreeV {
 
             treeMatrix[row].forEach(node => {
                 let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - circleRadius;
-                this.addNode(curr).setPosition(nodeW, nodeH);
-                curr++;
+                this.addNode(node["value"]).setPosition(nodeW, nodeH);
             });
 
             columnCount *= 2;
         }
 
         this.canvas.renderAll();
+    }
+
+    findNode(value) {
+        for (let i = 0; i < this.nodes.length; i++) {
+            if (value == this.nodes[i].value)
+                return this.nodes[i];
+        }
+        return null;
     }
 
     swapNodes(nodeValue1, nodeValue2, duration = 1000) {
@@ -154,21 +185,33 @@ class TreeV {
         node2.moveTo(x1, y1, duration);
     }
 
-    findNode(value) {
-        this.nodes.forEach(node => {
-            if (value == node.value)
-                return node;
-        });
+    connectNodes(nodeFromValue, nodeToValue) {
+        let nodeFrom = this.findNode(nodeFromValue);
+        let nodeTo = this.findNode(nodeToValue);
+
+        let xTo = nodeTo.posX();
+        let yTo = nodeTo.posY();
+
+        nodeFrom.connectWith(nodeToValue, [xTo, yTo]);
     }
+
+    updateConnections(treeMatrix) {
+        for (let row = 0; row < treeMatrix.length - 1; row++) {
+            for (let col = 0; col < treeMatrix[row].length; col++) {
+                console.log("b");
+            }
+        }
+    }
+
 }
 
 
 var treeMatrix = [
-    [{ pos: 0 }],
-    [{ pos: 0 }, { pos: 1 }],
-    [{ pos: 1 }, { pos: 2 }, { pos: 4 }],
-    [{ pos: 2 }, { pos: 3 }],
-    [{ pos: 4 }]
+    [{ value: 0, pos: 0 }],
+    [{ value: 1, pos: 0 }, { value: 2, pos: 1 }],
+    [{ value: 3, pos: 1 }, { value: 4, pos: 2 }, { value: 5, pos: 4 }],
+    [{ value: 6, pos: 2 }, { value: 7, pos: 3 }],
+    [{ value: 8, pos: 4 }]
 ];
 
 let tree = new TreeV(canvas);
@@ -178,7 +221,7 @@ tree.updateView(treeMatrix);
 // tree.nodes[0].highlighted(true);
 // tree.swapNodes(0, 3);
 
-let a = makeLine([10, 10, 100, 100]);
-canvas.add(a);
+tree.connectNodes(0, 1);
+
 
 
