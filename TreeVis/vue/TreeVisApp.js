@@ -28,7 +28,9 @@ var routes = [
 ];
 
 var router = new VueRouter({
-    routes: routes
+    routes: routes,
+    linkActiveClass: "active", // active class for non-exact links.
+    linkExactActiveClass: "active" // active class for *exact* links.
 });
 
 var app = new Vue({

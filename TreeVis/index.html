@@ -19,6 +19,9 @@
     <script src="https://cdn.jsdelivr.net/gh/SergySanJj/mocha-clean/index.js"></script>
     <!-- /libs -->
 
+    <!-- styles -->
+    <link rel="stylesheet" href="vue/css/style.css">
+    <!-- /styles -->
     <title>TreeVis</title>
 </head>
 
@@ -26,10 +29,10 @@
 <div id="app">
     <nav class="pageNav">
         <!-- use { name: 'user', params: { } } to pass parameters to view -->
-        <router-link :to="{ name: 'avl'}">AVL Tree</router-link>
-        <router-link :to="{ name: 'binary'}">Binary Tree</router-link>
-        <router-link :to="{ name: 'binarySearch'}">Binary Search Tree</router-link>
-        <router-link :to="{ name: 'redBlack'}">Red Black Tree</router-link>
+        <router-link class="menuLink" :to="{ name: 'avl'}">AVL Tree</router-link>
+        <router-link class="menuLink" :to="{ name: 'binary'}">Binary Tree</router-link>
+        <router-link class="menuLink" :to="{ name: 'binarySearch'}">Binary Search Tree</router-link>
+        <router-link class="menuLink" :to="{ name: 'redBlack'}">Red Black Tree</router-link>
     </nav>  
     <section class="pageBody">
         <router-view></router-view>
