@@ -29,13 +29,14 @@ var routes = [
 
 var router = new VueRouter({
     routes: routes,
-    linkActiveClass: "active", // active class for non-exact links.
-    linkExactActiveClass: "active" // active class for *exact* links.
+    linkActiveClass: "active",
+    linkExactActiveClass: "active"
 });
 
 var app = new Vue({
+    el: '#app',
     router: router,
-    data: {
-        message: 'Hello Tochik!'
+    components: {
+        'headmenu': httpVueLoader('./vue/components/headmenu.vue')
     }
-}).$mount('#app');
+});
