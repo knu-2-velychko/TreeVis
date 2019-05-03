@@ -3,3 +3,5 @@ QTreeVis/\.idea/
 QTreeVis/cmake-build-debug/
 
 TreeVis/\.idea/
+
+\.vscode/

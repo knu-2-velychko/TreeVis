@@ -9,6 +9,9 @@
     <!-- libs  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-full.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.5.3/vue-router.min.js'></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <!-- <script src="vue/httpVueLoader.js"></script> -->
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
@@ -19,10 +22,21 @@
     <title>TreeVis</title>
 </head>
 
-<div id="TreeVisApp">
-    {{message}}
-    ...
+<!-- website UI -->
+<div id="app">
+    <nav class="pageNav">
+        <!-- use { name: 'user', params: { } } to pass parameters to view -->
+        <router-link :to="{ name: 'avl'}">AVL Tree</router-link>
+        <router-link :to="{ name: 'binary'}">Binary Tree</router-link>
+        <router-link :to="{ name: 'binarySearch'}">Binary Search Tree</router-link>
+        <router-link :to="{ name: 'redBlack'}">Red Black Tree</router-link>
+    </nav>  
+    <section class="pageBody">
+        <router-view></router-view>
+    </section>
 </div>
+<!-- /website UI -->
+
 
 <!-- sourcecode  -->
 <script src="src\AbstractTree.js"></script>
@@ -34,7 +48,7 @@
 
 
 <!-- vue  -->
-<script src="vue\TreeVisApp.js"></script>
+<script type="module" src="vue\TreeVisApp.js"></script>
 <!-- /vue -->
 
 
