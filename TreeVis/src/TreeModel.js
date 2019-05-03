@@ -3,4 +3,8 @@ class TreeModel extends AbstractModel {
         super();
         this.tree = tree;
     }
+
+    //TODO: poll event
+    pollEvent(eventSender, event, params) {
+    }
 }
