@@ -14,7 +14,7 @@ class EventSystem {
         }
     }
 
-    async postEvent(eventSender, event, params) {
+    postEvent(eventSender, event, params) {
         for (let i in this.eventObjects) {
             let current = this.eventObjects[i];
             if (current.sender === eventSender) {
