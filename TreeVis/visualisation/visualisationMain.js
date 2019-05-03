@@ -144,6 +144,20 @@ class TreeV {
         return this.nodes.length;
     }
 
+    updateConnections(treeMatrix) {
+        for (let row = 0; row < treeMatrix.length - 1; row++) {
+            for (let col = 0; col < treeMatrix[row].length; col++) {
+                let currPos = treeMatrix[row][col].pos;
+                let childRow = treeMatrix[row + 1];
+                childRow.array.forEach(node => function () {
+                    if (node.pos == 2 * currPos || node.pos == 2 * currPos + 1) {
+                        this.connectNodes(treeMatrix[row][col].value, node.value);
+                    }
+                });
+            }
+        }
+    }
+
     updateView(treeMatrix) {
         this.treeMatrix = treeMatrix;
         let levels = treeMatrix.length;
@@ -152,13 +166,15 @@ class TreeV {
         for (let row = 0; row < levels; row++) {
             let nodeH = calcCoord(row, levels, this.canvas.height) - circleRadius;
 
-            treeMatrix[row].forEach(node => {
+            treeMatrix[row].array.forEach(node => function () {
                 let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - circleRadius;
                 this.addNode(node["value"]).setPosition(nodeW, nodeH);
             });
 
             columnCount *= 2;
         }
+
+        tree.updateConnections(treeMatrix);
 
         this.canvas.renderAll();
     }
@@ -194,15 +210,6 @@ class TreeV {
 
         nodeFrom.connectWith(nodeToValue, [xTo, yTo]);
     }
-
-    updateConnections(treeMatrix) {
-        for (let row = 0; row < treeMatrix.length - 1; row++) {
-            for (let col = 0; col < treeMatrix[row].length; col++) {
-                console.log("b");
-            }
-        }
-    }
-
 }
 
 
