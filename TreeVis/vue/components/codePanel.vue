@@ -1,28 +1,28 @@
 <template>
-    <div class='sidePanel'>
+    <div class='side-panel'>
         <h2>Custom code</h2>
         <textarea name="code" id="codeInput"></textarea>
     </div>
 </template>
 
 <script>
-module.exports = {
-    name: 'codepanel',
-    methods: {
+    module.exports = {
+        name: 'code-panel',
+        methods: {
 
+        }
     }
-}
 </script>
 
 <style scoped>
-    .sidePanel {
+    .side-panel {
         float: left;
         position: relative;
         width: 20%;
         height: 100%;
     }
 
-    .sidePanel textarea {
+    .side-panel textarea {
         opacity: .5;
         width: 100%;
         height: 70%;

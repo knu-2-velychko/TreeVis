@@ -1,21 +1,21 @@
 <template>
     <div class="tree-page">
-        <codepanel></codepanel>
-        <canvaspanel></canvaspanel>
+        <code-panel></code-panel>
+        <canvas-panel></canvas-panel>
     </div>
 </template>
 
 <script>
-module.exports = {
-    name: 'redBlack',
-    methods: {
+    module.exports = {
+        name: 'red-black',
+        methods: {
 
-    },
-    components: {
-        'codepanel': httpVueLoader('./codePanel.vue'),
-        'canvaspanel': httpVueLoader('./canvasPanel.vue')
+        },
+        components: {
+            'code-panel': httpVueLoader('./codePanel.vue'),
+            'canvas-panel': httpVueLoader('./canvasPanel.vue')
+        }
     }
-}
 </script>
 
 <style scoped>

@@ -5,11 +5,11 @@
 </template>
 
 <script>
-module.exports = {
-    name: 'binary',
-    methods: {
+    module.exports = {
+        name: 'binary',
+        methods: {
 
+        }
     }
-}
 </script>
 

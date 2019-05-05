@@ -5,10 +5,10 @@
 </template>
 
 <script>
-module.exports = {
-    name: 'avl',
-    methods: {
+    module.exports = {
+        name: 'avl',
+        methods: {
 
+        }
     }
-}
 </script>

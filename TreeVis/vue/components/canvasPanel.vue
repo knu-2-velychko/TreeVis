@@ -2,17 +2,17 @@
     <div class="content">
         <h2>Visualisation</h2>
         <buttons></buttons>
-        <canvas id="treeCanvas"></canvas>
+        <canvas id="tree-canvas"></canvas>
     </div>
 </template>
 
 <script>
-module.exports = {
-    name: 'canvaspanel',
-    components: {
-        'buttons': httpVueLoader('./buttons.vue')
+    module.exports = {
+        name: 'canvas-panel',
+        components: {
+            'buttons': httpVueLoader('./buttons.vue')
+        }
     }
-}
 </script>
 
 <style scoped>
@@ -28,7 +28,7 @@ module.exports = {
         width: 100%;
     }
 
-    #treeCanvas {
+    #tree-canvas {
         background: #c9c9c9;
     }
 </style>

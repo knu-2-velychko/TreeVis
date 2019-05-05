@@ -6,19 +6,19 @@
 
 <script>
 module.exports = {
-    name: 'bottombar'
+    name: 'bottom-bar'
 }
 </script>
 
 <style scoped>
-.footer {
-    padding-left: 16px;
-    width: calc(100% - 16px);
-    height: 50px;
-    line-height: 50px;
-    position: fixed;
-    color: #BDBDBD;
-    bottom: 0;
-    background: #212121ee;
-}
+    .footer {
+        padding-left: 16px;
+        width: calc(100% - 16px);
+        height: 50px;
+        line-height: 50px;
+        position: fixed;
+        color: #BDBDBD;
+        bottom: 0;
+        background: #212121ee;
+    }
 </style>

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-module.exports = {
-    name: 'buttons'
-}
+    module.exports = {
+        name: 'buttons'
+    }
 </script>

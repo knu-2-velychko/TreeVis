@@ -5,11 +5,11 @@
 </template>
 
 <script>
-module.exports = {
-    name: 'binarySearch',
-    methods: {
+    module.exports = {
+        name: 'binary-search',
+        methods: {
 
+        }
     }
-}
 </script>
 

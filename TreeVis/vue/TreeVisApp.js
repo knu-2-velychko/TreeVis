@@ -16,13 +16,13 @@ var routes = [
         component: BinaryTree
     },
     {
-        path: '/binarySearch',
-        name: 'binarySearch',
+        path: '/binary-search',
+        name: 'binary-search',
         component: BinarySearchTree
     },
     {
-        path: '/redBlack',
-        name: 'redBlack',
+        path: '/red-black',
+        name: 'red-black',
         component: RedBlackTree
     }
 ];
@@ -37,7 +37,7 @@ var app = new Vue({
     el: '#app',
     router: router,
     components: {
-        'headmenu': httpVueLoader('./vue/components/headmenu.vue'),
-        'bottombar': httpVueLoader('./vue/components/bottomBar.vue')
+        'head-menu': httpVueLoader('./vue/components/headmenu.vue'),
+        'bottom-bar': httpVueLoader('./vue/components/bottomBar.vue')
     }
 });
