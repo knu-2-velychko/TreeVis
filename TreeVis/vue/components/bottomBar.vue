@@ -16,9 +16,9 @@ module.exports = {
     width: calc(100% - 16px);
     height: 50px;
     line-height: 50px;
-    position: absolute;
+    position: fixed;
     color: #BDBDBD;
     bottom: 0;
-    background: #212121;
+    background: #212121ee;
 }
 </style>
