@@ -6,7 +6,7 @@
 
 <script>
 module.exports = {
-    name: 'readBlack',
+    name: 'redBlack',
     methods: {
 
     }

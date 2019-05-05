@@ -18,3 +18,34 @@ module.exports = {
     name: 'headmenu'
 }
 </script>
+
+<style scoped>
+.pageNav {
+    width: 100%;
+    background: #FFC107;
+    height: 60px;
+    line-height: 60px;
+    padding-top: 5px;
+}
+
+.pageNav:first-child:before {
+    content: 'Awesome Tree Visualization';
+    font-weight: 700;
+    padding: 0px 50px;
+}
+
+.menuLink {
+    display: inline-block;
+    padding: 0px 16px;
+    color: #212121;
+    text-decoration: none;
+    transition: .3s background;
+    font-weight: bold;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; 
+}
+
+.menuLink.active, .menuLink:hover {
+    background: #fefefe;
+}
+</style>

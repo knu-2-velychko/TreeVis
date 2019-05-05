@@ -37,6 +37,7 @@ var app = new Vue({
     el: '#app',
     router: router,
     components: {
-        'headmenu': httpVueLoader('./vue/components/headmenu.vue')
+        'headmenu': httpVueLoader('./vue/components/headmenu.vue'),
+        'bottombar': httpVueLoader('./vue/components/bottomBar.vue')
     }
 });
