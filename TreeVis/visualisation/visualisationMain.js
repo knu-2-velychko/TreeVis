@@ -120,11 +120,24 @@ class NodeV {
     }
 
     clearConnections() {
-
+        for (let i = 0; i < this.outgoingConnections.length; i++) {
+            this.canvas.remove(this.outgoingConnections[i].line);
+        }
+        this.outgoingConnections = [];
     }
 
     removeConnectionWith(node) {
+        for (let i = 0; i < this.outgoingConnections.length; i++) {
+            if (this.outgoingConnections[i].node == node) {
+                this.canvas.remove(this.outgoingConnections[i].line);
+                this.outgoingConnections.splice(i, 1);
+            }
+        }
+    }
 
+    removeMe() {
+        this.canvas.remove(this.view);
+        this.clearConnections();
     }
 }
 
@@ -140,6 +153,7 @@ class TreeV {
         this.nodes = [];
         this.canvas = canvas;
         this.treeMatrix = null;
+        this.newNode = null;
     }
 
     addNode(value) {
@@ -163,6 +177,14 @@ class TreeV {
 
     updateView(treeMatrix) {
         this.treeMatrix = treeMatrix;
+
+        tree.updateNodes(treeMatrix);
+        tree.updateConnections(treeMatrix);
+
+        this.canvas.renderAll();
+    }
+
+    updateNodes(treeMatrix) {
         let levels = treeMatrix.length;
 
         let columnCount = 1;
@@ -177,10 +199,6 @@ class TreeV {
 
             columnCount *= 2;
         }
-
-        tree.updateConnections(treeMatrix);
-
-        this.canvas.renderAll();
     }
 
     updateConnections(treeMatrix) {
@@ -210,9 +228,15 @@ class TreeV {
     }
 
     clearConnections() {
-        this.nodes.forEach(node => function () {
-            node.clearConnections();
-        });
+        for (let i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].clearConnections();
+        }
+    }
+
+    removeConnection(nodeValueFrom, nodeValueTo) {
+        let nodeFrom = this.findNode(nodeValueFrom);
+
+        nodeFrom.removeConnectionWith(nodeValueTo);
     }
 
     swapNodes(nodeValue1, nodeValue2, duration = 1000) {
@@ -227,6 +251,19 @@ class TreeV {
 
         node1.moveTo(x2, y2, duration);
         node2.moveTo(x1, y1, duration);
+    }
+
+    createNewNode(value) {
+        this.newNode = new NodeV(value, this.canvas);
+        this.newNode.setPosition(0, 0);
+    }
+
+    compareWith(nodeValueWith) {
+        let nodeWith = this.findNode(nodeValueWith);
+        let x = nodeWith.posX() - 2.6 * circleRadius;
+        let y = nodeWith.posY();
+
+        this.newNode.moveTo(x, y, 500);
     }
 }
 
@@ -246,6 +283,13 @@ tree.updateView(treeMatrix);
 // tree.nodes[0].highlighted(true);
 // tree.swapNodes(0, 3);
 
+//tree.clearConnections();
 
+//tree.removeConnection(0, 1);
+
+
+//tree.findNode(0).removeMe();
+
+tree.createNewNode(9);
 
 
