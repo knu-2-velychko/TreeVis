@@ -1,0 +1,47 @@
+@font-face {
+    font-family: "Google Sans";
+    src: local(Google Sans Regular), url("./font/googlesans/GoogleSans-Regular.ttf") format("ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Google Sans";
+    src: local(Google Sans Regular Italic), url("./font/googlesans/GoogleSans-Italic.ttf") format("ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Google Sans";
+    src: local(Google Sans Medium), url("./font/googlesans/GoogleSans-Medium.ttf") format("ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Google Sans";
+    src: local(Google Sans Medium Italic), url("./font/googlesans/GoogleSans-MediumItalic.ttf") format("ttf");
+    font-weight: 500;
+}
+    
+@font-face {
+    font-family: "Google Sans";
+    src: local(Google Sans Bold), url("./font/googlesans/GoogleSans-Bold.ttf") format("ttf");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Google Sans";
+    src: local(Google Sans Bold Italic), url("./font/googlesans/GoogleSans-BoldItalic.ttf") format("ttf");
+    font-weight: 700;
+}
+
+body {
+    font-family: 'Google Sans';
+    background: #fefefe;
+    margin: 0;
+    min-width: 900px;
+}
+
+/* Hides mocha tests even though it stil runs */
+#mocha {
+    visibility: hidden;
+}

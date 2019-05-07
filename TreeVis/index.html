@@ -7,7 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- libs  -->
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.5.3/vue-router.min.js'></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.1.4/mocha.min.js"></script>
@@ -21,20 +26,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.22/fabric.min.js"></script>
     <!-- /libs -->
 
+    <!-- styles -->
+    <link rel="stylesheet" href="vue/css/style.css">
+    <!-- /styles -->
     <title>TreeVis</title>
 </head>
+
+<!-- website UI -->
 
 <body>
     <canvas id="canvas" width="1200" height="600"></canvas>
     <script src="visualisation/visualisationMain.js"></script>
 
-    <div id="TreeVisApp">
-        {{message}}
-        ...
+    <div id="app">
+        <head-menu></head-menu>
+        <bottom-bar></bottom-bar>
     </div>
-
-
 </body>
+
+<!-- /website UI -->
 
 <!-- sourcecode  -->
 <script src="src\AbstractTree.js"></script>
@@ -56,7 +66,7 @@
 
 
 <!-- vue  -->
-<script src="vue\TreeVisApp.js"></script>
+<script type="module" src="vue\TreeVisApp.js"></script>
 <!-- /vue -->
 
 <!-- paper  -->
