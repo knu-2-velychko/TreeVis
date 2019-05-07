@@ -5,5 +5,7 @@ class AbstractModel {
         }
     }
 
-    pollEvent(eventSender, event, params);
+    pollEvent(eventSender, event, params) {
+
+    }
 }
