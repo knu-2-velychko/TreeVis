@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <h2>Visualisation</h2>
+        <h2>Visualization</h2>
         <buttons></buttons>
         <canvas id="tree-canvas"></canvas>
     </div>
