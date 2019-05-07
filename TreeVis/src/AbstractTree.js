@@ -20,13 +20,13 @@ class AbstractNode {
     }
 
     deleteNode() {
-        for(let i of this._children){
-            i.parent=null;
+        for (let i of this._children) {
+            i.parent = null;
         }
         if (this._parent != null) {
             for (let i of this._parent._children) {
-                if(i===this){
-                    i=null;
+                if (i === this) {
+                    i = null;
                 }
             }
         }
@@ -42,18 +42,11 @@ class AbstractTree {
         this._root = null;
     }
 
-    insertKey(newKey) {
+    insertKey(newKey);
 
-    }
+    deleteKey(_key) ;
 
-    deleteKey(_key) {
-
-    }
-
-    searchKey(_key) {
-
-    }
-
+    searchKey(_key);
 
     get root() {
         return this._root;
