@@ -23,8 +23,8 @@
     .page-nav {
         width: 100%;
         background: #FFC107;
-        height: 60px;
-        line-height: 60px;
+        height: 50px;
+        line-height: 50px;
         padding-top: 5px;
     }
 
