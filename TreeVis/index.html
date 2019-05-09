@@ -7,8 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- libs  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-full.min.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.5.3/vue-router.min.js'></script>
     <script src="https://unpkg.com/http-vue-loader"></script>
 
@@ -16,6 +17,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.1.4/mocha.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/SergySanJj/mocha-clean/index.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js'></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.22/fabric.min.js"></script>
     <!-- /libs -->
 
     <!-- styles -->
@@ -25,12 +33,18 @@
 </head>
 
 <!-- website UI -->
-<div id="app">
-    <head-menu></head-menu>
-    <bottom-bar></bottom-bar>
-</div>
-<!-- /website UI -->
 
+<body>
+    <canvas id="canvas" width="1200" height="600"></canvas>
+    <script src="visualisation/visualisationMain.js"></script>
+
+    <div id="app">
+        <head-menu></head-menu>
+        <bottom-bar></bottom-bar>
+    </div>
+</body>
+
+<!-- /website UI -->
 
 <!-- sourcecode  -->
 <script src="src\AbstractTree.js"></script>
@@ -38,6 +52,14 @@
 <script src="src\BinarySearchTree.js"></script>
 <script src="src\RedBlackTree.js"></script>
 <script src="src\AVLTree.js"></script>
+
+<script src="src\BinaryTreeIterator.js"></script>
+
+<script src="src/EventSystem.js"></script>
+<script src="src/AbstractModel.js"></script>
+<script src="src/NodeModel.js"></script>
+<script src="src/TreeModel.js"></script>
+
 <!-- /sourcecode -->
 
 
@@ -45,8 +67,17 @@
 <script type="module" src="vue\TreeVisApp.js"></script>
 <!-- /vue -->
 
+<!-- paper  -->
+<script src="visualisation/Renderer.js"></script>
+<script src="visualisation/RenderableObjectInterface.js"></script>
+<script src="visualisation/NodeView.js"></script>
+<script src="visualisation/TreeView.js"></script>
+<!-- /paper -->
+
 
 <!-- tests  -->
+
+<!--
 <div id="mocha"></div>
 
 <script>
@@ -60,6 +91,10 @@
 <script>
     mocha.run();
 </script>
+-->
+
 <!-- /tests -->
+
+
 
 </html>

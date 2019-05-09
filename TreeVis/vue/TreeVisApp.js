@@ -36,6 +36,7 @@ var router = new VueRouter({
 });
 
 var app = new Vue({
+
     el: '#app',
     router: router,
     components: {
@@ -43,3 +44,4 @@ var app = new Vue({
         'bottom-bar': httpVueLoader('./vue/components/bottomBar.vue')
     }
 });
+
