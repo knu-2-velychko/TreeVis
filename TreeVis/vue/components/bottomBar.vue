@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        Tree visualisation website made by Sergei Yarema, Taya Velychko, Vladislav Tochanenko and Mykyta Oliinyk.
+        Tree visualization website made by Sergei Yarema, Taya Velychko, Vladislav Tochanenko and Mykyta Oliinyk.
     </div>
 </template>
 
