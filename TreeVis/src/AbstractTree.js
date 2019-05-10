@@ -42,11 +42,17 @@ class AbstractTree {
         this._root = null;
     }
 
-    insertKey(newKey);
+    insertKey(newKey) {
 
-    deleteKey(_key) ;
+    }
 
-    searchKey(_key);
+    deleteKey(_key) {
+
+    }
+
+    searchKey(_key) {
+
+    }
 
     get root() {
         return this._root;
