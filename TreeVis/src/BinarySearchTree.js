@@ -13,6 +13,13 @@ class BinarySearchTree extends BinaryTree {
         super.insertKey(key);
         let node = new BinarySearchNode(key, null);
         this._insertNode(node);
+
+        // {
+        //     let flag = true;
+        //     while (flag) {
+        //         tree.findNode(this._root).highlighted(true).then(function () { flag = false; });
+        //     }
+        // }
     }
 
     deleteKey(key) {
@@ -34,11 +41,17 @@ class BinarySearchTree extends BinaryTree {
         return null;
     }
 
-    _insertNode(node) {
+    async _insertNode(node) {
         if (this._root == null) {
             this._root = node;
+            tree.createNewNode(node);
+            tree.endInsertion(makeMatrix(this));
         } else {
             let current = this._root;
+
+            tree.createNewNode(node);
+            await tree.compareWith(this._root);
+
             while (current != null) {
                 if (current.key > node.key) {
                     if (current.left == null) {
@@ -58,6 +71,8 @@ class BinarySearchTree extends BinaryTree {
                     }
                 }
             }
+
+            await tree.endInsertion(makeMatrix(this));
         }
     }
 

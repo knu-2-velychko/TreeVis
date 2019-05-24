@@ -90,15 +90,17 @@ class NodeV {
         return this.posY() + TreeVisVariables.circleRadius;
     }
 
-    moveTo(x, y, duration = 1000) {
-        this.view.animate('left', x, {
-            onChange: canvas.renderAll.bind(canvas),
-            duration: duration
-        });
-        this.view.animate('top', y, {
-            onChange: canvas.renderAll.bind(canvas),
-            duration: duration
-        });
+    async moveTo(x, y, duration = 1000) {
+        await Promise.all([
+            this.view.animate('left', x, {
+                onChange: canvas.renderAll.bind(canvas),
+                duration: duration
+            }),
+            this.view.animate('top', y, {
+                onChange: canvas.renderAll.bind(canvas),
+                duration: duration
+            })
+        ]);
     }
 
     setPosition(x, y) {
@@ -106,7 +108,7 @@ class NodeV {
         this.view.setTop(y);
     }
 
-    highlighted(value, color = colors["default"]) {
+    async highlighted(value, color = colors["default"]) {
         let circle = this.view.item(0);
         if (value)
             circle.setFill(color.toRgb());
@@ -114,6 +116,7 @@ class NodeV {
             circle.setFill(color.toRgb());
 
         this.canvas.renderAll();
+
     }
 
     connectWith(node, nodeCoords) {
@@ -189,6 +192,10 @@ class TreeV {
     }
 
     updateView(treeMatrix) {
+        this.nodes.forEach(function (node) {
+            node.removeMe();
+        });
+        this.nodes = [];
         this.treeMatrix = treeMatrix;
 
         tree.updateNodes(treeMatrix);
@@ -252,7 +259,7 @@ class TreeV {
         nodeFrom.removeConnectionWith(nodeValueTo);
     }
 
-    swapNodes(nodeValue1, nodeValue2, duration = 1000) {
+    async swapNodes(nodeValue1, nodeValue2, duration = 1000) {
         let node1 = this.findNode(nodeValue1);
         let node2 = this.findNode(nodeValue2);
         let x1, y1, x2, y2;
@@ -261,9 +268,10 @@ class TreeV {
 
         x2 = node2.posX();
         y2 = node2.posY();
-
-        node1.moveTo(x2, y2, duration);
-        node2.moveTo(x1, y1, duration);
+        await Promise.all([
+            node1.moveTo(x2, y2, duration),
+            node2.moveTo(x1, y1, duration)
+        ]);
     }
 
     createNewNode(value) {
@@ -272,7 +280,7 @@ class TreeV {
         this.newNode.highlighted(true);
     }
 
-    compareWith(nodeValueWith) {
+    async compareWith(nodeValueWith) {
         if (this.currentlyComparedWith !== null) {
             this.currentlyComparedWith.highlighted(false);
         }
@@ -287,7 +295,7 @@ class TreeV {
         this.newNode.moveTo(x, y, 500);
     }
 
-    endInsertion(treeMatrix) {
+    async endInsertion(treeMatrix) {
         if (this.currentlyComparedWith !== null) {
             this.currentlyComparedWith.highlighted(false);
         }
@@ -342,11 +350,11 @@ let treeImplementation = (treeType => {
     }
 })(treeType);
 
-treeImplementation.insertKey(2);
-treeImplementation.insertKey(3);
-treeImplementation.insertKey(4);
-treeImplementation.insertKey(1);
+// treeImplementation.insertKey(2);
+// treeImplementation.insertKey(3);
+// treeImplementation.insertKey(4);
+// treeImplementation.insertKey(1);
 
-let mat = makeMatrix(treeImplementation);
+// let mat = makeMatrix(treeImplementation);
 
-tree.updateView(mat);
+// tree.updateView(mat);
