@@ -7,26 +7,43 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- libs  -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-full.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.5.3/vue-router.min.js'></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.1.4/mocha.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/SergySanJj/mocha-clean/index.js"></script>
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js'></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.22/fabric.min.js"></script>
     <!-- /libs -->
 
+    <!-- styles -->
+    <link rel="stylesheet" href="vue/css/style.css">
+    <!-- /styles -->
     <title>TreeVis</title>
 </head>
 
-<canvas id="treeCanvas" width="900" height="500" resize></canvas>
+<!-- website UI -->
 
+<body>
+    <!-- <script src="visualisation/visualisationMain.js"></script> -->
 
-<div id="TreeVisApp">
-    {{message}}
-    ...
-</div>
+    <div id="app">
+        <head-menu></head-menu>
+        <bottom-bar></bottom-bar>
+    </div>
+</body>
+
+<!-- /website UI -->
 
 <!-- sourcecode  -->
 <script src="src\AbstractTree.js"></script>
@@ -46,7 +63,7 @@
 
 
 <!-- vue  -->
-<script src="vue\TreeVisApp.js"></script>
+<script type="module" src="vue\TreeVisApp.js"></script>
 <!-- /vue -->
 
 <!-- paper  -->
@@ -54,12 +71,12 @@
 <script src="visualisation/RenderableObjectInterface.js"></script>
 <script src="visualisation/NodeView.js"></script>
 <script src="visualisation/TreeView.js"></script>
-
-<script src="visualisation/papermain.js" type="text/paperscript" canvas="treeCanvas"></script>
 <!-- /paper -->
 
 
 <!-- tests  -->
+
+<!--
 <div id="mocha"></div>
 
 <script>
@@ -73,6 +90,10 @@
 <script>
     mocha.run();
 </script>
+-->
+
 <!-- /tests -->
+
+
 
 </html>
