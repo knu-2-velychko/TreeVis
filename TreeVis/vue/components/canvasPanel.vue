@@ -12,11 +12,6 @@
         name: 'canvas-panel',
         components: {
             'buttons': httpVueLoader('./buttons.vue')
-        },
-        created() {
-            let visualisationMain = document.createElement('script');
-            visualisationMain.setAttribute('src','./visualisation/visualisationMain.js');
-            document.head.appendChild(visualisationMain);
         }
     }
 </script>
