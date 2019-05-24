@@ -1,15 +1,26 @@
-const circleRadius = 30;
-const nodeFontSize = 22;
+class TreeVisVariables {
+    constructor(radius, fontSize) {
+        //     static this.TreeVisVariables.circleRadius = radius;
+        //     static this.TreeVisVariables.nodeFontSize = fontSize;
+    }
+}
 
-// We use static for canvases that don't need gui elements selection StaticCanvas
-var canvas = new fabric.StaticCanvas('canvas');
+TreeVisVariables.circleRadius = 30;
+TreeVisVariables.nodeFontSize = 30;
+
+var colors = {
+    "red": new fabric.Color("rgb(200,0,0)"),
+    "green": new fabric.Color("rgb(0,200,0)"),
+    "blue": new fabric.Color("rgb(0,0,200)"),
+    "default": new fabric.Color("#2196F3")
+}
 
 function makeCircle(left = 0, top = 0) {
     let circle = new fabric.Circle({
         left: left,
         top: top,
         strokeWidth: 2,
-        radius: circleRadius,
+        radius: TreeVisVariables.circleRadius,
         fill: '#fff',
         stroke: '#666',
         originX: 'center',
@@ -22,7 +33,7 @@ function makeCircle(left = 0, top = 0) {
 
 function makeText(left = 0, top = 0, value) {
     let text = new fabric.Text(value, {
-        fontSize: nodeFontSize,
+        fontSize: TreeVisVariables.nodeFontSize,
         originX: 'center',
         originY: 'center'
     });
@@ -48,10 +59,10 @@ function makeNodeVisualisation(left = 0, top = 0, value) {
 }
 
 class NodeV {
-    constructor(value, canvas = null) {
+    constructor(value, canvas = null, key = value) {
         this.value = value;
 
-        this.view = makeNodeVisualisation(0, 0, String(value));
+        this.view = makeNodeVisualisation(0, 0, String(key));
         this.view.on('moving', function () { highlighted(true); });
 
         // values {node:.. , line:..}
@@ -72,11 +83,11 @@ class NodeV {
     }
 
     posCenterX() {
-        return this.posX() + circleRadius;
+        return this.posX() + TreeVisVariables.circleRadius;
     }
 
     posCenterY() {
-        return this.posY() + circleRadius;
+        return this.posY() + TreeVisVariables.circleRadius;
     }
 
     moveTo(x, y, duration = 1000) {
@@ -95,12 +106,12 @@ class NodeV {
         this.view.setTop(y);
     }
 
-    highlighted(value) {
+    highlighted(value, color = colors["default"]) {
         let circle = this.view.item(0);
         if (value)
-            circle.setFill("#84f4f1");
+            circle.setFill(color.toRgb());
         else
-            circle.setFill("#fff");
+            circle.setFill(color.toRgb());
 
         this.canvas.renderAll();
     }
@@ -159,7 +170,7 @@ class TreeV {
     }
 
     addNode(value) {
-        let newNode = new NodeV(value, this.canvas);
+        let newNode = new NodeV(value, this.canvas, value.key);
         this.nodes.push(newNode);
 
         return newNode;
@@ -191,12 +202,12 @@ class TreeV {
 
         let columnCount = 1;
         for (let row = 0; row < levels; row++) {
-            let nodeH = calcCoord(row, levels, this.canvas.height) - circleRadius;
+            let nodeH = calcCoord(row, levels, this.canvas.height) - TreeVisVariables.circleRadius;
 
             for (let nodeNum = 0; nodeNum < treeMatrix[row].length; nodeNum++) {
                 let node = treeMatrix[row][nodeNum];
-                let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - circleRadius;
-                this.addNode(node["value"]).setPosition(nodeW, nodeH);
+                let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - TreeVisVariables.circleRadius;
+                this.addNode(node.value).setPosition(nodeW, nodeH);
             }
 
             columnCount *= 2;
@@ -270,7 +281,7 @@ class TreeV {
         this.currentlyComparedWith = nodeWith;
         this.currentlyComparedWith.highlighted(true);
 
-        let x = nodeWith.posX() - 2.6 * circleRadius;
+        let x = nodeWith.posX() - 2.6 * TreeVisVariables.circleRadius;
         let y = nodeWith.posY();
 
         this.newNode.moveTo(x, y, 500);
@@ -297,9 +308,12 @@ var treeMatrix = [
     [{ value: 8, pos: 4 }]
 ];
 
+// We use static for canvases that d    on't need gui elements selection StaticCanvas
+var canvas = new fabric.StaticCanvas('canvas');
+
 let tree = new TreeV(canvas);
 
-tree.updateView(treeMatrix);
+//tree.updateView(treeMatrix);
 
 // tree.nodes[0].highlighted(true);
 // tree.swapNodes(0, 3);
@@ -311,8 +325,28 @@ tree.updateView(treeMatrix);
 
 //tree.findNode(0).removeMe();
 
-tree.createNewNode(9);
-tree.compareWith(0);
+//tree.createNewNode(9);
+//tree.compareWith(0);
 
+// TODO: get tree type from vue
+let treeType = "BinarySearchTree";
 
+let treeImplementation = (treeType => {
+    switch (treeType) {
+        case "BinarySearchTree":
+            return new BinarySearchTree();
+        case "AVLTree":
+            return new AVLTree();
+        case "RedBlackTree":
+            return new RedBlackTree();
+    }
+})(treeType);
 
+treeImplementation.insertKey(2);
+treeImplementation.insertKey(3);
+treeImplementation.insertKey(4);
+treeImplementation.insertKey(1);
+
+let mat = makeMatrix(treeImplementation);
+
+tree.updateView(mat);
