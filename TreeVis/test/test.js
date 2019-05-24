@@ -103,7 +103,7 @@ describe('Binary Search Tree', () => {
     describe('Binary Search Tree delete', () => {
         let tree = new BinarySearchTree();
 
-        it("delete should delete node with key from tree", () => {
+        it("delete should delete node with key from treeView", () => {
             tree.insertKey(3);
             tree.insertKey(5);
             tree.insertKey(2);
@@ -216,7 +216,7 @@ describe('Red-Black Tree', () => {
             tree.insertKey(2);
             tree.insertKey(1);
         });
-        it("delete should delete node with key from tree", () => {
+        it("delete should delete node with key from treeView", () => {
             tree.deleteKey(3);
             checkBinaryTreeOrderInvariant(tree.root);
             checkRedBlackTreeInvariant(tree.root);
@@ -311,7 +311,7 @@ describe('AVL Tree', () => {
 
     describe('AVL Tree delete', () => {
         let tree = new AVLTree();
-        it("delete should delete node with key from tree", () => {
+        it("delete should delete node with key from treeView", () => {
             tree.insertKey(3);
             tree.insertKey(5);
             tree.insertKey(2);
@@ -417,7 +417,7 @@ describe('Binary Tree Iterator', () => {
     });
 });
 
-describe('Get matrix of tree', () => {
+describe('Get matrix of treeView', () => {
     it('Binary Search Tree', () => {
         let tree = new BinarySearchTree();
         tree.insertKey(3);

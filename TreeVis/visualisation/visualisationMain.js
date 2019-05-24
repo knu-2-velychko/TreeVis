@@ -198,8 +198,8 @@ class TreeV {
         this.nodes = [];
         this.treeMatrix = treeMatrix;
 
-        tree.updateNodes(treeMatrix);
-        tree.updateConnections(treeMatrix);
+        treeView.updateNodes(treeMatrix);
+        treeView.updateConnections(treeMatrix);
 
         this.canvas.renderAll();
     }
@@ -292,10 +292,10 @@ class TreeV {
         let x = nodeWith.posX() - 2.6 * TreeVisVariables.circleRadius;
         let y = nodeWith.posY();
 
-        this.newNode.moveTo(x, y, 500);
+        await this.newNode.moveTo(x, y, 500);
     }
 
-    async endInsertion(treeMatrix) {
+    endInsertion(treeMatrix) {
         if (this.currentlyComparedWith !== null) {
             this.currentlyComparedWith.highlighted(false);
         }
@@ -319,24 +319,24 @@ var treeMatrix = [
 // We use static for canvases that d    on't need gui elements selection StaticCanvas
 var canvas = new fabric.StaticCanvas('canvas');
 
-let tree = new TreeV(canvas);
+let treeView = new TreeV(canvas);
 
-//tree.updateView(treeMatrix);
+//treeView.updateView(treeMatrix);
 
-// tree.nodes[0].highlighted(true);
-// tree.swapNodes(0, 3);
+// treeView.nodes[0].highlighted(true);
+// treeView.swapNodes(0, 3);
 
-//tree.clearConnections();
+//treeView.clearConnections();
 
-//tree.removeConnection(0, 1);
+//treeView.removeConnection(0, 1);
 
 
-//tree.findNode(0).removeMe();
+//treeView.findNode(0).removeMe();
 
-//tree.createNewNode(9);
-//tree.compareWith(0);
+//treeView.createNewNode(9);
+//treeView.compareWith(0);
 
-// TODO: get tree type from vue
+// TODO: get treeView type from vue
 let treeType = "BinarySearchTree";
 
 let treeImplementation = (treeType => {
@@ -357,4 +357,4 @@ let treeImplementation = (treeType => {
 
 // let mat = makeMatrix(treeImplementation);
 
-// tree.updateView(mat);
+// treeView.updateView(mat);
