@@ -4,7 +4,17 @@ class TreeModel extends AbstractModel {
         this.tree = tree;
     }
 
-    //TODO: poll event
-    pollEvent(eventSender, event, params) {
+    call(eventSender, event, params) {
+        switch (event) {
+            case 'insert':
+                this.tree.insertKey(params);
+                break;
+            case 'search':
+                this.tree.searchKey(params);
+                break;
+            case 'delete':
+                this.tree.deleteKey(params);
+                break;
+        }
     }
 }
