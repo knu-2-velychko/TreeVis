@@ -153,9 +153,7 @@ class TreeV {
         this.nodes = [];
         this.canvas = canvas;
         this.treeMatrix = null;
-
         this.newNode = null;
-        this.currentlyComparedWith = null;
     }
 
     addNode(value) {
@@ -258,33 +256,14 @@ class TreeV {
     createNewNode(value) {
         this.newNode = new NodeV(value, this.canvas);
         this.newNode.setPosition(0, 0);
-        this.newNode.highlighted(true);
     }
 
     compareWith(nodeValueWith) {
-        if (this.currentlyComparedWith !== null) {
-            this.currentlyComparedWith.highlighted(false);
-        }
-
         let nodeWith = this.findNode(nodeValueWith);
-        this.currentlyComparedWith = nodeWith;
-        this.currentlyComparedWith.highlighted(true);
-
         let x = nodeWith.posX() - 2.6 * circleRadius;
         let y = nodeWith.posY();
 
         this.newNode.moveTo(x, y, 500);
-    }
-
-    endInsertion(treeMatrix) {
-        if (this.currentlyComparedWith !== null) {
-            this.currentlyComparedWith.highlighted(false);
-        }
-
-        this.canvas.remove(this.newNode.view);
-        this.newNode = null;
-
-        this.updateView(treeMatrix);
     }
 }
 
@@ -312,7 +291,5 @@ tree.updateView(treeMatrix);
 //tree.findNode(0).removeMe();
 
 tree.createNewNode(9);
-tree.compareWith(0);
-
 
 

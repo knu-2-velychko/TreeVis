@@ -1,7 +1,6 @@
 <template>
-    <div class="tree-page">
-        <code-panel></code-panel>
-        <canvas-panel></canvas-panel>
+    <div>
+        <h3>Binary Search Vue file</h3>
     </div>
 </template>
 
@@ -10,19 +9,7 @@
         name: 'binary-search',
         methods: {
 
-        },
-        components: {
-            'code-panel': httpVueLoader('./codePanel.vue'),
-            'canvas-panel': httpVueLoader('./canvasPanel.vue')
         }
     }
 </script>
 
-<style scoped>
-    .tree-page {
-        position: absolute;
-        height: calc(100% - 40px - 80px);
-        width: calc(100% - 32px);
-        margin: 0px 16px;
-    }
-</style>

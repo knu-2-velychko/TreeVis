@@ -28,8 +28,6 @@ var routes = [
 ];
 
 var router = new VueRouter({
-    hashbang: false,
-    history: true,
     routes: routes,
     linkActiveClass: "active",
     linkExactActiveClass: "active"
