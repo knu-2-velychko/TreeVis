@@ -12,11 +12,8 @@ var colors = {
     "red": new fabric.Color("rgb(200,0,0)"),
     "green": new fabric.Color("rgb(0,200,0)"),
     "blue": new fabric.Color("rgb(0,0,200)"),
-    "default": new fabric.Color("rgb(100,100,100)")
+    "default": new fabric.Color("#2196F3")
 }
-
-// We use static for canvases that d    on't need gui elements selection StaticCanvas
-var canvas = new fabric.StaticCanvas('canvas');
 
 function makeCircle(left = 0, top = 0) {
     let circle = new fabric.Circle({
@@ -62,10 +59,10 @@ function makeNodeVisualisation(left = 0, top = 0, value) {
 }
 
 class NodeV {
-    constructor(value, canvas = null) {
+    constructor(value, canvas = null, key = value) {
         this.value = value;
 
-        this.view = makeNodeVisualisation(0, 0, String(value));
+        this.view = makeNodeVisualisation(0, 0, String(key));
         this.view.on('moving', function () { highlighted(true); });
 
         // values {node:.. , line:..}
@@ -173,7 +170,7 @@ class TreeV {
     }
 
     addNode(value) {
-        let newNode = new NodeV(value, this.canvas);
+        let newNode = new NodeV(value, this.canvas, value.key);
         this.nodes.push(newNode);
 
         return newNode;
@@ -210,7 +207,7 @@ class TreeV {
             for (let nodeNum = 0; nodeNum < treeMatrix[row].length; nodeNum++) {
                 let node = treeMatrix[row][nodeNum];
                 let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - TreeVisVariables.circleRadius;
-                this.addNode(node["value"]).setPosition(nodeW, nodeH);
+                this.addNode(node.value).setPosition(nodeW, nodeH);
             }
 
             columnCount *= 2;
@@ -311,9 +308,12 @@ var treeMatrix = [
     [{ value: 8, pos: 4 }]
 ];
 
+// We use static for canvases that d    on't need gui elements selection StaticCanvas
+var canvas = new fabric.StaticCanvas('canvas');
+
 let tree = new TreeV(canvas);
 
-tree.updateView(treeMatrix);
+//tree.updateView(treeMatrix);
 
 // tree.nodes[0].highlighted(true);
 // tree.swapNodes(0, 3);
@@ -325,8 +325,28 @@ tree.updateView(treeMatrix);
 
 //tree.findNode(0).removeMe();
 
-tree.createNewNode(9);
-tree.compareWith(0);
+//tree.createNewNode(9);
+//tree.compareWith(0);
 
+// TODO: get tree type from vue
+let treeType = "BinarySearchTree";
 
+let treeImplementation = (treeType => {
+    switch (treeType) {
+        case "BinarySearchTree":
+            return new BinarySearchTree();
+        case "AVLTree":
+            return new AVLTree();
+        case "RedBlackTree":
+            return new RedBlackTree();
+    }
+})(treeType);
 
+treeImplementation.insertKey(2);
+treeImplementation.insertKey(3);
+treeImplementation.insertKey(4);
+treeImplementation.insertKey(1);
+
+let mat = makeMatrix(treeImplementation);
+
+tree.updateView(mat);

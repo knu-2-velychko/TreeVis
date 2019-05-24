@@ -450,7 +450,8 @@ describe('Get matrix of tree', () => {
         chai.expect(matrix[1][1].pos).to.equal(1);
         chai.expect(matrix[1][1].node.key).to.equal(5);
         chai.expect(matrix[2][0].pos).to.equal(0);
-        chai.expect(matrix[2][0].node.key).to.equal(1);    });
+        chai.expect(matrix[2][0].node.key).to.equal(1);
+    });
     it('AVL Tree', () => {
         let tree = new AVLTree();
         tree.insertKey(3);
@@ -466,5 +467,6 @@ describe('Get matrix of tree', () => {
         chai.expect(matrix[1][1].pos).to.equal(1);
         chai.expect(matrix[1][1].node.key).to.equal(5);
         chai.expect(matrix[2][0].pos).to.equal(0);
-        chai.expect(matrix[2][0].node.key).to.equal(1);    });
+        chai.expect(matrix[2][0].node.key).to.equal(1);
+    });
 });
