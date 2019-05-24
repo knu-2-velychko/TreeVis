@@ -1,16 +1,22 @@
 <template>
     <div class="content">
-        <h2>Visualisation</h2>
+        <h2>Visualization</h2>
         <buttons></buttons>
-        <canvas id="tree-canvas"></canvas>
+        <canvas id="canvas" ref="canvas" width="1200" height="600"></canvas>
     </div>
 </template>
 
 <script>
+
     module.exports = {
         name: 'canvas-panel',
         components: {
             'buttons': httpVueLoader('./buttons.vue')
+        },
+        created() {
+            let visualisationMain = document.createElement('script');
+            visualisationMain.setAttribute('src','./visualisation/visualisationMain.js');
+            document.head.appendChild(visualisationMain);
         }
     }
 </script>
