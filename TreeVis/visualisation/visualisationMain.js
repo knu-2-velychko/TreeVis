@@ -1,7 +1,21 @@
-const circleRadius = 30;
-const nodeFontSize = 22;
+class TreeVisVariables {
+    constructor(radius, fontSize) {
+        //     static this.TreeVisVariables.circleRadius = radius;
+        //     static this.TreeVisVariables.nodeFontSize = fontSize;
+    }
+}
 
-// We use static for canvases that don't need gui elements selection StaticCanvas
+TreeVisVariables.circleRadius = 30;
+TreeVisVariables.nodeFontSize = 30;
+
+var colors = {
+    "red": new fabric.Color("rgb(200,0,0)"),
+    "green": new fabric.Color("rgb(0,200,0)"),
+    "blue": new fabric.Color("rgb(0,0,200)"),
+    "default": new fabric.Color("rgb(100,100,100)")
+}
+
+// We use static for canvases that d    on't need gui elements selection StaticCanvas
 var canvas = new fabric.StaticCanvas('canvas');
 
 function makeCircle(left = 0, top = 0) {
@@ -9,7 +23,7 @@ function makeCircle(left = 0, top = 0) {
         left: left,
         top: top,
         strokeWidth: 2,
-        radius: circleRadius,
+        radius: TreeVisVariables.circleRadius,
         fill: '#fff',
         stroke: '#666',
         originX: 'center',
@@ -22,7 +36,7 @@ function makeCircle(left = 0, top = 0) {
 
 function makeText(left = 0, top = 0, value) {
     let text = new fabric.Text(value, {
-        fontSize: nodeFontSize,
+        fontSize: TreeVisVariables.nodeFontSize,
         originX: 'center',
         originY: 'center'
     });
@@ -72,11 +86,11 @@ class NodeV {
     }
 
     posCenterX() {
-        return this.posX() + circleRadius;
+        return this.posX() + TreeVisVariables.circleRadius;
     }
 
     posCenterY() {
-        return this.posY() + circleRadius;
+        return this.posY() + TreeVisVariables.circleRadius;
     }
 
     moveTo(x, y, duration = 1000) {
@@ -95,12 +109,12 @@ class NodeV {
         this.view.setTop(y);
     }
 
-    highlighted(value) {
+    highlighted(value, color = colors["default"]) {
         let circle = this.view.item(0);
         if (value)
-            circle.setFill("#84f4f1");
+            circle.setFill(color.toRgb());
         else
-            circle.setFill("#fff");
+            circle.setFill(color.toRgb());
 
         this.canvas.renderAll();
     }
@@ -191,11 +205,11 @@ class TreeV {
 
         let columnCount = 1;
         for (let row = 0; row < levels; row++) {
-            let nodeH = calcCoord(row, levels, this.canvas.height) - circleRadius;
+            let nodeH = calcCoord(row, levels, this.canvas.height) - TreeVisVariables.circleRadius;
 
             for (let nodeNum = 0; nodeNum < treeMatrix[row].length; nodeNum++) {
                 let node = treeMatrix[row][nodeNum];
-                let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - circleRadius;
+                let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - TreeVisVariables.circleRadius;
                 this.addNode(node["value"]).setPosition(nodeW, nodeH);
             }
 
@@ -242,8 +256,8 @@ class TreeV {
     }
 
     swapNodes(nodeValue1, nodeValue2, duration = 1000) {
-        let node1 = findNode(nodeValue1);
-        let node2 = findNode(nodeValue2);
+        let node1 = this.findNode(nodeValue1);
+        let node2 = this.findNode(nodeValue2);
         let x1, y1, x2, y2;
         x1 = node1.posX();
         y1 = node1.posY();
@@ -270,7 +284,7 @@ class TreeV {
         this.currentlyComparedWith = nodeWith;
         this.currentlyComparedWith.highlighted(true);
 
-        let x = nodeWith.posX() - 2.6 * circleRadius;
+        let x = nodeWith.posX() - 2.6 * TreeVisVariables.circleRadius;
         let y = nodeWith.posY();
 
         this.newNode.moveTo(x, y, 500);
