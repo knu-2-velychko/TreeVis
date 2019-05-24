@@ -242,8 +242,8 @@ class TreeV {
     }
 
     swapNodes(nodeValue1, nodeValue2, duration = 1000) {
-        let node1 = findNode(nodeValue1);
-        let node2 = findNode(nodeValue2);
+        let node1 = this.findNode(nodeValue1);
+        let node2 = this.findNode(nodeValue2);
         let x1, y1, x2, y2;
         x1 = node1.posX();
         y1 = node1.posY();
