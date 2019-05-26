@@ -92,14 +92,14 @@ class NodeV {
 
     moveTo(x, y, duration = 1000) {
         this.view.animate('left', x, {
-            onChange: canvas.renderAll.bind(canvas),
-            duration: duration
-        }
+                onChange: canvas.renderAll.bind(canvas),
+                duration: duration
+            }
         );
         this.view.animate('top', y, {
-            onChange: canvas.renderAll.bind(canvas),
-            duration: duration
-        }
+                onChange: canvas.renderAll.bind(canvas),
+                duration: duration
+            }
         );
 
         let delay = 1.50;
@@ -134,7 +134,7 @@ class NodeV {
         coords = coords.concat(nodeCoords);
 
         let line = makeLine(coords);
-        this.outgoingConnections.push({ node: node, line: line });
+        this.outgoingConnections.push({node: node, line: line});
 
         this.canvas.add(line);
         this.canvas.sendToBack(line);
@@ -308,6 +308,7 @@ class TreeV {
         let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
         await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
     }
+
     async moveRight() {
         let x = this.currentlyComparedWith.posX() + 1.2 * TreeVisVariables.circleRadius;
         let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
