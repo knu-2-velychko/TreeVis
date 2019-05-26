@@ -346,6 +346,16 @@ function getTreeImplementation(treeType) {
     })(treeType);
 }
 
+
+// treeImplementation.insertKey(2);
+// treeImplementation.insertKey(3);
+// treeImplementation.insertKey(1);
+
+// let mat = makeMatrix(treeImplementation);
+
+// tree.updateView(mat);
+
+
 function reassignValues(loadTreeType) {
     canvas = new fabric.StaticCanvas('canvas');
     treeView = new TreeV(canvas);
