@@ -11,8 +11,8 @@ TreeVisVariables.nodeFontSize = 30;
 var colors = {
     "red": new fabric.Color("rgb(200,0,0)"),
     "green": new fabric.Color("rgb(0,200,0)"),
-    "blue": new fabric.Color("rgb(0,0,200)"),
-    "default": new fabric.Color("#2196F3")
+    "blue": new fabric.Color("#92ccff"),
+    "default": new fabric.Color("#fff")
 }
 
 function makeCircle(left = 0, top = 0) {
@@ -21,7 +21,7 @@ function makeCircle(left = 0, top = 0) {
         top: top,
         strokeWidth: 2,
         radius: TreeVisVariables.circleRadius,
-        fill: '#fff',
+        fill: colors["default"].toRgb(),
         stroke: '#666',
         originX: 'center',
         originY: 'center'
@@ -63,7 +63,6 @@ class NodeV {
         this.value = value;
 
         this.view = makeNodeVisualisation(0, 0, String(key));
-        this.view.on('moving', function () { highlighted(true); });
 
         // values {node:.. , line:..}
         this.outgoingConnections = [];
@@ -90,17 +89,26 @@ class NodeV {
         return this.posY() + TreeVisVariables.circleRadius;
     }
 
-    async moveTo(x, y, duration = 1000) {
-        await Promise.all([
-            this.view.animate('left', x, {
-                onChange: canvas.renderAll.bind(canvas),
-                duration: duration
-            }),
-            this.view.animate('top', y, {
-                onChange: canvas.renderAll.bind(canvas),
-                duration: duration
-            })
-        ]);
+    moveTo(x, y, duration = 1000) {
+        this.view.animate('left', x, {
+            onChange: canvas.renderAll.bind(canvas),
+            duration: duration
+        }
+        );
+        this.view.animate('top', y, {
+            onChange: canvas.renderAll.bind(canvas),
+            duration: duration
+        }
+        );
+
+        let delay = 1.50;
+        return new Promise(resolve => {
+            setTimeout(() => {
+
+
+                resolve();
+            }, duration * delay);
+        });
     }
 
     setPosition(x, y) {
@@ -108,15 +116,14 @@ class NodeV {
         this.view.setTop(y);
     }
 
-    async highlighted(value, color = colors["default"]) {
+    highlighted(value, color = colors["default"]) {
         let circle = this.view.item(0);
         if (value)
             circle.setFill(color.toRgb());
         else
-            circle.setFill(color.toRgb());
+            circle.setFill(colors["default"].toRgb());
 
         this.canvas.renderAll();
-
     }
 
     connectWith(node, nodeCoords) {
@@ -198,8 +205,8 @@ class TreeV {
         this.nodes = [];
         this.treeMatrix = treeMatrix;
 
-        treeView.updateNodes(treeMatrix);
-        treeView.updateConnections(treeMatrix);
+        this.updateNodes(treeMatrix);
+        this.updateConnections(treeMatrix);
 
         this.canvas.renderAll();
     }
@@ -275,9 +282,9 @@ class TreeV {
     }
 
     createNewNode(value) {
-        this.newNode = new NodeV(value, this.canvas);
+        this.newNode = new NodeV(value, this.canvas, value.key);
         this.newNode.setPosition(0, 0);
-        this.newNode.highlighted(true);
+        this.newNode.highlighted(true, colors["blue"]);
     }
 
     async compareWith(nodeValueWith) {
@@ -287,7 +294,7 @@ class TreeV {
 
         let nodeWith = this.findNode(nodeValueWith);
         this.currentlyComparedWith = nodeWith;
-        this.currentlyComparedWith.highlighted(true);
+        this.currentlyComparedWith.highlighted(true, colors["blue"]);
 
         let x = nodeWith.posX() - 2.6 * TreeVisVariables.circleRadius;
         let y = nodeWith.posY();
@@ -295,7 +302,7 @@ class TreeV {
         await this.newNode.moveTo(x, y, 500);
     }
 
-    endInsertion(treeMatrix) {
+    async endInsertion(treeMatrix) {
         if (this.currentlyComparedWith !== null) {
             this.currentlyComparedWith.highlighted(false);
         }
@@ -321,22 +328,22 @@ var canvas = new fabric.StaticCanvas('canvas');
 
 let treeView = new TreeV(canvas);
 
-//treeView.updateView(treeMatrix);
+//tree.updateView(treeMatrix);
 
-// treeView.nodes[0].highlighted(true);
-// treeView.swapNodes(0, 3);
+// tree.nodes[0].highlighted(true);
+// tree.swapNodes(0, 3);
 
-//treeView.clearConnections();
+//tree.clearConnections();
 
-//treeView.removeConnection(0, 1);
+//tree.removeConnection(0, 1);
 
 
-//treeView.findNode(0).removeMe();
+//tree.findNode(0).removeMe();
 
-//treeView.createNewNode(9);
-//treeView.compareWith(0);
+//tree.createNewNode(9);
+//tree.compareWith(0);
 
-// TODO: get treeView type from vue
+// TODO: get tree type from vue
 let treeType = "BinarySearchTree";
 
 let treeImplementation = (treeType => {
@@ -357,4 +364,6 @@ let treeImplementation = (treeType => {
 
 // let mat = makeMatrix(treeImplementation);
 
-// treeView.updateView(mat);
+// tree.updateView(mat);
+
+
