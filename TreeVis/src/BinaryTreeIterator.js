@@ -53,7 +53,7 @@ let makeMatrix = function (tree) {
             currentDepth++;
             matrix.push([]);
         }
-        matrix[currentDepth].push({pos: iterator.getPos, node: iterator.getCurrent});
+        matrix[currentDepth].push({pos: iterator.getPos, value: iterator.getCurrent});
         iterator.next();
     }
     return matrix;
