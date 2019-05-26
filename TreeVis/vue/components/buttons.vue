@@ -1,9 +1,9 @@
 <template>
     <div>
         <input type="number">
-        <button>First</button>
-        <button>Second</button>
-        <button>Third</button>
+        <button onclick="onInsertClick();">Insert</button>
+        <button>Find</button>
+        <button>Delete</button>
     </div>
 </template>
 

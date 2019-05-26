@@ -92,14 +92,14 @@ class NodeV {
 
     moveTo(x, y, duration = 1000) {
         this.view.animate('left', x, {
-                onChange: canvas.renderAll.bind(canvas),
-                duration: duration
-            }
+            onChange: canvas.renderAll.bind(canvas),
+            duration: duration
+        }
         );
         this.view.animate('top', y, {
-                onChange: canvas.renderAll.bind(canvas),
-                duration: duration
-            }
+            onChange: canvas.renderAll.bind(canvas),
+            duration: duration
+        }
         );
 
         let delay = 1.50;
@@ -134,7 +134,7 @@ class NodeV {
         coords = coords.concat(nodeCoords);
 
         let line = makeLine(coords);
-        this.outgoingConnections.push({node: node, line: line});
+        this.outgoingConnections.push({ node: node, line: line });
 
         this.canvas.add(line);
         this.canvas.sendToBack(line);
@@ -308,7 +308,6 @@ class TreeV {
         let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
         await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
     }
-
     async moveRight() {
         let x = this.currentlyComparedWith.posX() + 1.2 * TreeVisVariables.circleRadius;
         let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
@@ -327,31 +326,12 @@ class TreeV {
     }
 }
 
-
 // We use static for canvases that d    on't need gui elements selection StaticCanvas
-//var canvas = new fabric.StaticCanvas('canvas');
 var canvas;
-//let treeView = new TreeV(canvas);
 let treeView;
-
-//tree.updateView(treeMatrix);
-
-// tree.nodes[0].highlighted(true);
-// tree.swapNodes(0, 3);
-
-//tree.clearConnections();
-
-//tree.removeConnection(0, 1);
-
-
-//tree.findNode(0).removeMe();
-
-//tree.createNewNode(9);
-//tree.compareWith(0);
-
-// TODO: get tree type from vue
-//let treeType = "BinarySearchTree";
 let treeType;
+let treeImplementation;
+let treeModel;
 
 function getTreeImplementation(treeType) {
     return (treeType => {
@@ -366,21 +346,7 @@ function getTreeImplementation(treeType) {
     })(treeType);
 }
 
-let treeImplementation;
-
-// treeImplementation.insertKey(2);
-// treeImplementation.insertKey(3);
-// treeImplementation.insertKey(4);
-// treeImplementation.insertKey(1);
-
-// let mat = makeMatrix(treeImplementation);
-
-// tree.updateView(mat);
-
-
 function reassignValues(loadTreeType) {
-    //let docCanv = document.getElementById("canvas");
-    console.log("Tai");
     canvas = new fabric.StaticCanvas('canvas');
     treeView = new TreeV(canvas);
     treeType = "BinarySearchTree";
