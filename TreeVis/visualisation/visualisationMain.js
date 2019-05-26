@@ -327,18 +327,12 @@ class TreeV {
 }
 
 
-var treeMatrix = [
-    [{ value: 0, pos: 0 }],
-    [{ value: 1, pos: 0 }, { value: 2, pos: 1 }],
-    [{ value: 3, pos: 1 }, { value: 4, pos: 2 }, { value: 5, pos: 3 }],
-    [{ value: 6, pos: 2 }, { value: 7, pos: 3 }],
-    [{ value: 8, pos: 4 }]
-];
 
 // We use static for canvases that d    on't need gui elements selection StaticCanvas
-var canvas = new fabric.StaticCanvas('canvas');
-
-let treeView = new TreeV(canvas);
+//var canvas = new fabric.StaticCanvas('canvas');
+var canvas;
+//let treeView = new TreeV(canvas);
+let treeView;
 
 //tree.updateView(treeMatrix);
 
@@ -356,18 +350,23 @@ let treeView = new TreeV(canvas);
 //tree.compareWith(0);
 
 // TODO: get tree type from vue
-let treeType = "BinarySearchTree";
+//let treeType = "BinarySearchTree";
+let treeType;
 
-let treeImplementation = (treeType => {
-    switch (treeType) {
-        case "BinarySearchTree":
-            return new BinarySearchTree();
-        case "AVLTree":
-            return new AVLTree();
-        case "RedBlackTree":
-            return new RedBlackTree();
-    }
-})(treeType);
+function getTreeImplementation(treeType) {
+    return (treeType => {
+        switch (treeType) {
+            case "BinarySearchTree":
+                return new BinarySearchTree();
+            case "AVLTree":
+                return new AVLTree();
+            case "RedBlackTree":
+                return new RedBlackTree();
+        }
+    })(treeType);
+}
+
+let treeImplementation;
 
 // treeImplementation.insertKey(2);
 // treeImplementation.insertKey(3);
@@ -379,3 +378,12 @@ let treeImplementation = (treeType => {
 // tree.updateView(mat);
 
 
+function reassignValues(loadTreeType) {
+    //let docCanv = document.getElementById("canvas");
+    canvas = new fabric.StaticCanvas('canvas');
+    treeView = new TreeV(canvas);
+    treeType = "BinarySearchTree";
+    treeImplementation = getTreeImplementation(treeType);
+}
+
+reassignValues();
