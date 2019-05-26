@@ -7,6 +7,7 @@ class TreeVisVariables {
 
 TreeVisVariables.circleRadius = 30;
 TreeVisVariables.nodeFontSize = 30;
+TreeVisVariables.animationTime = 700;
 
 var colors = {
     "red": new fabric.Color("rgb(200,0,0)"),
@@ -299,7 +300,18 @@ class TreeV {
         let x = nodeWith.posX() - 2.6 * TreeVisVariables.circleRadius;
         let y = nodeWith.posY();
 
-        await this.newNode.moveTo(x, y, 500);
+        await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
+    }
+
+    async moveLeft() {
+        let x = this.currentlyComparedWith.posX() - 1.2 * TreeVisVariables.circleRadius;
+        let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
+        await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
+    }
+    async moveRight() {
+        let x = this.currentlyComparedWith.posX() + 1.2 * TreeVisVariables.circleRadius;
+        let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
+        await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
     }
 
     async endInsertion(treeMatrix) {

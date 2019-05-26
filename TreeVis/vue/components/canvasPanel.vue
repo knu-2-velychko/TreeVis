@@ -14,9 +14,21 @@
             'buttons': httpVueLoader('./buttons.vue')
         },
         created() {
-            let visualisationMain = document.createElement('script');
-            visualisationMain.setAttribute('src','./visualisation/visualisationMain.js');
-            document.head.appendChild(visualisationMain);
+            let oldScript = document.getElementById('visualisationScript');
+            function createTreeVisualisationScript(){
+                let visualisationMain = document.createElement('script');
+                visualisationMain.setAttribute('src','./visualisation/visualisationMain.js');
+                visualisationMain.setAttribute('id','visualisationScript');
+                return visualisationMain;
+            }
+            if (oldScript==null){
+                document.head.appendChild(createTreeVisualisationScript());
+            }
+            else {
+                //console.log("dwdw");
+                document.head.removeChild(oldScript);
+                document.head.appendChild(createTreeVisualisationScript());
+            }
         }
     }
 </script>
