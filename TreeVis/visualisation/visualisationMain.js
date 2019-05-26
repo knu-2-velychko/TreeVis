@@ -14,7 +14,7 @@ var colors = {
     "default": new fabric.Color("#fff")
 }
 
-// We use static for canvases that d    on't need gui elements selection StaticCanvas
+// We use static for canvases that don't need gui elements selection StaticCanvas
 var canvas;
 let treeView;
 let treeType;
