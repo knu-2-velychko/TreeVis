@@ -1,4 +1,3 @@
-
 function makeCircle(left = 0, top = 0) {
     let circle = new fabric.Circle({
         left: left,
@@ -58,4 +57,12 @@ function getTreeImplementation(treeType) {
                 return new RedBlackTree();
         }
     })(treeType);
+}
+
+function timer(timeout) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        }, timeout);
+    });
 }

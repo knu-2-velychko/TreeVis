@@ -19,15 +19,17 @@ class BinarySearchTree extends BinaryTree {
         this._root = this._deleteKey(this._root, key);
     }
 
-    searchKey(key) {
+    async searchKey(key) {
         super.searchKey(key);
         let current = this._root;
         while (current != null) {
+            await treeView.findNode(current).blink(colors['green']);
             if (current.key > key) {
                 current = current.left;
             } else if (current.key < key) {
                 current = current.right;
             } else {
+                await treeView.findNode(current).blink(colors['red']);
                 return current;
             }
         }

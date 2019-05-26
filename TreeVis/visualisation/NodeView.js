@@ -31,14 +31,14 @@ class NodeV {
 
     moveTo(x, y, duration = 1000) {
         this.view.animate('left', x, {
-            onChange: canvas.renderAll.bind(canvas),
-            duration: duration
-        }
+                onChange: canvas.renderAll.bind(canvas),
+                duration: duration
+            }
         );
         this.view.animate('top', y, {
-            onChange: canvas.renderAll.bind(canvas),
-            duration: duration
-        }
+                onChange: canvas.renderAll.bind(canvas),
+                duration: duration
+            }
         );
 
         let delay = 1.50;
@@ -73,7 +73,7 @@ class NodeV {
         coords = coords.concat(nodeCoords);
 
         let line = makeLine(coords);
-        this.outgoingConnections.push({ node: node, line: line });
+        this.outgoingConnections.push({node: node, line: line});
 
         this.canvas.add(line);
         this.canvas.sendToBack(line);
@@ -99,5 +99,11 @@ class NodeV {
     removeMe() {
         this.canvas.remove(this.view);
         this.clearConnections();
+    }
+
+    async blink(color) {
+        this.highlighted(true, color);
+        await timer(TreeVisVariables.animationTime);
+        this.highlighted(false);
     }
 }
