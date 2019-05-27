@@ -44,6 +44,7 @@ class AVLTree extends BinarySearchTree {
             current = current.parent;
             current = this._balance(current, newKey);
         }
+        treeView.updateView(makeMatrix(this));
     }
 
     async deleteKey(key) {
