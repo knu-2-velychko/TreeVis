@@ -15,8 +15,12 @@ class BinarySearchTree extends BinaryTree {
         await this._insertNode(node);
     }
 
-    deleteKey(key) {
-        this._root = this._deleteKey(this._root, key);
+    async deleteKey(key) {
+        this.deletedView = null;
+        this._root = await this._deleteKey(this._root, key);
+        if (this.deletedView != null) {
+            treeView.endDeletion(makeMatrix(this), this.deletedView);
+        }
     }
 
     async searchKey(key) {
@@ -87,15 +91,19 @@ class BinarySearchTree extends BinaryTree {
         return node;
     }
 
-    _deleteKey(node, key) {
+    async _deleteKey(node, key) {
         if (node == null) {
             return null;
         }
+        await treeView.findNode(node).blink(colors['green']);
         if (key < node.key) {
-            node.left = this._deleteKey(node.left, key);
+            node.left = await this._deleteKey(node.left, key);
         } else if (key > node.key) {
-            node.right = this._deleteKey(node.right, key);
+            node.right = await this._deleteKey(node.right, key);
         } else {
+            await treeView.findNode(node).blink(colors['red']);
+            this.deletedView = treeView.findNode(node);
+
             let left = node.left;
             let right = node.right;
             node = null;
@@ -105,8 +113,10 @@ class BinarySearchTree extends BinaryTree {
             let min = this._findMin(right);
             min.right = this._deleteMin(right);
             min.left = left;
+
             return min;
         }
+        return node;
     }
 
 }

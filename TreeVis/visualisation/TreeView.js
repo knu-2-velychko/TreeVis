@@ -136,13 +136,14 @@ class TreeV {
         let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
         await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
     }
+
     async moveRight() {
         let x = this.currentlyComparedWith.posX() + 1.2 * TreeVisVariables.circleRadius;
         let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
         await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
     }
 
-    async endInsertion(treeMatrix) {
+    endInsertion(treeMatrix) {
         if (this.currentlyComparedWith !== null) {
             this.currentlyComparedWith.highlighted(false);
         }
@@ -150,6 +151,11 @@ class TreeV {
         this.canvas.remove(this.newNode.view);
         this.newNode = null;
 
+        this.updateView(treeMatrix);
+    }
+
+    endDeletion(treeMatrix, oldNodeView) {
+        this.canvas.remove(oldNodeView.view);
         this.updateView(treeMatrix);
     }
 }
