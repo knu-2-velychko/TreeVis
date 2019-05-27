@@ -7,7 +7,7 @@
 
 <script>
     module.exports = {
-        name: 'binary-search',
+        name: 'BinarySearchTree',
         methods: {
 
         },

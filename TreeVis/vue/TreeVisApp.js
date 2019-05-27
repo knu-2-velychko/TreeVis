@@ -1,13 +1,13 @@
 'use strict';
-var AvlTree = httpVueLoader('./vue/components/avl.vue')
+var AvlTree = httpVueLoader('./vue/components/AVLTree.vue')
 var BinaryTree = httpVueLoader('./vue/components/binary.vue')
 var BinarySearchTree = httpVueLoader('./vue/components/binarySearch.vue')
 var RedBlackTree = httpVueLoader('./vue/components/redBlack.vue')
 
 var routes = [
     {
-        path: '/avl',
-        name: 'avl',
+        path: '/AVLTree',
+        name: 'AVLTree',
         component: AvlTree
     },
     {
@@ -16,13 +16,13 @@ var routes = [
         component: BinaryTree
     },
     {
-        path: '/binary-search',
-        name: 'binary-search',
+        path: '/BinarySearchTree',
+        name: 'BinarySearchTree',
         component: BinarySearchTree
     },
     {
-        path: '/red-black',
-        name: 'red-black',
+        path: '/RedBlackTree',
+        name: 'RedBlackTree',
         component: RedBlackTree
     }
 ];

@@ -24,6 +24,6 @@ let treeModel;
 function reassignValues(loadTreeType) {
     canvas = new fabric.StaticCanvas('canvas');
     treeView = new TreeV(canvas);
-    treeType = "BinarySearchTree";
+    treeType = window.location.toString().substring(window.location.toString().lastIndexOf('/') + 1);
     treeImplementation = getTreeImplementation(treeType);
 }

@@ -7,7 +7,7 @@
 
 <script>
     module.exports = {
-        name: 'red-black',
+        name: 'RedBlackTree',
         methods: {
 
         },
