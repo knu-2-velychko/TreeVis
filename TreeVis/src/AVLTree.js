@@ -46,8 +46,12 @@ class AVLTree extends BinarySearchTree {
         }
     }
 
-    deleteKey(key) {
-        this._root = this._deleteKey(key);
+    async deleteKey(key) {
+        this.deletedView = null;
+        this._root = await this._deleteKey(this._root, key);
+        if (this.deletedView != null) {
+            treeView.endDeletion(makeMatrix(this), this.deletedView);
+        }
     }
 
     _balance(node, key) {
@@ -94,15 +98,19 @@ class AVLTree extends BinarySearchTree {
         return tmp;
     };
 
-    _deleteKey(node, key) {
+    async _deleteKey(node, key) {
         if (node == null) {
             return null;
         }
+        await treeView.findNode(node).blink(colors['green']);
         if (key < node.key) {
-            node.left = this._deleteKey(node.left, key);
+            node.left = await this._deleteKey(node.left, key);
         } else if (key > node.key) {
-            node.right = this._deleteKey(node.right, key);
+            node.right = await this._deleteKey(node.right, key);
         } else {
+            await treeView.findNode(node).blink(colors['red']);
+            this.deletedView = treeView.findNode(node);
+
             let left = node.left;
             let right = node.right;
             node = null;
@@ -114,6 +122,7 @@ class AVLTree extends BinarySearchTree {
             min.left = left;
             return this._balance(min);
         }
+        return node;
     }
 
 }
