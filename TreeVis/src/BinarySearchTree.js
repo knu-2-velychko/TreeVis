@@ -71,7 +71,6 @@ class BinarySearchTree extends BinaryTree {
                     }
                 }
             }
-
             treeView.endInsertion(makeMatrix(this));
         }
     }

@@ -36,9 +36,9 @@ class AVLTree extends BinarySearchTree {
         super();
     }
 
-    insertKey(newKey) {
+    async insertKey(newKey) {
         let node = new AVLNode(newKey, null);
-        super._insertNode(node);
+        await super._insertNode(node);
         let current = node;
         while (current != null) {
             current = current.parent;

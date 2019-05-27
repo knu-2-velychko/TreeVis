@@ -24,8 +24,12 @@
         name: "head-menu",
         methods: {
             changeTree: async function (treeType) {
-                var currentTreeType = treeType;
                 treeImplementation = getTreeImplementation(treeType);
+                if (treeType == 'RedBlackTree') {
+                    let rbtDeleteDisabled = true;
+                } else {
+                    let rbtDeleteDisabled = false;
+                }
             }
         }
     };

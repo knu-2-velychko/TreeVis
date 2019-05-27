@@ -34,9 +34,9 @@ class RedBlackTree extends BinarySearchTree {
         super();
     }
 
-    insertKey(newKey) {
+    async insertKey(newKey) {
         let node = new RedBlackNode(newKey, null);
-        super._insertNode(node);
+        await super._insertNode(node);
         this._insertCase1(node);
     }
 
