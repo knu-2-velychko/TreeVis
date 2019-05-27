@@ -49,6 +49,7 @@ class RedBlackTree extends BinarySearchTree {
         if (node != null) {
             if (node.parent == null) {
                 node.color = Color.black;
+                treeView.findNode(node).setStroke('black');
             } else {
                 this._insertCase2(node);
             }
@@ -69,6 +70,10 @@ class RedBlackTree extends BinarySearchTree {
             node.parent.color = Color.black;
             u.color = Color.black;
             g.color = Color.red;
+
+            treeView.findNode(node.parent).setStroke('black');
+            treeView.findNode(u).setStroke('black');
+            treeView.findNode(g).setStroke('red');
             this._insertCase1(g);
         } else {
             this._insertCase4(node);
@@ -92,6 +97,9 @@ class RedBlackTree extends BinarySearchTree {
         let g = node.parent.parent;
         node.parent.color = Color.red;
         g.color = Color.red;
+
+        treeView.findNode(node.parent).setStroke('red');
+        treeView.findNode(g).setStroke('red');
         if (node === node.parent.left && node.parent === g.left) {
             this._rotateRight(g);
         } else {

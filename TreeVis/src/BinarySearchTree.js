@@ -33,7 +33,7 @@ class BinarySearchTree extends BinaryTree {
             } else if (current.key < key) {
                 current = current.right;
             } else {
-                await treeView.findNode(current).blink(colors['red']);
+                await treeView.findNode(current).blink(colors['yellow']);
                 return current;
             }
         }
@@ -100,7 +100,7 @@ class BinarySearchTree extends BinaryTree {
         } else if (key > node.key) {
             node.right = await this._deleteKey(node.right, key);
         } else {
-            await treeView.findNode(node).blink(colors['red']);
+            await treeView.findNode(node).blink(colors['yellow']);
             this.deletedView = treeView.findNode(node);
 
             let left = node.left;

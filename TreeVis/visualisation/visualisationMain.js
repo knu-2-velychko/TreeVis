@@ -8,11 +8,11 @@ TreeVisVariables.nodeFontSize = 30;
 TreeVisVariables.animationTime = 700;
 
 var colors = {
-    "red": new fabric.Color("#ff887b"),
     "green": new fabric.Color("#c5ffc5"),
     "blue": new fabric.Color("#92ccff"),
+    "yellow": new fabric.Color("#fffc93"),
     "default": new fabric.Color("#fff")
-}
+};
 
 // We use static for canvases that don't need gui elements selection StaticCanvas
 var canvas;

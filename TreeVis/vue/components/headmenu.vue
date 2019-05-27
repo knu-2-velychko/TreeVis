@@ -25,11 +25,6 @@
         methods: {
             changeTree: async function (treeType) {
                 treeImplementation = getTreeImplementation(treeType);
-                if (treeType == 'RedBlackTree') {
-                    let rbtDeleteDisabled = true;
-                } else {
-                    let rbtDeleteDisabled = false;
-                }
             }
         }
     };

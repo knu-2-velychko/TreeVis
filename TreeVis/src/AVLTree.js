@@ -108,7 +108,7 @@ class AVLTree extends BinarySearchTree {
         } else if (key > node.key) {
             node.right = await this._deleteKey(node.right, key);
         } else {
-            await treeView.findNode(node).blink(colors['red']);
+            await treeView.findNode(node).blink(colors['yellow']);
             this.deletedView = treeView.findNode(node);
 
             let left = node.left;
