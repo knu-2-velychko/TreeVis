@@ -1,39 +1,3 @@
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Regular), url("../fonts/googlesans/GoogleSans-Regular.ttf") format("ttf");
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Regular Italic), url("../fonts/googlesans/GoogleSans-Italic.ttf") format("ttf");
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Medium), url("../fonts/googlesans/GoogleSans-Medium.ttf") format("ttf");
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Medium Italic), url("../fonts/googlesans/GoogleSans-MediumItalic.ttf") format("ttf");
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Bold), url("../fonts/googlesans/GoogleSans-Bold.ttf") format("ttf");
-    font-weight: 700;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Bold Italic), url("../fonts/googlesans/GoogleSans-BoldItalic.ttf") format("ttf");
-    font-weight: 700;
-}
-
 body {
     font-family: 'Google Sans';
     background: #fefefe;
@@ -109,7 +73,7 @@ input {
     border: none;
 }
 
-input[type=number] {
+input {
     font-family: "Google Sans", sans-serif;
     line-height: 36px;
     text-transform: uppercase;
@@ -126,21 +90,21 @@ input::placeholder {
     color: #9E9E9E;
 }
 
-input[type=number] {
+input {
     background: #F5F5F5;
     color: #212121;
     border-bottom: 2px solid #cecece;
 }
 
-input[type=number]:focus {
+input:focus {
     border-bottom: 2px solid #2196F3;
 }
 
-input[type=number]:hover {
+input:hover {
     background: #EEEEEE;
 }
 
-input[type=number]::after {
+input::after {
     background: #F5F5F5;
 }
 
