@@ -1,26 +1,27 @@
 class EventSystem {
     constructor() {
         if (!EventSystem.instance) {
-            this.eventObjects = [];
+            // dict of lists: sender -> [listener1, lestener2, ...]
+            this.eventObjects = {};
             EventSystem.instance = this;
         }
         return EventSystem.instance;
     }
 
     subcribeTo(sender, listener) {
-        let found = this.eventObjects.find(event => (event.sender === sender && event.listener === listener));
-        if (typeof found === 'undefined' || found === null) {
-            this.eventObjects.push({sender: sender, listener: listener});
-        }
+        if (!(sender in this.eventObjects))
+            this.eventObjects[sender] = [];
+        let found = this.eventObjects[sender].find(l => (l === listener));
+        if (typeof found === 'undefined' || found === null)
+            this.eventObjects[sender].push(listener);
     }
 
-    postEvent(eventSender, event, params) {
-        for (let i in this.eventObjects) {
-            let current = this.eventObjects[i];
-            if (current.sender === eventSender) {
-                current.listener(eventSender, event, params);
+    postEvent(sender, event, params) {
+        if(sender in this.eventObjects)
+            for (let i in this.eventObjects[sender]) {
+                let current = this.eventObjects[i];
+                current.call(sender, event, params);
             }
-        }
     }
 }
 

@@ -7,18 +7,35 @@
 </template>
 
 <script>
-
     module.exports = {
-        name: 'canvas-panel',
+        name: "canvas-panel",
         components: {
-            'buttons': httpVueLoader('./buttons.vue')
+            buttons: httpVueLoader("./buttons.vue")
         },
-        created() {
-            let visualisationMain = document.createElement('script');
-            visualisationMain.setAttribute('src','./visualisation/visualisationMain.js');
-            document.head.appendChild(visualisationMain);
+        async created() {
+            let flag = false;
+            let promise = new Promise(function (resolve) {
+                let visualisationMain = document.createElement("script");
+                visualisationMain.setAttribute(
+                    "src",
+                    "./visualisation/visualisationMain.js"
+                );
+                visualisationMain.setAttribute("id", "visualisationScript");
+                resolve(visualisationMain);
+            });
+            promise.then(function (visualisationMain) {
+                let oldScript = document.getElementById("visualisationScript");
+                if (oldScript == null) {
+                    document.head.insertBefore(visualisationMain, document.head.firstChild);
+                    visualisationMain.onload = function () {
+                        reassignValues();
+                    };
+                } else {
+                    reassignValues();
+                }
+            })
         }
-    }
+    };
 </script>
 
 <style scoped>
