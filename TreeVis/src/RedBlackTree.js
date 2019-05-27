@@ -38,6 +38,7 @@ class RedBlackTree extends BinarySearchTree {
         let node = new RedBlackNode(newKey, null);
         await super._insertNode(node);
         this._insertCase1(node);
+        treeView.updateView(makeMatrix(this));
     }
 
     //TODO: deletion
@@ -49,7 +50,7 @@ class RedBlackTree extends BinarySearchTree {
         if (node != null) {
             if (node.parent == null) {
                 node.color = Color.black;
-                treeView.findNode(node).setStroke('black');
+                console.log(treeView.findNode(node));
             } else {
                 this._insertCase2(node);
             }
@@ -71,9 +72,6 @@ class RedBlackTree extends BinarySearchTree {
             u.color = Color.black;
             g.color = Color.red;
 
-            treeView.findNode(node.parent).setStroke('black');
-            treeView.findNode(u).setStroke('black');
-            treeView.findNode(g).setStroke('red');
             this._insertCase1(g);
         } else {
             this._insertCase4(node);
@@ -98,12 +96,10 @@ class RedBlackTree extends BinarySearchTree {
         node.parent.color = Color.red;
         g.color = Color.red;
 
-        treeView.findNode(node.parent).setStroke('red');
-        treeView.findNode(g).setStroke('red');
         if (node === node.parent.left && node.parent === g.left) {
             this._rotateRight(g);
         } else {
-            this._rotateLeft()
+            this._rotateLeft(g);
         }
     }
 
@@ -114,7 +110,7 @@ class RedBlackTree extends BinarySearchTree {
             node.right.parent = node;
         }
         rightChild.parent = node.parent;
-        if (node.parent === nullptr) {
+        if (node.parent === null) {
             this._root = rightChild;
         } else if (node === node.parent.left) {
             node.parent.left = rightChild;

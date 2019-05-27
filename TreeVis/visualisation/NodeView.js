@@ -2,11 +2,6 @@ class NodeV {
     constructor(value, canvas = null, key = value) {
         this.value = value;
         this.view = makeNodeVisualisation(0, 0, String(key));
-
-        this.stroke = value.color === 1 ? 'red' : 'black';
-        console.log(this.stroke);
-        this.setStroke(this.stroke);
-
         // values {node:.. , line:..}
         this.outgoingConnections = [];
 
@@ -14,6 +9,9 @@ class NodeV {
         if (canvas !== null) {
             canvas.add(this.view);
         }
+
+        this.stroke = value.color === 1 ? 'red' : value.color === 2 ? 'black' : null;
+        this.setStroke(this.stroke);
     }
 
     posX() {
@@ -69,6 +67,7 @@ class NodeV {
         if (stroke != null) {
             circle.set("strokeWidth", 5);
             circle.set("stroke", stroke);
+            this.canvas.renderAll();
         }
     }
 
