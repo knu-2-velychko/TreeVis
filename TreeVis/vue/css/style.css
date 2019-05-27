@@ -73,7 +73,7 @@ input {
     border: none;
 }
 
-input[type=number] {
+input {
     font-family: "Google Sans", sans-serif;
     line-height: 36px;
     text-transform: uppercase;
@@ -90,21 +90,21 @@ input::placeholder {
     color: #9E9E9E;
 }
 
-input[type=number] {
+input {
     background: #F5F5F5;
     color: #212121;
     border-bottom: 2px solid #cecece;
 }
 
-input[type=number]:focus {
+input:focus {
     border-bottom: 2px solid #2196F3;
 }
 
-input[type=number]:hover {
+input:hover {
     background: #EEEEEE;
 }
 
-input[type=number]::after {
+input::after {
     background: #F5F5F5;
 }
 
