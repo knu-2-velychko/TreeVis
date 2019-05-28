@@ -93,7 +93,7 @@ class RedBlackTree extends BinarySearchTree {
 
     _insertCase5(node) {
         let g = node.parent.parent;
-        node.parent.color = Color.red;
+        node.parent.color = Color.black;
         g.color = Color.red;
 
         if (node === node.parent.left && node.parent === g.left) {
