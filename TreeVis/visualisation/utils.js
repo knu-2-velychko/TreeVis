@@ -66,3 +66,12 @@ function timer(timeout) {
         }, timeout);
     });
 }
+
+function getXY(row, levels, column, columnCount) {
+    let x = calcCoord(row, levels, this.canvas.height) - TreeVisVariables.circleRadius;
+    let y = calcCoord(column, columnCount, this.canvas.width) - TreeVisVariables.circleRadius;
+    return {
+        x: x,
+        y: y
+    };
+}

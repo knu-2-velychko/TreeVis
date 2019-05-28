@@ -57,6 +57,7 @@ class TreeV {
         }
     }
 
+
     updateConnections(treeMatrix) {
         for (let row = 0; row < treeMatrix.length - 1; row++) {
             for (let col = 0; col < treeMatrix[row].length; col++) {
@@ -141,6 +142,66 @@ class TreeV {
         let x = this.currentlyComparedWith.posX() + 1.2 * TreeVisVariables.circleRadius;
         let y = this.currentlyComparedWith.posY() + 1.2 * TreeVisVariables.circleRadius;
         await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
+    }
+
+    positionOf(node) {
+        if (node) {
+            let totalRows = this.treeMatrix.length;
+            this.treeMatrix.forEach(function (rowArray, i) {
+                rowArray.forEach(function (item, j) {
+                    if (item.value == node.value) {
+                        return { column: j, row: i, levels: totalRows, columnCount: rowArray.length };
+                    }
+                });
+            });
+        }
+        return { column: -1, row: -1 };
+    }
+
+    async rotateRight(aroundNode) {
+        let left = this.findNode(aroundNode.left);
+        let center = this.findNode(aroundNode);
+        let right = this.findNode(aroundNode.right);
+
+        if (left)
+            left.clearConnections();
+        if (center)
+            center.clearConnections();
+        if (right)
+            right.clearConnections();
+
+        let nodePositions = [
+            this.positionOf(left),
+            this.positionOf(center),
+            this.positionOf(right)
+        ];
+        if (left) {
+            nodePositions[0].row -= 1;
+            nodePositions[0].column -= Math.floor(nodePositions[0].column / 2);
+        }
+
+        if (center) {
+            nodePositions[1].row += 1;
+            nodePositions[1].column *= 2;
+        }
+        if (right) {
+            nodePositions[2].row += 1;
+            nodePositions[2].column *= 2;
+        }
+
+        let nodeCoords = [nodePositions.map(pos => getXY(pos.row, pos.levels, pos.column, pos.columnCount))];
+
+        let move = async (nodeVis, x, y) => {
+            if (nodeVis) {
+                await nodeVis.moveTo(x, y);
+            }
+        }
+
+        await Promise.all([
+            () => { if (left) move(left, nodeCoords[0].x, nodeCoords[0].y) },
+            () => { if (center) move(center, nodeCoords[1].x, nodeCoords[1].y) },
+            () => { if (right) move(right, nodeCoords[2].x, nodeCoords[2].y) }
+        ]);
     }
 
     endInsertion(treeMatrix) {
