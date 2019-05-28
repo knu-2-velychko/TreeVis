@@ -5,7 +5,9 @@ class TreeVisVariables {
 
 TreeVisVariables.circleRadius = 30;
 TreeVisVariables.nodeFontSize = 30;
-TreeVisVariables.animationTime = 700;
+TreeVisVariables.animationTime = 750;
+TreeVisVariables.defaultAnimationTime = 300;
+
 
 var colors = {
     "green": new fabric.Color("#c5ffc5"),

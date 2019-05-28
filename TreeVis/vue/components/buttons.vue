@@ -19,6 +19,9 @@
                 :disabled="treeForm.disabledButtons || rbtDeleteDisabled"
         >Delete
         </button>
+        <input type="range" class="form-control-range" id="formControlRange" v-model="treeForm.animationSpeed"
+        style="width:200px; height: 40px;" v-on:change="updateSpeed(treeForm.animationSpeed);" min="20" max="100">
+
     </div>
 </template>
 
@@ -40,13 +43,17 @@
                 this.treeForm.disabledButtons = true;
                 await treeImplementation.deleteKey(n);
                 this.treeForm.disabledButtons = false;
+            },
+            updateSpeed: function(n){
+                TreeVisVariables.animationTime = (100.0/n)*TreeVisVariables.defaultAnimationTime;
             }
         },
         data() {
             return {
                 treeForm: {
                     InputFieldVal: 1,
-                    disabledButtons: false
+                    disabledButtons: false,
+                    animationSpeed: 50
                 }
             };
         },
