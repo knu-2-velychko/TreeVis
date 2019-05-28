@@ -1,39 +1,3 @@
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Regular), url("../fonts/googlesans/GoogleSans-Regular.ttf") format("ttf");
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Regular Italic), url("../fonts/googlesans/GoogleSans-Italic.ttf") format("ttf");
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Medium), url("../fonts/googlesans/GoogleSans-Medium.ttf") format("ttf");
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Medium Italic), url("../fonts/googlesans/GoogleSans-MediumItalic.ttf") format("ttf");
-    font-weight: 500;
-}
-    
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Bold), url("../fonts/googlesans/GoogleSans-Bold.ttf") format("ttf");
-    font-weight: 700;
-}
-
-@font-face {
-    font-family: "Google Sans";
-    src: local(Google Sans Bold Italic), url("../fonts/googlesans/GoogleSans-BoldItalic.ttf") format("ttf");
-    font-weight: 700;
-}
-
 body {
     font-family: 'Google Sans';
     background: #fefefe;
@@ -41,14 +5,14 @@ body {
     min-width: 900px;
 }
 
-button:focus { outline:0; }
+button:focus {
+    outline: 0;
+}
 
 button {
     margin: 1em 0 1em 8px;
-
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-    
     transition: box-shadow, filter 100ms;
     -webkit-transition: -webkit-box-shadow 300ms, filter 100ms;
     transition: -webkit-box-shadow 300ms, filter 100ms;
@@ -80,18 +44,16 @@ button {
     font-weight: 500;
     line-height: 36px;
     text-transform: uppercase;
-
     height: 36px;
     padding: 0 2rem;
     border: none;
     border-radius: 2px;
     display: inline-block;
-    
     vertical-align: middle;
     -webkit-tap-highlight-color: transparent;
 }
 
-button.disabled {
+button:disabled {
     -webkit-box-shadow: none;
     box-shadow: none;
     cursor: default;
@@ -102,7 +64,7 @@ button {
     color: #ffffff;
 }
 
-button.disabled {
+button:disabled {
     background: #424242 !important;
     color: #BDBDBD !important;
 }
@@ -111,18 +73,15 @@ input {
     border: none;
 }
 
-input[type=number] {
+input {
     font-family: "Google Sans", sans-serif;
-
     line-height: 36px;
     text-transform: uppercase;
-
     height: 36px;
     padding-left: 16px;
     padding-right: 4px;
     border-radius: 2px;
     outline-width: 0;
-
     transition: border-bottom .3s, background .3s;
     -webkit-transition: border-bottom .3s, background .3s;
 }
@@ -131,26 +90,26 @@ input::placeholder {
     color: #9E9E9E;
 }
 
-input[type=number] {
+input {
     background: #F5F5F5;
     color: #212121;
     border-bottom: 2px solid #cecece;
 }
 
-input[type=number]:focus {
+input:focus {
     border-bottom: 2px solid #2196F3;
 }
 
-input[type=number]:hover {
+input:hover {
     background: #EEEEEE;
 }
 
-input[type=number]::after {
+input::after {
     background: #F5F5F5;
 }
 
-
 /* Hides mocha tests even though it stil runs */
+
 #mocha {
     visibility: hidden;
 }

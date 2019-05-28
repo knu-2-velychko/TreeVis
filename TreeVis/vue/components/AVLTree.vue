@@ -7,7 +7,7 @@
 
 <script>
     module.exports = {
-        name: 'avl',
+        name: 'AVLTree',
         methods: {
 
         },
