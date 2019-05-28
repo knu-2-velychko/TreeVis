@@ -27,16 +27,34 @@ class TreeV {
         return null;
     }
 
-    updateView(treeMatrix) {
-        this.nodes.forEach(function (node) {
-            node.removeMe();
-        });
-        this.nodes = [];
-        this.treeMatrix = treeMatrix;
+    async updateView(newTreeMatrix) {
+        let levels = newTreeMatrix.length;
+        let width = this.canvas.width;
+        let height = this.canvas.height;
 
-        this.updateNodes(treeMatrix);
-        this.updateConnections(treeMatrix);
+        let animationPromises = [];
 
+        for (let i = 0; i < newTreeMatrix.length; i++) {
+            let row = newTreeMatrix[i];
+            for (let j = 0; j < row.length; j++) {
+                let node = row[j];
+
+                let nodeVis = this.findNode(node.value);
+                let coords = getXY(i, levels, j, height, width);
+                if (nodeVis) {
+                    animationPromises.push(nodeVis.moveTo(coords.x, coords.y));
+                }
+                else {
+                    this.addNode(node.value).setPosition(coords.x, coords.y);
+                    this.canvas.renderAll();
+                }
+            }
+        }
+
+        await Promise.all(animationPromises);
+
+        this.updateConnections(newTreeMatrix);
+        this.treeMatrix = newTreeMatrix;
         this.canvas.renderAll();
     }
 

@@ -67,9 +67,10 @@ function timer(timeout) {
     });
 }
 
-function getXY(row, levels, column, columnCount) {
-    let x = calcCoord(row, levels, this.canvas.height) - TreeVisVariables.circleRadius;
-    let y = calcCoord(column, columnCount, this.canvas.width) - TreeVisVariables.circleRadius;
+function getXY(row, levels, column, height, width) {
+    let columnCount = Math.pow(2,levels);
+    let x = calcCoord(row, levels, height) - TreeVisVariables.circleRadius;
+    let y = calcCoord(column, columnCount, width) - TreeVisVariables.circleRadius;
     return {
         x: x,
         y: y
