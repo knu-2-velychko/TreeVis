@@ -145,20 +145,21 @@ class TreeV {
     }
 
     positionOf(node) {
+        let positionRes = { column: -1, row: -1 };
         if (node) {
             let totalRows = this.treeMatrix.length;
             this.treeMatrix.forEach(function (rowArray, i) {
                 rowArray.forEach(function (item, j) {
                     if (item.value == node.value) {
-                        return { column: j, row: i, levels: totalRows, columnCount: rowArray.length };
+                        positionRes = { column: j, row: i, levels: totalRows, columnCount: Math.pow(2, i) };
                     }
                 });
             });
         }
-        return { column: -1, row: -1 };
+        return positionRes;
     }
 
-    async rotateRight(aroundNode) {
+    async rotateRight(aroundNode, newTreeMatrix) {
         let left = this.findNode(aroundNode.left);
         let center = this.findNode(aroundNode);
         let right = this.findNode(aroundNode.right);
@@ -175,11 +176,11 @@ class TreeV {
             this.positionOf(center),
             this.positionOf(right)
         ];
+
         if (left) {
             nodePositions[0].row -= 1;
             nodePositions[0].column -= Math.floor(nodePositions[0].column / 2);
         }
-
         if (center) {
             nodePositions[1].row += 1;
             nodePositions[1].column *= 2;
@@ -189,7 +190,7 @@ class TreeV {
             nodePositions[2].column *= 2;
         }
 
-        let nodeCoords = [nodePositions.map(pos => getXY(pos.row, pos.levels, pos.column, pos.columnCount))];
+        let nodeCoords = nodePositions.map(pos => getXY(pos.row, pos.levels, pos.column, pos.columnCount));
 
         let move = async (nodeVis, x, y) => {
             if (nodeVis) {
@@ -198,10 +199,12 @@ class TreeV {
         }
 
         await Promise.all([
-            () => { if (left) move(left, nodeCoords[0].x, nodeCoords[0].y) },
-            () => { if (center) move(center, nodeCoords[1].x, nodeCoords[1].y) },
-            () => { if (right) move(right, nodeCoords[2].x, nodeCoords[2].y) }
+            move(left, nodeCoords[0].x, nodeCoords[0].y),
+            move(center, nodeCoords[1].x, nodeCoords[1].y),
+            move(right, nodeCoords[2].x, nodeCoords[2].y)
         ]);
+
+        this.updateView(newTreeMatrix);
     }
 
     endInsertion(treeMatrix) {
