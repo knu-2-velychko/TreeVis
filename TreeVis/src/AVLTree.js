@@ -63,21 +63,21 @@ class AVLTree extends BinarySearchTree {
         node.setHeight();
         //left left case
         if (node.balanceFactor > 1 && node.left != null && key < node.left.key) {
-            this._rotateRight(node);
+            return this._rotateRight(node);
         }
         //right right case
         if (node.balanceFactor < -1 && node.right != null && key > node.right.key) {
-            this._rotateLeft(node);
+            return this._rotateLeft(node);
         }
         //left right case
         if (node.balanceFactor > 1 && node.left != null && key > node.left.key) {
             this._rotateLeft(node.left);
-            this._rotateRight(node);
+            return this._rotateRight(node);
         }
         //right left case
         if (node.balanceFactor < -1 && node.right != null && key < node.right.key) {
             this._rotateRight(node.right);
-            this._rotateLeft(node);
+            return this._rotateLeft(node);
         }
     }
 
@@ -132,12 +132,14 @@ class AVLTree extends BinarySearchTree {
             let right = node.right;
             node = null;
             if (right == null) {
-                return this._balance(left);
+                this._balance(left);
+                return left;
             }
             let min = this._findMin(right);
             min.right = this._deleteMin(right);
             min.left = left;
-            return this._balance(min);
+            this._balance(min);
+            return min;
         }
         return node;
     }
