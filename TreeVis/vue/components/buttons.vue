@@ -61,6 +61,7 @@
             rbtDeleteDisabled() {
                 return window.location.toString().substring(window.location.toString().lastIndexOf('/') + 1) === "RedBlackTree";
             }
+            
         }
     };
 </script>
