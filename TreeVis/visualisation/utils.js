@@ -39,7 +39,7 @@ function makeNodeVisualisation(left = 0, top = 0, value) {
     let figures = [makeCircle(left, top), makeText(String(value.key), left, top)];
     if (value.balanceFactor != null)
         figures.push(makeText(String(value.balanceFactor), left + TreeVisVariables.circleRadius + 20, 0, TreeVisVariables.nodeFontSize - 10));
-    let node = new fabric.Group(figures, {left: left, top: top});
+    let node = new fabric.Group(figures, { left: left, top: top });
     return node;
 }
 
@@ -77,4 +77,15 @@ function getXY(row, levels, column, height, width) {
         x: x,
         y: y
     };
+}
+
+function nodeExists(value, matrix) {
+    let result = false;
+    matrix.forEach(function (row) {
+        row.forEach(function (item) {
+            if (item.value == value)
+                result = true;
+        });
+    });
+    return result;
 }

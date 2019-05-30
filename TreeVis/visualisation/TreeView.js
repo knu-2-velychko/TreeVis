@@ -34,13 +34,15 @@ class TreeV {
 
         this.clearConnections();
 
+        this.removeDeleted(this.treeMatrix, newTreeMatrix);
+
         for (let i = 0; i < newTreeMatrix.length; i++) {
             let row = newTreeMatrix[i];
             for (let j = 0; j < row.length; j++) {
                 let node = row[j];
 
                 let nodeVis = this.findNode(node.value);
-                let coords = getXY(i, levels, row[j]["pos"]+1, this.canvas.height, this.canvas.width);
+                let coords = getXY(i, levels, row[j]["pos"] + 1, this.canvas.height, this.canvas.width);
                 console.log(coords);
                 if (nodeVis) {
                     if (nodeVis.posX() != coords.x || nodeVis.posY() != coords.y)
@@ -60,6 +62,19 @@ class TreeV {
         this.updateConnections(newTreeMatrix);
         this.treeMatrix = newTreeMatrix;
         this.canvas.renderAll();
+    }
+
+    removeDeleted(oldTreeMatrix, newTreeMatrix) {
+        let treeV = this;
+        if (oldTreeMatrix) {
+            oldTreeMatrix.forEach(function (item) {
+                if (!nodeExists(item, newTreeMatrix)) {
+                    let nodeV = treeV.findNode(item);
+                    if (nodeV)
+                        nodeV.removeMe();
+                }
+            })
+        }
     }
 
     updateNodes(treeMatrix) {
