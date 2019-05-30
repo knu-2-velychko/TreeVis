@@ -68,9 +68,9 @@ function timer(timeout) {
 }
 
 function getXY(row, levels, column, height, width) {
-    let columnCount = Math.pow(2,levels);
-    let x = calcCoord(row, levels, height) - TreeVisVariables.circleRadius;
-    let y = calcCoord(column, columnCount, width) - TreeVisVariables.circleRadius;
+    let columnCount = Math.pow(2, levels);
+    let x = calcCoord(column, columnCount, width) - TreeVisVariables.circleRadius;
+    let y = calcCoord(row, levels, height) - TreeVisVariables.circleRadius;
     return {
         x: x,
         y: y

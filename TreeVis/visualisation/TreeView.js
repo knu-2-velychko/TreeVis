@@ -29,10 +29,10 @@ class TreeV {
 
     async updateView(newTreeMatrix) {
         let levels = newTreeMatrix.length;
-        let width = this.canvas.width;
-        let height = this.canvas.height;
 
         let animationPromises = [];
+
+        this.clearConnections();
 
         for (let i = 0; i < newTreeMatrix.length; i++) {
             let row = newTreeMatrix[i];
@@ -40,9 +40,11 @@ class TreeV {
                 let node = row[j];
 
                 let nodeVis = this.findNode(node.value);
-                let coords = getXY(i, levels, j, height, width);
+                let coords = getXY(i, levels, row[j]["pos"]+1, this.canvas.height, this.canvas.width);
+                console.log(coords);
                 if (nodeVis) {
-                    animationPromises.push(nodeVis.moveTo(coords.x, coords.y));
+                    if (nodeVis.posX() != coords.x || nodeVis.posY() != coords.y)
+                        animationPromises.push(nodeVis.moveTo(coords.x, coords.y));
                 }
                 else {
                     this.addNode(node.value).setPosition(coords.x, coords.y);
@@ -52,6 +54,8 @@ class TreeV {
         }
 
         await Promise.all(animationPromises);
+
+        console.log("anim passed");
 
         this.updateConnections(newTreeMatrix);
         this.treeMatrix = newTreeMatrix;
@@ -77,6 +81,7 @@ class TreeV {
 
 
     updateConnections(treeMatrix) {
+        this.clearConnections();
         for (let row = 0; row < treeMatrix.length - 1; row++) {
             for (let col = 0; col < treeMatrix[row].length; col++) {
                 let currPos = treeMatrix[row][col].pos;
