@@ -27,6 +27,38 @@ class TreeV {
         return null;
     }
 
+    async updateNodes(treeMatrix) {
+        let levels = treeMatrix.length;
+
+        let columnCount = 1;
+
+        let animationPromises = [];
+
+        for (let row = 0; row < levels; row++) {
+            let nodeH = calcCoord(row, levels, this.canvas.height) - TreeVisVariables.circleRadius;
+
+            for (let nodeNum = 0; nodeNum < treeMatrix[row].length; nodeNum++) {
+                let node = treeMatrix[row][nodeNum];
+                let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - TreeVisVariables.circleRadius;
+
+                let nodeVis = this.findNode(node.value);
+
+                if (nodeVis) {
+                    if (nodeVis.posX() != nodeW || nodeVis.posY() != nodeH)
+                        animationPromises.push(nodeVis.moveTo(nodeW, nodeH));
+                }
+                else {
+                    this.addNode(node.value).setPosition(nodeW, nodeH);
+                    this.canvas.renderAll();
+                }
+            }
+
+            columnCount *= 2;
+        }
+
+        await Promise.all(animationPromises);
+    }
+
     async updateView(newTreeMatrix) {
         let levels = newTreeMatrix.length;
 
@@ -36,26 +68,7 @@ class TreeV {
 
         this.removeDeleted(this.treeMatrix, newTreeMatrix);
 
-        for (let i = 0; i < newTreeMatrix.length; i++) {
-            let row = newTreeMatrix[i];
-            for (let j = 0; j < row.length; j++) {
-                let node = row[j];
-
-                let nodeVis = this.findNode(node.value);
-                let coords = getXY(i, levels, row[j]["pos"] + 1, this.canvas.height, this.canvas.width);
-                console.log(coords);
-                if (nodeVis) {
-                    if (nodeVis.posX() != coords.x || nodeVis.posY() != coords.y)
-                        animationPromises.push(nodeVis.moveTo(coords.x, coords.y));
-                }
-                else {
-                    this.addNode(node.value).setPosition(coords.x, coords.y);
-                    this.canvas.renderAll();
-                }
-            }
-        }
-
-        await Promise.all(animationPromises);
+        await this.updateNodes(newTreeMatrix);
 
         console.log("anim passed");
 
@@ -77,22 +90,7 @@ class TreeV {
         }
     }
 
-    updateNodes(treeMatrix) {
-        let levels = treeMatrix.length;
 
-        let columnCount = 1;
-        for (let row = 0; row < levels; row++) {
-            let nodeH = calcCoord(row, levels, this.canvas.height) - TreeVisVariables.circleRadius;
-
-            for (let nodeNum = 0; nodeNum < treeMatrix[row].length; nodeNum++) {
-                let node = treeMatrix[row][nodeNum];
-                let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - TreeVisVariables.circleRadius;
-                this.addNode(node.value).setPosition(nodeW, nodeH);
-            }
-
-            columnCount *= 2;
-        }
-    }
 
 
     updateConnections(treeMatrix) {
@@ -195,54 +193,6 @@ class TreeV {
             });
         }
         return positionRes;
-    }
-
-    async rotateRight(aroundNode, newTreeMatrix) {
-        let left = this.findNode(aroundNode.left);
-        let center = this.findNode(aroundNode);
-        let right = this.findNode(aroundNode.right);
-
-        if (left)
-            left.clearConnections();
-        if (center)
-            center.clearConnections();
-        if (right)
-            right.clearConnections();
-
-        let nodePositions = [
-            this.positionOf(left),
-            this.positionOf(center),
-            this.positionOf(right)
-        ];
-
-        if (left) {
-            nodePositions[0].row -= 1;
-            nodePositions[0].column -= Math.floor(nodePositions[0].column / 2);
-        }
-        if (center) {
-            nodePositions[1].row += 1;
-            nodePositions[1].column *= 2;
-        }
-        if (right) {
-            nodePositions[2].row += 1;
-            nodePositions[2].column *= 2;
-        }
-
-        let nodeCoords = nodePositions.map(pos => getXY(pos.row, pos.levels, pos.column, pos.columnCount));
-
-        let move = async (nodeVis, x, y) => {
-            if (nodeVis) {
-                await nodeVis.moveTo(x, y);
-            }
-        }
-
-        await Promise.all([
-            move(left, nodeCoords[0].x, nodeCoords[0].y),
-            move(center, nodeCoords[1].x, nodeCoords[1].y),
-            move(right, nodeCoords[2].x, nodeCoords[2].y)
-        ]);
-
-        this.updateView(newTreeMatrix);
     }
 
     endInsertion(treeMatrix) {

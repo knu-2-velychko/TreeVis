@@ -4,7 +4,7 @@
         <h2>Visualization</h2>
         -->
         <buttons></buttons>
-        <canvas id="canvas" ref="canvas" width="1400" height="600"></canvas>
+        <canvas id="canvas" ref="canvas" width="1400px" height="600"></canvas>
     </div>
 </template>
 

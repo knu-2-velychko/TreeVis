@@ -125,6 +125,8 @@ class RedBlackTree extends BinarySearchTree {
         }
         rightChild.left = node;
         node.parent = rightChild;
+
+        
     }
 
     _rotateRight(node) {
