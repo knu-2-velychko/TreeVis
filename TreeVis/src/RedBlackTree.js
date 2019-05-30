@@ -1,4 +1,4 @@
-let Color = Object.freeze({"red": 1, "black": 2});
+let Color = Object.freeze({ "red": 1, "black": 2 });
 
 class RedBlackNode extends BinaryNode {
     constructor(nodeKey, nodeParent) {
@@ -126,7 +126,7 @@ class RedBlackTree extends BinarySearchTree {
         rightChild.left = node;
         node.parent = rightChild;
 
-        
+        treeView.updateView(makeMatrix(this));
     }
 
     _rotateRight(node) {
@@ -143,6 +143,8 @@ class RedBlackTree extends BinarySearchTree {
             node.parent.right = leftChild;
         leftChild.right = node;
         node.parent = leftChild;
+
+        treeView.updateView(makeMatrix(this));
     }
 
 }

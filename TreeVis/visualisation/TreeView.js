@@ -70,8 +70,6 @@ class TreeV {
 
         await this.updateNodes(newTreeMatrix);
 
-        console.log("anim passed");
-
         this.updateConnections(newTreeMatrix);
         this.treeMatrix = newTreeMatrix;
         this.canvas.renderAll();

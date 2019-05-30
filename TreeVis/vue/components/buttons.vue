@@ -1,6 +1,7 @@
 <template>
     <div>
-        <input type="number" id="InputField" v-model="treeForm.InputFieldVal">
+        <input type="number" id="InputField" v-model="treeForm.InputFieldVal"
+        :max='999' :min='-999' >
         <button
                 id="InsertButton"
                 v-on:click="insertNode(treeForm.InputFieldVal)"
@@ -61,7 +62,9 @@
             rbtDeleteDisabled() {
                 return window.location.toString().substring(window.location.toString().lastIndexOf('/') + 1) === "RedBlackTree";
             }
-            
+        },
+        updated() {
+            //treeForm.animationSpeed = TreeVisVariables.animationTime / TreeVisVariables.defaultAnimationTime;
         }
     };
 </script>
