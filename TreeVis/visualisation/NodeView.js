@@ -1,7 +1,7 @@
 class NodeV {
     constructor(value, canvas = null, key = value) {
         this.value = value;
-        this.view = makeNodeVisualisation(0, 0, String(key));
+        this.view = makeNodeVisualisation(0, 0, value);
         // values {node:.. , line:..}
         this.outgoingConnections = [];
 
@@ -65,7 +65,6 @@ class NodeV {
     strokeMe(stroke) {
         let circle = this.view.item(0);
         if (stroke != null) {
-            circle.set("strokeWidth", 5);
             circle.set("stroke", stroke);
             this.canvas.renderAll();
         }

@@ -13,11 +13,8 @@ button {
     margin: 1em 0 1em 8px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-    transition: box-shadow, filter 100ms;
-    -webkit-transition: -webkit-box-shadow 300ms, filter 100ms;
-    transition: -webkit-box-shadow 300ms, filter 100ms;
-    transition: box-shadow 300ms, filter 100ms;
-    transition: box-shadow 300ms, -webkit-box-shadow 300ms, filter 100ms;
+    -webkit-transition: box-shadow 300ms, -webkit-box-shadow 300ms, filter 100ms, background 300ms;
+    transition: box-shadow 300ms, -webkit-box-shadow 300ms, filter 100ms, background 300ms;
 }
 
 button:hover {
@@ -36,6 +33,11 @@ button:active {
 
 button:active {
     filter: brightness(90%);
+}
+
+button:disabled {
+    box-shadow: none;
+    -webkit-box-shadow: none;
 }
 
 button {
@@ -65,15 +67,15 @@ button {
 }
 
 button:disabled {
-    background: #424242 !important;
-    color: #BDBDBD !important;
+    background: #cccccc !important;
+    color: #999999 !important;
 }
 
 input {
     border: none;
 }
 
-input {
+input[type=number] {
     font-family: "Google Sans", sans-serif;
     line-height: 36px;
     text-transform: uppercase;
@@ -86,26 +88,67 @@ input {
     -webkit-transition: border-bottom .3s, background .3s;
 }
 
-input::placeholder {
+input[type=number]::placeholder {
     color: #9E9E9E;
 }
 
-input {
+input[type=number] {
     background: #F5F5F5;
     color: #212121;
     border-bottom: 2px solid #cecece;
 }
 
-input:focus {
+input[type=number]:focus {
     border-bottom: 2px solid #2196F3;
 }
 
-input:hover {
+input[type=number]:hover {
     background: #EEEEEE;
 }
 
-input::after {
+input[type=number]::after {
     background: #F5F5F5;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px !important;
+    border-radius: 5px;   
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%; 
+    background: #2196F3;
+    cursor: pointer;
+    transition: width .1s, height .1s;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%; 
+    background: #2196F3;
+    cursor: pointer;
+    transition: width .1s, height .1s;
+    -webkit-transition: width .1s, height .1s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover, input[type=range]::-webkit-slider-thumb:active {
+    width: 25px;
+    height: 25px;
+}
+
+input[type=range]::-moz-range-thumb:hover, input[type=range]::-moz-range-thumb:active {
+    width: 25px;
+    height: 25px;
 }
 
 /* Hides mocha tests even though it stil runs */
