@@ -60,10 +60,6 @@ class TreeV {
     }
 
     async updateView(newTreeMatrix) {
-        let levels = newTreeMatrix.length;
-
-        let animationPromises = [];
-
         this.clearConnections();
 
         this.removeDeleted(this.treeMatrix, newTreeMatrix);
@@ -87,9 +83,6 @@ class TreeV {
             })
         }
     }
-
-
-
 
     updateConnections(treeMatrix) {
         this.clearConnections();
@@ -193,7 +186,7 @@ class TreeV {
         return positionRes;
     }
 
-    endInsertion(treeMatrix) {
+    async endInsertion(treeMatrix) {
         if (this.currentlyComparedWith !== null) {
             this.currentlyComparedWith.highlighted(false);
         }
@@ -201,11 +194,20 @@ class TreeV {
         this.canvas.remove(this.newNode.view);
         this.newNode = null;
 
-        this.updateView(treeMatrix);
+        await this.updateView(treeMatrix);
     }
 
-    endDeletion(treeMatrix, oldNodeView) {
+    async endDeletion(treeMatrix, oldNodeView) {
         this.canvas.remove(oldNodeView.view);
-        this.updateView(treeMatrix);
+        await this.updateView(treeMatrix);
     }
+
+    async rotateAround(rotationNode, newTreeMatrix) {
+        let node = this.findNode(rotationNode);
+        node.highlighted(true, colors["green"]);
+        await this.updateView(newTreeMatrix);
+        node.highlighted(false);
+    }
+
+
 }

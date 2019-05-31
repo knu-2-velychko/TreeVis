@@ -37,8 +37,8 @@ class RedBlackTree extends BinarySearchTree {
     async insertKey(newKey) {
         let node = new RedBlackNode(newKey, null);
         await super._insertNode(node);
-        this._insertCase1(node);
-        treeView.updateView(makeMatrix(this));
+        await this._insertCase1(node);
+        await treeView.updateView(makeMatrix(this));
     }
 
     //TODO: deletion
@@ -46,24 +46,24 @@ class RedBlackTree extends BinarySearchTree {
 
     }
 
-    _insertCase1(node) {
+    async _insertCase1(node) {
         if (node != null) {
             if (node.parent == null) {
                 node.color = Color.black;
                 treeView.findNode(node).setStroke('black');
             } else {
-                this._insertCase2(node);
+                await this._insertCase2(node);
             }
         }
     }
 
-    _insertCase2(node) {
+    async _insertCase2(node) {
         if (node.parent.color !== Color.black) {
-            this._insertCase3(node);
+            await this._insertCase3(node);
         }
     }
 
-    _insertCase3(node) {
+    async _insertCase3(node) {
         let g = node.grandparent;
         let u = node.uncle;
 
@@ -77,24 +77,24 @@ class RedBlackTree extends BinarySearchTree {
             treeView.findNode(g).setStroke('red');
             this._insertCase1(g);
         } else {
-            this._insertCase4(node);
+            await this._insertCase4(node);
         }
     }
 
-    _insertCase4(node) {
+    async _insertCase4(node) {
         let g = node.grandparent;
 
         if (node === node.parent.right && node.parent === g.left) {
-            this._rotateLeft(node.parent);
+            await this._rotateLeft(node.parent);
             node = node.left;
         } else if (node === node.parent.left && node.parent === g.right) {
-            this._rotateRight(node.parent);
+            await this._rotateRight(node.parent);
             node = node.right;
         }
         this._insertCase5(node);
     }
 
-    _insertCase5(node) {
+    async _insertCase5(node) {
         let g = node.parent.parent;
         node.parent.color = Color.black;
         g.color = Color.red;
@@ -103,13 +103,13 @@ class RedBlackTree extends BinarySearchTree {
         treeView.findNode(g).setStroke('red');
 
         if (node === node.parent.left && node.parent === g.left) {
-            this._rotateRight(g);
+            await this._rotateRight(g);
         } else {
-            this._rotateLeft(g);
+            await this._rotateLeft(g);
         }
     }
 
-    _rotateLeft(node) {
+    async _rotateLeft(node) {
         let rightChild = node.right;
         node.right = rightChild.left;
         if (node.right != null) {
@@ -126,10 +126,10 @@ class RedBlackTree extends BinarySearchTree {
         rightChild.left = node;
         node.parent = rightChild;
 
-        treeView.updateView(makeMatrix(this));
+        await treeView.rotateAround(node, makeMatrix(this));
     }
 
-    _rotateRight(node) {
+    async _rotateRight(node) {
         let leftChild = node.left;
         node.left = leftChild.right;
         if (node.left != null)
@@ -144,7 +144,7 @@ class RedBlackTree extends BinarySearchTree {
         leftChild.right = node;
         node.parent = leftChild;
 
-        treeView.updateView(makeMatrix(this));
+        await treeView.rotateAround(node, makeMatrix(this));
     }
 
 }

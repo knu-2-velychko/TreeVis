@@ -44,44 +44,44 @@ class AVLTree extends BinarySearchTree {
         let current = node;
         while (current != null) {
             current = current.parent;
-            this._balance(current, newKey);
+            await this._balance(current, newKey);
         }
-        treeView.updateView(makeMatrix(this));
+        await treeView.updateView(makeMatrix(this));
     }
 
     async deleteKey(key) {
         this.deletedView = null;
         this._root = await this._deleteKey(this._root, key);
         if (this.deletedView != null) {
-            treeView.endDeletion(makeMatrix(this), this.deletedView);
+            await treeView.endDeletion(makeMatrix(this), this.deletedView);
         }
     }
 
-    _balance(node, key) {
+    async _balance(node, key) {
         if (node == null)
             return null;
         node.setHeight();
         //left left case
         if (node.balanceFactor > 1 && node.left != null && key < node.left.key) {
-            return this._rotateRight(node);
+            return await this._rotateRight(node);
         }
         //right right case
         if (node.balanceFactor < -1 && node.right != null && key > node.right.key) {
-            return this._rotateLeft(node);
+            return await this._rotateLeft(node);
         }
         //left right case
         if (node.balanceFactor > 1 && node.left != null && key > node.left.key) {
-            this._rotateLeft(node.left);
+            await this._rotateLeft(node.left);
             return this._rotateRight(node);
         }
         //right left case
         if (node.balanceFactor < -1 && node.right != null && key < node.right.key) {
-            this._rotateRight(node.right);
+            await this._rotateRight(node.right);
             return this._rotateLeft(node);
         }
     }
 
-    _rotateLeft(node) {
+    async _rotateLeft(node) {
         let rightChild = node.right;
         node.right = rightChild.left;
         if (node.right != null) {
@@ -97,9 +97,11 @@ class AVLTree extends BinarySearchTree {
         }
         rightChild.left = node;
         node.parent = rightChild;
+
+        await treeView.rotateAround(node, makeMatrix(this));
     }
 
-    _rotateRight(node) {
+    async _rotateRight(node) {
         let leftChild = node.left;
         node.left = leftChild.right;
         if (node.left != null)
@@ -113,6 +115,8 @@ class AVLTree extends BinarySearchTree {
             node.parent.right = leftChild;
         leftChild.right = node;
         node.parent = leftChild;
+
+        await treeView.rotateAround(node, makeMatrix(this));
     }
 
     async _deleteKey(node, key) {
