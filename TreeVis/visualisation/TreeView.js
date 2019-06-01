@@ -46,8 +46,8 @@ class TreeV {
                 if (nodeVis) {
                     if (nodeVis.posX() != nodeW || nodeVis.posY() != nodeH)
                         animationPromises.push(nodeVis.moveTo(nodeW, nodeH));
-                }
-                else {
+                    nodeVis.updBalance();
+                } else {
                     this.addNode(node.value).setPosition(nodeW, nodeH);
                     this.canvas.renderAll();
                 }
@@ -172,13 +172,13 @@ class TreeV {
     }
 
     positionOf(node) {
-        let positionRes = { column: -1, row: -1 };
+        let positionRes = {column: -1, row: -1};
         if (node) {
             let totalRows = this.treeMatrix.length;
             this.treeMatrix.forEach(function (rowArray, i) {
                 rowArray.forEach(function (item, j) {
                     if (item.value == node.value) {
-                        positionRes = { column: j, row: i, levels: totalRows, columnCount: Math.pow(2, i) };
+                        positionRes = {column: j, row: i, levels: totalRows, columnCount: Math.pow(2, i)};
                     }
                 });
             });
