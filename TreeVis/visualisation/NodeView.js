@@ -1,9 +1,7 @@
 class NodeV {
     constructor(value, canvas = null, key = value) {
         this.value = value;
-
-        this.view = makeNodeVisualisation(0, 0, String(key));
-
+        this.view = makeNodeVisualisation(0, 0, value);
         // values {node:.. , line:..}
         this.outgoingConnections = [];
 
@@ -11,6 +9,9 @@ class NodeV {
         if (canvas !== null) {
             canvas.add(this.view);
         }
+
+        this.stroke = value.color === 1 ? 'red' : value.color === 2 ? 'black' : null;
+        this.setStroke(this.stroke);
     }
 
     posX() {
@@ -56,13 +57,25 @@ class NodeV {
         this.view.setTop(y);
     }
 
+    setStroke(stroke) {
+        this.stroke = stroke;
+        this.strokeMe(this.stroke);
+    }
+
+    strokeMe(stroke) {
+        let circle = this.view.item(0);
+        if (stroke != null) {
+            circle.set("stroke", stroke);
+            this.canvas.renderAll();
+        }
+    }
+
     highlighted(value, color = colors["default"]) {
         let circle = this.view.item(0);
-        if (value)
+        if (value) {
             circle.setFill(color.toRgb());
-        else
+        } else
             circle.setFill(colors["default"].toRgb());
-
         this.canvas.renderAll();
     }
 

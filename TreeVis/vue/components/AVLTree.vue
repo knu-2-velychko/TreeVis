@@ -1,16 +1,14 @@
 <template>
     <div class="tree-page">
-        <code-panel></code-panel>
+        <!--        <code-panel></code-panel>-->
         <canvas-panel></canvas-panel>
     </div>
 </template>
 
 <script>
     module.exports = {
-        name: 'avl',
-        methods: {
-
-        },
+        name: 'AVLTree',
+        methods: {},
         components: {
             'code-panel': httpVueLoader('./codePanel.vue'),
             'canvas-panel': httpVueLoader('./canvasPanel.vue')

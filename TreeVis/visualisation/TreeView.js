@@ -27,37 +27,65 @@ class TreeV {
         return null;
     }
 
-    updateView(treeMatrix) {
-        this.nodes.forEach(function (node) {
-            node.removeMe();
-        });
-        this.nodes = [];
-        this.treeMatrix = treeMatrix;
-
-        this.updateNodes(treeMatrix);
-        this.updateConnections(treeMatrix);
-
-        this.canvas.renderAll();
-    }
-
-    updateNodes(treeMatrix) {
+    async updateNodes(treeMatrix) {
         let levels = treeMatrix.length;
 
         let columnCount = 1;
+
+        let animationPromises = [];
+
         for (let row = 0; row < levels; row++) {
             let nodeH = calcCoord(row, levels, this.canvas.height) - TreeVisVariables.circleRadius;
 
             for (let nodeNum = 0; nodeNum < treeMatrix[row].length; nodeNum++) {
                 let node = treeMatrix[row][nodeNum];
                 let nodeW = calcCoord(node["pos"], columnCount, this.canvas.width) - TreeVisVariables.circleRadius;
-                this.addNode(node.value).setPosition(nodeW, nodeH);
+
+                let nodeVis = this.findNode(node.value);
+
+                if (nodeVis) {
+                    if (nodeVis.posX() != nodeW || nodeVis.posY() != nodeH)
+                        animationPromises.push(nodeVis.moveTo(nodeW, nodeH));
+                }
+                else {
+                    this.addNode(node.value).setPosition(nodeW, nodeH);
+                    this.canvas.renderAll();
+                }
             }
 
             columnCount *= 2;
         }
+
+        await Promise.all(animationPromises);
+    }
+
+    async updateView(newTreeMatrix) {
+        this.clearConnections();
+
+        this.removeDeleted(this.treeMatrix, newTreeMatrix);
+
+        await this.updateNodes(newTreeMatrix);
+
+        this.updateConnections(newTreeMatrix);
+        this.treeMatrix = newTreeMatrix;
+        this.canvas.renderAll();
+    }
+
+    removeDeleted(oldTreeMatrix, newTreeMatrix) {
+        let treeV = this;
+        if (oldTreeMatrix) {
+            oldTreeMatrix.forEach(function (item) {
+                if (!nodeExists(item, newTreeMatrix)) {
+                    let nodeV = treeV.findNode(item);
+                    if (nodeV)
+                        nodeV.removeMe();
+                }
+            })
+        }
     }
 
     updateConnections(treeMatrix) {
+        this.clearConnections();
         for (let row = 0; row < treeMatrix.length - 1; row++) {
             for (let col = 0; col < treeMatrix[row].length; col++) {
                 let currPos = treeMatrix[row][col].pos;
@@ -143,7 +171,22 @@ class TreeV {
         await this.newNode.moveTo(x, y, TreeVisVariables.animationTime);
     }
 
-    endInsertion(treeMatrix) {
+    positionOf(node) {
+        let positionRes = { column: -1, row: -1 };
+        if (node) {
+            let totalRows = this.treeMatrix.length;
+            this.treeMatrix.forEach(function (rowArray, i) {
+                rowArray.forEach(function (item, j) {
+                    if (item.value == node.value) {
+                        positionRes = { column: j, row: i, levels: totalRows, columnCount: Math.pow(2, i) };
+                    }
+                });
+            });
+        }
+        return positionRes;
+    }
+
+    async endInsertion(treeMatrix) {
         if (this.currentlyComparedWith !== null) {
             this.currentlyComparedWith.highlighted(false);
         }
@@ -151,11 +194,20 @@ class TreeV {
         this.canvas.remove(this.newNode.view);
         this.newNode = null;
 
-        this.updateView(treeMatrix);
+        await this.updateView(treeMatrix);
     }
 
-    endDeletion(treeMatrix, oldNodeView) {
+    async endDeletion(treeMatrix, oldNodeView) {
         this.canvas.remove(oldNodeView.view);
-        this.updateView(treeMatrix);
+        await this.updateView(treeMatrix);
     }
+
+    async rotateAround(rotationNode, newTreeMatrix) {
+        let node = this.findNode(rotationNode);
+        node.highlighted(true, colors["green"]);
+        await this.updateView(newTreeMatrix);
+        node.highlighted(false);
+    }
+
+
 }

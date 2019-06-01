@@ -1,4 +1,4 @@
-let Color = Object.freeze({"red": 1, "black": 2});
+let Color = Object.freeze({ "red": 1, "black": 2 });
 
 class RedBlackNode extends BinaryNode {
     constructor(nodeKey, nodeParent) {
@@ -34,10 +34,11 @@ class RedBlackTree extends BinarySearchTree {
         super();
     }
 
-    insertKey(newKey) {
+    async insertKey(newKey) {
         let node = new RedBlackNode(newKey, null);
-        super._insertNode(node);
-        this._insertCase1(node);
+        await super._insertNode(node);
+        await this._insertCase1(node);
+        await treeView.updateView(makeMatrix(this));
     }
 
     //TODO: deletion
@@ -45,23 +46,24 @@ class RedBlackTree extends BinarySearchTree {
 
     }
 
-    _insertCase1(node) {
+    async _insertCase1(node) {
         if (node != null) {
             if (node.parent == null) {
                 node.color = Color.black;
+                treeView.findNode(node).setStroke('black');
             } else {
-                this._insertCase2(node);
+                await this._insertCase2(node);
             }
         }
     }
 
-    _insertCase2(node) {
+    async _insertCase2(node) {
         if (node.parent.color !== Color.black) {
-            this._insertCase3(node);
+            await this._insertCase3(node);
         }
     }
 
-    _insertCase3(node) {
+    async _insertCase3(node) {
         let g = node.grandparent;
         let u = node.uncle;
 
@@ -69,44 +71,52 @@ class RedBlackTree extends BinarySearchTree {
             node.parent.color = Color.black;
             u.color = Color.black;
             g.color = Color.red;
+
+            treeView.findNode(node.parent).setStroke('black');
+            treeView.findNode(u).setStroke('black');
+            treeView.findNode(g).setStroke('red');
             this._insertCase1(g);
         } else {
-            this._insertCase4(node);
+            await this._insertCase4(node);
         }
     }
 
-    _insertCase4(node) {
+    async _insertCase4(node) {
         let g = node.grandparent;
 
         if (node === node.parent.right && node.parent === g.left) {
-            this._rotateLeft(node.parent);
+            await this._rotateLeft(node.parent);
             node = node.left;
         } else if (node === node.parent.left && node.parent === g.right) {
-            this._rotateRight(node.parent);
+            await this._rotateRight(node.parent);
             node = node.right;
         }
         this._insertCase5(node);
     }
 
-    _insertCase5(node) {
+    async _insertCase5(node) {
         let g = node.parent.parent;
-        node.parent.color = Color.red;
+        node.parent.color = Color.black;
         g.color = Color.red;
+
+        treeView.findNode(node.parent).setStroke('black');
+        treeView.findNode(g).setStroke('red');
+
         if (node === node.parent.left && node.parent === g.left) {
-            this._rotateRight(g);
+            await this._rotateRight(g);
         } else {
-            this._rotateLeft()
+            await this._rotateLeft(g);
         }
     }
 
-    _rotateLeft(node) {
+    async _rotateLeft(node) {
         let rightChild = node.right;
         node.right = rightChild.left;
         if (node.right != null) {
             node.right.parent = node;
         }
         rightChild.parent = node.parent;
-        if (node.parent === nullptr) {
+        if (node.parent === null) {
             this._root = rightChild;
         } else if (node === node.parent.left) {
             node.parent.left = rightChild;
@@ -115,9 +125,11 @@ class RedBlackTree extends BinarySearchTree {
         }
         rightChild.left = node;
         node.parent = rightChild;
+
+        await treeView.rotateAround(node, makeMatrix(this));
     }
 
-    _rotateRight(node) {
+    async _rotateRight(node) {
         let leftChild = node.left;
         node.left = leftChild.right;
         if (node.left != null)
@@ -131,6 +143,8 @@ class RedBlackTree extends BinarySearchTree {
             node.parent.right = leftChild;
         leftChild.right = node;
         node.parent = leftChild;
+
+        await treeView.rotateAround(node, makeMatrix(this));
     }
 
 }

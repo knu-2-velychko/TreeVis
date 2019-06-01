@@ -124,7 +124,7 @@ describe('Binary Search Tree', () => {
     });
 });
 
-describe('Red-Black Tree Node', () => {
+describe('RedBlackTree Tree Node', () => {
     var node = new RedBlackNode(3, null);
 
     it('node should not be empty', () => {
@@ -163,7 +163,7 @@ describe('Red-Black Tree Node', () => {
     });
 });
 
-describe('Red-Black Tree', () => {
+describe('RedBlackTree Tree', () => {
     it('root should be empty', () => {
         var tree = new RedBlackTree();
 
@@ -363,7 +363,7 @@ describe('Binary Tree Iterator', () => {
         chai.expect(iterator.getCurrent).to.equal(null);
         chai.assert(iterator.isEqual(iterator.end));
     });
-    it('Red-Black Tree', () => {
+    it('RedBlackTree Tree', () => {
         let tree = new RedBlackTree();
         tree.insertKey(3);
         tree.insertKey(5);
@@ -435,7 +435,7 @@ describe('Get matrix of treeView', () => {
         chai.expect(matrix[2][0].pos).to.equal(0);
         chai.expect(matrix[2][0].node.key).to.equal(1);
     });
-    it('Red-Black Tree', () => {
+    it('RedBlackTree Tree', () => {
         let tree = new RedBlackTree();
         tree.insertKey(3);
         tree.insertKey(5);
