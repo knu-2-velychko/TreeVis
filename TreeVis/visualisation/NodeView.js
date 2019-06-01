@@ -10,8 +10,8 @@ class NodeV {
             canvas.add(this.view);
         }
 
-        this.stroke = value.color === 1 ? 'red' : value.color === 2 ? 'black' : null;
-        this.setStroke(this.stroke);
+        let stroke = value.color === 1 ? 'red' : value.color === 2 ? 'black' : null;
+        this.setStroke(stroke);
     }
 
     posX() {
@@ -58,17 +58,21 @@ class NodeV {
     }
 
     setStroke(stroke) {
-        this.stroke = stroke;
-        this.strokeMe(this.stroke);
-    }
-
-    strokeMe(stroke) {
         let circle = this.view.item(0);
         if (stroke != null) {
             circle.set("stroke", stroke);
             this.canvas.renderAll();
         }
     }
+
+    updBalance() {
+        let annotation = this.view.item(2);
+        if (annotation != null) {
+            annotation.setText(String(this.value.balanceFactor));
+            this.canvas.renderAll();
+        }
+    }
+
 
     highlighted(value, color = colors["default"]) {
         let circle = this.view.item(0);
