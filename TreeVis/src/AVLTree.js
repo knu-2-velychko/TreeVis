@@ -65,21 +65,21 @@ class AVLTree extends BinarySearchTree {
         node.setHeight();
         //left left case
         if (node.balanceFactor > 1 && node.left != null && key < node.left.key) {
-            return this._rotateRight(node);
+            this._rotateRight(node);
         }
         //right right case
         if (node.balanceFactor < -1 && node.right != null && key >= node.right.key) {
-            return this._rotateLeft(node);
+            this._rotateLeft(node);
         }
         //left right case
         if (node.balanceFactor > 1 && node.left != null && key >= node.left.key) {
             this._rotateLeft(node.left);
-            return this._rotateRight(node);
+            this._rotateRight(node);
         }
         //right left case
         if (node.balanceFactor < -1 && node.right != null && key < node.right.key) {
             this._rotateRight(node.right);
-            return this._rotateLeft(node);
+            this._rotateLeft(node);
         }
     }
 
